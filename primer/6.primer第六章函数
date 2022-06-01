@@ -1,0 +1,1030 @@
+//第六章 函数
+//函数是一个命名的代码块，我们通过调用函数执行相应的代码。
+//函数可以有0个或多个参数，而且通常会产生一个结果。
+//可以重载函数，同一个名字可以对应几个不同的函数。
+
+//6.1 函数基础
+/*1.一个典型的函数包括：返回类型（return type）、函数名字、
+    由0个或多个形参（parameter）组成的列表以及函数体（function body）
+  2.通过调用运算符（call operator）来执行函数。
+    调用运算符的形式是一对圆括号，它作用与一个表达式，
+    该表达式是函数或者指向函数的指针；
+    圆括号之内是一个用逗号隔开的实参（argument）列表，
+    我们用实参初始化函数的形参。
+    调用表达式的类型就是函数的返回类型。
+  3.调用函数完成两项工作：一是实参初始化函数对应的形参，
+    二是将控制权转移给被掉用函数。
+    此时，主调函数（calling function）的执行被暂时中断，
+    被调函数（called function）开始执行。
+  4.当遇到一条return语句时，完成两项工作：一是返回return语句中的值，
+    二是将控制权从被掉函数转移回主调函数。
+  5.形参和实参是对应关系，但没有规定实参的求值顺序。
+  6.函数形参列表可以为空，但不能省略。
+    形参列表中每个形参度含有一个声明符的声明，
+    类型相同，也必须把两个类型都写出来。
+    形参名是可选的，未命名的形参函数体不会使用它。
+    是否设置未命名的形参不影响调用时提供的实参数量。
+  7.函数的返回类型，一种特殊的返回类型是void，表示不返回任何值。
+    函数返回类型不能是数组类型或函数类型，但可以是指向数组或函数的指针。*/
+//6.1.1 局部对象
+/*1.在C++中，名字有作用域，对象有生命周期（lifetime）。
+    名字的作用域是程序文本的一部分，名字在其中可见。
+    对象的生命周期是程序执行过程中该对象存在的一段时间。
+  2.形参和函数体内部定义的变量统称为局部变量（local variable）。
+    局部变量仅在函数的作用域内可见，
+    同时局部变量还会隐藏（hide）在外层作用域中的同名的变量。
+  3.把只存在于块执行期间的对象称为自动对象（automatic object）。
+  4.内置类型的未初始化局部变量将产生未定义的值。
+  5.局部静态对象（local static object）
+    在程序的执行路径第一次经过对象定义语句初始化，直到程序终止。*/
+//6.1.2 函数声明
+/*1.函数可以声明多次，只能定义一次。
+    函数声明无函数体，用一个分号代替，可以不写形参，写形参便于理解。
+    函数的三要素，返回类型、函数名、形参类型描述了函数的接口，
+    说明了调用该函数所需的全部信息。
+    函数声明也称作函数原型（function prototype）。
+  2.建议变量、函数在头文件中声明，在源文件中定义*/
+//6.1.3 分离式编译（separate compilation）
+//1.仔细阅读编译器的用户手册，弄清楚由多个文件组成的程序是如何编译并执行的
+#include <iostream>
+#include <cstddef>
+using namespace std;
+//编写函数
+//val的阶乘是val*(val-1)*(val-2)...*(val-(val-1))*1
+int fact(int val)
+{
+    int ret = 1; //局部变量，用于保存计算结果
+    while (val > 1)
+      ret *= val--; //把ret和val的乘积赋值给ret，然后将val减1
+    return ret;     //返回结果
+}
+size_t conut_calls();//函数声明
+size_t conut_calls()//函数定义
+{
+    static size_t ctr = 0; //调用结束后，这个值任然有效
+    return ++ctr;
+}
+    int main()
+{
+    //调用函数
+    int j = fact(5); //j等于120，即fact(5)的结果
+    cout << "5! is " << j << endl;
+    //等价于
+    /*
+    int val = 5; //用字面值5初始化val
+    int ret = 1; //fact函数体内的代码
+    while (val > 1)
+        ret *= val--;
+    int j = ret; //用ret的副本初始化j;
+    */
+    for (size_t i = 0; i != 10; ++i)
+        cout << conut_calls() << endl;
+    return 0;
+}
+
+//6.2 参数传递
+/*1.每次调用函数都会重新创建它的形参，并用传入的实参进行初始化。
+    2.形参类型决定了形参和实参的交互方式。
+    如果形参是引用类型，它将绑定到对应的实参上，
+    否则，将实参的值拷贝后赋给形参。
+    3.形参是引用类型，对应的实参被引用传递（passed by reference）
+    或者函数被传引用调用（called by reference）。引用形参是实参的别名。
+    4.实参的值被拷贝给形参时，形参和实参是两个相互独立的对象。
+    实参被值传递（passed by value）或函数被传值调用（called by value）。*/
+//6.2.1 传值参数
+/*1.指针形参
+    当执行指针拷贝时，拷贝的是指针的值，拷贝后是两个不同的指针。
+    通过指针可以修改它所指对象的值。
+    c++中建议用引用代替指针*/
+//6.2.2 传引用参数
+/*1.引用的操作实际上是作用在引用所引得对象上的。
+  2.使用引用避免拷贝
+    拷贝大的类类型对象或者容器对象比较低效，
+    甚至有的类类型（包括IO类型在内）根部不支持拷贝操作。
+  3.使用引用形参返回额外信息
+    使用引用形参为我们一次返回多个结果提供了有效的途径。*/
+//6.2.3 const形参和实参
+/*1.当实参初始化形参时，会忽略掉形参的顶层const。
+    即函数重载时，形参列表中的const变量，与不带const的变量相同。
+  2.指针或引用形参与const
+  3.尽量使用常量引用
+    把函数不会改变的形参定义成普通的引用是一种比较常见的错误。
+    误以为函数可以改变实参的值。
+    使用引用而非常量引用也会极大地限制函数所能接受的实参类型。*/
+//6.2.4 数组形参
+/*1.数组的两个特殊性质：一是不允许拷贝数组，无法以值传递的方式使用数组参数。
+    二使用数组时（通常）会将其转换成指针，传递一个数组时，
+    实际上传递的是指向数组首元素的指针。
+  2.使用标记指定数组长度
+    管理数组实参的第一种方法是要求数组本身包含一个结束标记，
+    典型的就是C风格字符串
+  3.使用标准库规范
+    管理数组实参的第二种技术是传递指向数组首元素和尾元素的指针。
+  4.显示传递一个表示数组大小的形参
+    专门定义一个表示数组大小的形参
+  5.数组形参和const
+    当函数不需要对素组元素执行写操作的时候，数组形参应该是指向const指针
+  6.数组引用形参，引用形参绑定到对应的实参上，也就是绑定到数组上。
+  7.传递多维数组
+    处理的事数组的数组，元素首元素本身就是一个数组，
+    指针就是一个指向数组的指针，数组的第二维的大小都是素组类型的一部分。*/
+//6.2.5 main：处理命令行选项
+/*1.有时，我们需要给main传递实参，
+    用户可以通过设置一组选项来确定函数所要执行的操作。
+    main函数位于prog之内，我们可以向程序传递下面的选项：
+    prog -d -o ofile data0
+    这些命令通过两个（可选的）形参传递给main函数
+    int main（int argc,char *argv[]){...}
+    int main (int argc,char **argv){...}
+    argv指向char *,当实参传递给main函数之后，
+    argv的第一个元素指向程序的名字或者一个空字符串，
+    接下来的元素一次传递命令行提供的实参。最后一个指针之后的元素值保证为0。
+    以上的命令行，argc等于5，
+    argv[0]="prog";//或者argv[0]也可以指向一个空字符串
+    argv[1]="-d";
+    argv[2]="-o";
+    argv[3]="ofile";
+    argv[4]="data0";
+    argv[5]=0;*/
+//6.2.6 含有可变形参的函数
+/*1.为了编写能处理不同数量实参的函数，c++11提供了两种主要方法：
+    如果所有的实参类型相同，可以传递一个名为initializer_list的标准类型；
+    如果实参的类型不同，编写一个特殊函数，也就是所谓的可变参数模板。
+    还有一种特殊的形参类型（即省略符），可以用它传递可变数量的实参。
+    一般只用于与C函数交互的接口程序。
+  2.initializer_list用于特定类型的值的数组，定义在同名头文件中。
+  3.  表6.1:initializer_list提供的操作
+  initializer_list<T>lst;   默认初始化；T类型元素的空列表
+  initializer_list<T>lst{a,b,c...};
+  lst的元素数量和初始值一样多；lst的元素是对应初始值的副本；列表中的元素是const
+  lst2(lst)或lst2=lst 拷贝或赋值一个initializer_list对象不会拷贝列表中的元素；
+  拷贝后，原始列表和副本共享元素
+  lst.size()  列表中的元素数量
+  lst.begin() 返回指向lst中首元素的指针
+  lst.end() 返回指向lst中尾元素下一位置的指针
+  4.和vector，一样是模板类型，必须说明列表元素的类型
+    和vector不同，initializer_list对象的元素永远是常量值，无法改变其对象中的元素的值。*/
+#include <iostream>
+#include <cstddef>
+#include <system_error>
+using namespace std;
+//该函数接受一个指针，然后将指针所指的值置为0
+void reset(int *ip)
+{
+    *ip = 0; //改变指针ip所指对象的值
+    ip = 0;  //只改变了ip的局部拷贝，实参未被改变
+}
+//该函数接受一个int对象的引用，然后将对象的值置为0
+void reset(int &i) //i是传给reset函数的对象的另一个名字
+{
+    i = 0; //改变了i所引用对象的值
+}
+//比较两个string对象的长度
+bool isShorter(const string &s1, const string &s2)
+{
+    return s1.size() < s2.size();
+}
+
+//返回s中c第一次出现的位置索引
+//引用形参occurs负责统计c出现的总次数
+string::size_type find_char(const string &s, char c, string::size_type &occurs)
+{
+    auto ret = s.size(); //第一次出现的位置（如果有的话），没有就不对
+    occurs = 0;          //设置表示出现次数的形参的值
+    for (decltype(ret) i = 0; i != s.size(); ++i)
+    {
+        if (s[i] == c)
+        {
+            if (ret == s.size())
+                ret = i; //记录c第一次出现的位置
+            ++occurs;    //记录出现的次数加1
+        }
+    }
+    return ret; //出现的次数通过occurs隐式地返回
+}
+//尽管声明形式不同，但这三个print函数是等价的
+//每个函数都有一个const int*类型的形参
+void print(const int *);
+void print(const int[]);   //可以看出来，函数的意图是作用与一个数组
+void print(const int[10]); //这里的维度表示我们期望数组含有多少个元素，实际不一定
+void print(const int i[10])
+{
+    cout << *i << endl;
+}
+void print(const char *cp)
+{
+    if (cp)                //若cp不是一个空指针
+        while (*cp)        //只要指针所指的字符不是空字符
+            cout << *cp++; //输出当前字符并将指针向前移动一个位置
+    cout << endl;
+}
+void print(const string str)
+{
+    auto beg = str.begin(), end = str.end();
+    while (beg != end)
+        cout << *beg++ << " ";
+    cout << endl;
+}
+void print(const int *beg, const int *end)
+{
+    //输出beg到end之间（不含end）的所有元素
+    while (beg != end)
+        cout << *beg++ << " "; //输出当前元素并将指针移动一个位置
+    cout << endl;
+}
+//const int *ia等价于const int ia[]
+//size表示数组的大小，将它显式地传给函数用于控制对ia元素的访问
+void print(const int *ia, size_t size)
+{
+    for (size_t i = 0; i != size; i++)
+        cout << ia[i] << " ";
+    cout << endl;
+}
+//形参时数组的引用，维度是类型的一部分
+void print(const int (&arr)[10])
+{
+    for (auto elem : arr)
+        cout << elem << " ";
+    cout << endl;
+}
+//matrix看起来是一个二维数组，实际上形参是指向含有10个整数的数组的指针
+void print(const int matrix[][10], size_t rowsize); //与下面等价
+//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组
+void print(const int (*matrix)[10], size_t rowSize)
+{
+    for (size_t i = 0; i != rowSize; i++)
+        print(matrix[i], 10);
+}
+//编写输出错误信息的函数
+void error_msg(initializer_list<string> il)
+{
+    for (auto beg = il.begin(); beg != il.end(); ++beg)
+        cout << *beg << " ";
+    cout << endl;
+}
+void error_msg(string e,initializer_list<string> il)
+{
+    cout << e.size() << ": ";
+    for(const auto &elem:il)
+        cout << elem << " ";
+    cout << endl;
+}
+int main()
+{
+    //6.2.1 传值参数
+    int n = 0, i = n; //int类型的初始变量，i是n的值得副本:n=0,i=0
+    i = 42;           //i的值改变，但n的值不变n=0,i=42
+
+    int *p = &n, *q = &i; //p指向变量n，q指向变量i
+    *p = 42;              //n的值改变；p不变：n=42
+    p = q;                //p指向变量i；但i和n的值不变n=42,i=42
+
+    reset(&i);                   //改变i的值而非i的地址i=0
+    cout << "i = " << i << endl; //输出i=0
+
+    int &r = n; //r绑定了n（即r是n的另一个名字）
+    r = 42;     //n=42
+    r = i;      //n=i=0;
+    i = r;      //i=r=n=0;
+    //6.2.2 传引用参数
+    int j = 42;
+    reset(j);                    //j采用传引用方式，它的值被改变
+    cout << "j = " << j << endl; //输出j = 0
+
+    const string s1 = "123456789", s2 = "abcdefghijk", s3 = "";
+    cout << isShorter(s1, s2) << endl;
+
+    string::size_type ctr;
+    auto index = find_char(s2, 'g', ctr);
+    cout << index << ctr << endl;
+
+    //6.2.3
+    const int ci = 42;   //不能改变ci但值，const是顶层的
+    i = ci;              //正确：当拷贝ci时，忽略了它的顶层const
+    int *const cp = &i;  //const是顶层的，不能给cp赋值
+    *cp = 0;             //正确：通过解引用改变cp所指对象的值
+    const int *cp2 = &i; //指针cp2是常量
+    const int &r1 = i;   //引用r1是常量
+    const int &r2 = 42;  //引用r2是常量
+
+    //int *p = cp2;//常量不能初始化变量,不能给变量赋值，0，nullptr,NULL对指针除外
+    //int &r3 = r;//常量不能初始化变量,不能给变量赋值
+    //int &r4 = 42;//常量不能初始化变量,不能给变量赋值
+
+    ctr = 0;
+    reset(&i); //调用形参类型是int*的reset函数
+    //rest(&ci);//不能用指向const int对象的指针初始化int *
+    reset(i); //调用形参是int&的reset函数
+    //reset(ci);//不能把普通引用绑定到const int对象上
+    //reset(42);//不能把普通引用绑定到字面值上
+    //reset(ctr);//ctr是无符号类型，类型不匹配
+    //正确：find_char的第一个形参时对常量的引用
+    find_char("Hello World", 'o', ctr);
+
+    int m = 0, l[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    print(&m); //正确：&m的类型是int *
+    print(l);  //正确：n转换成int *并指向n[0]
+
+    print("Hello World");
+    print(s1);
+    print(s2);
+    //l转换成指向它首元素的指针
+    //第二个实参是指向ld的尾后元素的指针
+    print(begin(l), end(l));
+    print(l, end(l) - begin(l));
+    print(l); //实参是含有10个整数元素的数组
+
+    const int arr[2][10] = {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}};
+    print(arr, end(arr) - begin(arr));
+
+    string expected = "a", actual = "b";
+    if (expected != actual)
+        //形参传递一个值得序列，必须把序列放在一对花括号内：
+        error_msg({"functionX", expected, actual});
+    else
+        error_msg({"functionX", "okay"});
+    if (expected != actual)
+        //形参传递一个值得序列，必须把序列放在一对花括号内：
+        error_msg({"Hello","functionX", expected, actual});
+    else
+        error_msg({"World!","functionX", "okay"});
+    return 0;
+}
+/*
+i = 0
+j = 0
+1
+61
+0
+0 1 2 3 4 5 6 7 8 9
+Hello World
+1 2 3 4 5 6 7 8 9
+a b c d e f g h i j k
+0 1 2 3 4 5 6 7 8 9
+0 1 2 3 4 5 6 7 8 9
+0 1 2 3 4 5 6 7 8 9
+1 2 3 4 5 6 7 8 9 10
+0 1 2 3 4 5 6 7 8 9
+functionX a b
+Hello functionX a b
+*/
+
+//6.3 返回类型和return语句
+//6.3.1无返回值函数
+/*1.没有返回值的return语句只能用在返回类型为void的函数中。
+    返回void的函数不要求非得有return语句。
+    无返回语句需要中途退出，可用用return语句。*/
+//6.3.2 有返回值函数
+/*1.只要函数的返回类型不是void，则该函数每条return必须返回一个值。
+    返回的值必须和函数的返回类型相同，或可以隐式地转换成函数的返回类型。
+  2.含有return语句的循环后面应该也有一条return语句。
+  3.值是如何被返回的：
+    返回的值用于初始化调用点的一个临时量，该临时量就是函数调用的结果。
+    返回类型是普通变量，返回值将被拷贝到调用点。
+    函数返回引用，该引用仅是它所引对象的一个别名。
+  4.不要返回局部对象的引用或指针，
+    函数终止，局部变量的引用指向不再有效的内存区域
+  5.返回类类型的函数和调用运算符
+    如果函数返回指针、引用或类的对象，
+    我们就能使用函数调用的结果访问结果对象的成员。*/
+/*6.引用返回左值，函数返回类型决定函数调用是否是左值。
+    调用一个返回引用得函数得到左值，其他返回类型得到右值。
+    能为返回类型是非常量引用得函数的结果赋值。
+  7.列表初始化返回值
+    C++11函数可以返回花括号保卫的值得列表。
+    对表示函数返回的临时量进行初始化。
+    如果列表为空，临时量执行值初始化；
+    否则，返回的值有函数的返回类型决定。
+    如果返回的事内置类型，则花括号包围的列表最多包含一个值，
+    所占空间不应该大于目标类型的空间。
+    如果返回的事类类型，由类本身定义初始值如何使用。
+  8.主函数main的返回值
+    如果main函数结尾处没有return语句，编译器隐式插入一条return 0语句。
+  9.递归，函数调用自身，不管调用时直接还是间接，
+    都称该函数为递归函数（recursive function)。
+    递归函数中，一定有某条路径是不包含递归调用的。
+    递归循环（recursion loop）*/
+//6.3.3 返回数组指针
+/*1.函数不能返回数组，但可以返回数组指针。
+    使用类型别名可以简化定义返回数组指针的函数。
+  2.声明一个返回数组指针的函数。返回数组指针的函数形式如下：
+    Type (*function(parameter_list))[dimension]{}
+    Type表示元素的类型，dimension标书数组的大小。
+    (*function(parameter_list))两端的括号必须存在。
+    函数的形参必须紧跟函数名字之后。形参列表先于数组的维度。
+    func(int i)表示调用func函数时需要一个int类型的实参
+    （*func(int i))意味着我们可以对函数调用的结果执行解引用操作
+    (*fun(int i))[10]表示解引用func的调用将得到一个大小是10的数组
+  3.使用尾置返回类型（trailing return type）
+    任何函数都可以使用尾置返回。
+    尾置返回类型跟在形参列表后面并以一个->符号开头。
+    返回类型设置为auto:
+    //func接受一个int类型的实参，返回一个指针，该指针指向一个含有10个整数的数组。
+    auto func(int i) -> int(*)[10];
+  4.使用decltype
+    */
+#include <iostream>
+#include <cstddef>
+#include <vector>
+#include <cstdlib>
+using namespace std;
+void swap(int &v1, int &v2)
+{
+    //6.3.1
+    //如果两个值相等，则不需要交换，直接退出
+    if (v1 == v2)
+        return;
+    //若果程序执行到这里，说明还需要继续完成某些功能
+    int tmp = v2;
+    v2 = v1;
+    v1 = tmp;
+    //此处无需显式的return语句
+}
+//因为含有不正确的返回值，所以这段代码无法通过编译
+/*bool str_subrange(const string &str1, const string &str2)
+{
+    //大小相同：此时用普通的相等性判断结果作为返回值
+    if (str1.size() == str2.size())
+        return str1 == str2; //正确：==运算符返回布尔值
+    //得到较短string对象的大小
+    auto size = (str1.size() < str2.size()) ? str1.size() : str2.size();
+    //检查两个string对象的对应字符是否相等，以较短的字符串长度为限
+    for (decltype(size) i = 0; i != size; ++i)
+    {
+        if (str1[i] != str2[i])
+            return; //错误#1：没有返回值，编译器讲报告这一错误
+    }
+    //错误#2：控制流可能尚未返回任何值就结束了函数的执行
+    //编译器可能检查不出这一错误
+}*/
+//如果ctr的值大于1，返回word的复数形式
+string make_plural(size_t ctr, const string &word, const string &ending)
+{
+    return (ctr > 1) ? word + ending : word;
+}
+//挑出两个string对象中较短的那个，返回其引用
+const string &shorterString(const string &s1, const string &s2)
+{
+    return s1.size() <= s2.size() ? s1 : s2;
+}
+//严重错误：这个函数试图返回局部对象的引用
+/*const string &manip()
+{
+    string ret;
+    //以某种方式改变一下ret
+    if (!ret.empty())
+        return ret; //错误：返回局部对象的引用！
+    else
+        return "Empty"; //错误："Empty"是一个局部临时量
+}*/
+
+char &get_val(string &str, string::size_type ix)
+{
+    return str[ix]; //get_val假定索引值时有效的
+}
+vector<string> process()
+{
+    //...
+    //expected,actual是string对象
+    string expected = "A", actual = "B";
+    if (expected.empty())
+        return {}; //返回一个空vector对象
+    else if (expected == actual)
+        return {"functionX", "okay"}; //返回列表初始化的vector对象
+    else
+        return {"functionX", expected, actual};
+}
+//计算val的阶乘，即1*2*3...*val
+int factorial(int val)
+{
+    if (val > 1)
+        return factorial(val - 1) * val;
+    return 1;
+}
+typedef int arrT[5]; //arrT是一个类型别名，表示类型是含有10个整数的数组
+//using arrT = int[5];//arrT的等价声明
+int odd[] = {1, 3, 5, 7, 9};
+int even[] = {0, 2, 4, 6, 8};
+arrT *func(int i);               //func返回一个指向含有10个整数的数组的指针
+int (*func(int i))[5];          //等同上面的函数声明
+auto func(int i) -> int (*)[5] //等同上面的函数声明
+{
+    return (i % 2) ? &odd : &even; //返回一个指向数组的指针
+}
+
+//返回一个指针，该指针指向含有5个整数的数组
+decltype(odd) *arrPtr(int i)
+{
+    return (i % 2) ? &odd : &even; //返回一个指向数组的指针
+}
+int main()
+{
+    string s("a value");
+    cout << s << endl;   //输出a value
+    get_val(s, 0) = 'A'; //将s[0]的值改为A
+    cout << s << endl;   //输出A value
+    cout << *++process().begin() << endl;
+    cout << factorial(5) << endl;
+    int arr[10];         //arr是一个含有10个整数的数组
+    int *p1[10];         //p1是一个含有10个指针的数组
+    int(*p2)[10] = &arr; //p2是一个指针，指向含有10个整数的数组
+    cout << **arrPtr(4)<< endl;
+    cout << **func(4) << endl;
+    bool some_failure = 1;
+    if (some_failure)
+        return EXIT_FAILURE; //定义在cstdlib头文件中
+    else
+        return EXIT_SUCCESS; //定义在cstdlib头文件中
+
+    //return 0;
+}
+
+//6.4函数重载
+//同一作用域内的几个函数名字信啊通但形参列表不同，
+//称为重载（overloaded）函数
+/*1.定义重载函数
+  创建几个不同的函数分别根据名字、电话、账户号码等信息查找记录。
+  Record lookup(const Account&);//根据Account查找记录
+  Record lookup(const Phone&);//根据Phone查找记录
+  Record lookup(const Name&);//根据Name查找记录
+  Account acct;
+  Phone phone;
+  Record r1=lookup(acct);//调用接受Account的版本
+  Record r2=lookup(phone);//调用接受Phone的版本
+  不允许两个函数除了返回类型外其他所有的要素都相同。
+  2.判断两个形参的类型是否相异。
+  有时候两个形参列表看起来不一样，实际相同：
+  //每队声明的是同一个函数
+  Record lookup(const Account &acct);
+  Record lookup(const Account &);//省略了形参的名字
+
+  typedef Phone Telno;
+  Record lookup(const Phone&);
+  Record lookup(const Telno&);//Telno和Phone的类型相同
+  3.重载和const形参
+  顶层const不影响传入函数的对象。
+  一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来
+  Record lookup(Phone);
+  Record lookuo(const Phone);//重复声明了Record lookup(Phone)
+
+  Record lookup(Phone *);
+  Record lookup(Phone *const);//重复声明了Record lookup(Phone *)
+  Record lookup(&Phone);以及Record lookup(const &Phone);与上面两个声明具有二义性，但不同
+
+  //对于接受引用或指针的函数来说，对象是常量还是非常量对应的形参不同
+  //定义类4个独立的重载函数
+  Record lookup(Account&);//函数作用于Account的引用
+  Record lookup(const Account &);//新函数，作用于常量的引用
+  Record lookup(Account *);//新函数，作用于指向Account的指针
+  Record lookup(const Account *);//新函数，作用域指向常量的指针
+
+  最好只重载哪些确实非常相似的操作。
+
+  4.const_cast和重载
+  5.调用重载的函数
+  函数匹配（function matching）是指一个过程，
+  过程中把函数调用与一组重载函数中的某一个关联起来，
+  函数匹配也叫重载确定（overload resolution）。
+  最佳匹配（best match）
+  无匹配（no match）
+  二义性调用（ambiguous call)*/
+//6.4.1 重载与作用域
+/*1.在不同的作用域中无法重载函数名。*/
+#include <iostream>
+#include <cstring>
+using namespace std;
+void print(const char cp[])
+{
+    if (cp)                //若cp不是一个空指针
+        while (*cp)        //只要指针所指的字符不是空字符
+            cout << *cp++; //输出当前字符并将指针向前移动一个位置
+    cout << endl;
+}
+void print(const int *beg, const int *end)
+{
+    for (beg; beg != end; ++beg)
+        cout << *beg << " ";
+    cout << endl;
+}
+void print(const int ia[], size_t size)
+{
+    for (size_t i = 0; i != size; ++i)
+        cout << ia[i] << " ";
+    cout << endl;
+}
+const string &shorterString(const string &s1, const string &s2)
+{
+    return s1.size() <= s2.size() ? s1 : s2;
+}
+string &shorterString(string &s1, string &s2)
+{
+    auto &r = shorterString(const_cast<const string &>(s1), const_cast<const string &>(s2));
+    return const_cast<string &>(r);
+}
+string read()
+{
+    string read = "read";
+    return read;
+}
+void print(const string &str)
+{
+    for (auto s : str)
+        cout << s;
+    cout << endl;
+}
+void print(double d) { cout << d << endl; } //重载print函数
+void print(int i) { cout << i << endl; }    //重载print函数
+void fooBar(int ival)
+{
+    //bool read=false;//新作用域：隐藏了外层read
+    string s = read();
+    //不好的习惯，局部作用域中声明函数不是一个好的选择
+    //void print(int);//新作用域，隐藏了之前的print
+    print(s);         //调用print(const string &)
+    print("Value: "); //调用print(const char *)
+    print(ival);      //调用print(int)
+    print(3.14);      //调用print(double)
+}
+int main()
+{
+    int j[] = {
+        0,
+        13,
+        4,
+        6,
+        6};
+    print("Hello World");        //调用void print(const char *cp)
+    print(j, end(j) - begin(j)); //调用void print(const int ia[], size_t size)
+    print(begin(j), end(j));     //调用void print(const int *beg, const int *end)
+    int ival = 4;
+    fooBar(ival);
+    return 0;
+}
+
+//6.5 特殊用途语言特性
+//三种函数的语言特性：默认实参、内联函数和constexpr函数。
+//6.5.1 默认实参
+/*1.函数多次调用中被赋予一个相同的值，这个值称为默认实参（default argument）
+  2.使用默认实参调用函数，只要在调用函数时省略该实参。
+  默认实参负责填补函数调用缺少的尾部实参。
+  3.默认实参声明，为没有默认值的形参添加默认实参，
+  该形参右侧所有形参必须都有默认值。
+  一个函数只声明一次，但多次声明时合法的。给定作用域中一个形参只能赋予一次默认实参。
+  应该在函数声明中指定默认实参，并将声明放在合适的头文件中。
+  4.默认实参初始值
+  局部变量不能作为默认实参。只要表达式类型能转换成所需类型，就能作为默认实参。*/
+//6.5.2 内联函数和constexpr函数
+/*1.把规模较小的操作定义成函数有很多好处
+  阅读理解函数调用比读懂等价的条件表达式容易得多。
+  函数可以确保行为的统一，每次相关操作都保证按照同样的方式进行。
+  如果需要修改，修改函数要比先找到等价表达式所有出现的地方再逐一修改更容易。
+  函数可以被其他应用重复利用，省去程序员重新编写的代价。
+  2.缺点，调用函数比求等价表达式要慢。
+  3.内联函数可以避免函数调用的开销
+  内联说明是向编译器发出的一个请求，编译器可以忽略这个请求。
+  4.constexpr函数（constexpr function）
+  是指用于常量表达式的函数。
+  函数返回值类型及所有形参的类型都得是字面值类型。
+  编译时，把函数的调用替换成其结果值。
+  常被隐式指定为内联函数
+  允许constexpr函数的返回值并非一个常量：
+  //如果arg是常量表达式，则scale(arg)也是常量表达式
+  constexpr size_t scale(size_t cnt){return new_sz()*cnt;}
+  5.内联函数和constexpr函数可以多次定义，但多次定义必须完全一致。
+  通常将内联函数和constexpr函数定义在头文件中。*/
+//6.5.3 调试帮助
+/*类似头文件保护的技术，以便有选择地执行调试代码。
+基本思路：程序可以包含一些用于调试的代码，只在开发程序时使用，
+程序发布时，先屏蔽掉调试代码。
+用到两项预处理功能：assert和NDENUG
+1.assert预处理宏
+assert是一种预处理宏（perprocessor marco）。
+预处理宏是一个预处理变量，类似内联函数。
+assert用一个表达式作为它的条件：assert(expr);
+对expr求值，值为假0，assert输出信息并终止程序的运行。
+如果值为真非0，assert什么也不做。
+assert宏定义在cassert中，预处理名字由预处理器管理，
+可以直接使用预处理名字而无需提供using声明
+宏名字必须唯一。含有cassert头文件的程序不能再定义名为assert的变量、函数或者其他实体。
+2.NDENUG预处理变量
+如果定义类NDRBUG，assert什么也不做。
+默认情况下没有定义NDEBUG，从而assert将执行运行时检查。
+用#define语句丁iNDEBUG，从而关闭调试状态。
+很多编译器偷工命令行选项是我们可以定义预处理变量。
+定义NDEBUG能避免检查各种条件所需的运行时开销。
+编写自己的调试代码：
+void print(string word, size_t threshold)
+{
+#ifndef NDEBUG
+  //_ _func_ _事编译器定义的一个局部静态变量，用于存放函数的名字
+  if (word.size() < threshold)
+    cerr << "Error: " << _ _FILE_ _
+         << " : in function "_ _func_ _
+         << " at line " << _ _LINE_ _ << endl
+         << "    Compiled on " << _ _DATE_ _
+         << " at " << _ _TIME_ _ << endl
+         << "    Word read was\"" << word
+         << "\": Length too short" << endl;
+#endif
+  //...
+}
+  变量_ _func_ _输出当前调试函数的名字。是const char 的静态数组。
+  _ _FILE_ _存放文件名的字符串字面值
+  _ _LILE_ _存放当前行号的整型字面值
+  _ _TIME_ _存放文件编译时间的字符串字面值
+  _ _DATE_ _存放文件编译日期的字符串字面值
+  */
+
+#include <iostream>
+using namespace std;
+typedef string::size_type sz;
+char backgrnd = '#';
+string screen(sz ht = 24, sz wid = 80, char backgrnd = ' ')
+{
+  string h = "Hight: " + to_string(ht);
+  string w = "Wight: " + to_string(wid);
+  string b = "Backround: " + to_string(backgrnd);
+  return h + "," + w + "," + b;
+}
+inline const string *const shortString(const string *s1, const string *s2)
+{
+  return s1->size() < s2->size() ? s1 : s2;
+}
+inline string *shortString(string *s1, string *s2)
+{
+  auto *str = shortString(const_cast<const string *>(s1), const_cast<const string *>(s2));
+  return const_cast<string *>(str);
+}
+inline const string &shortString(const string &s1, const string &s2)
+{
+  return s1.size() < s2.size() ? s1 : s2;
+}
+inline string &shortString(string &s1, string &s2)
+{
+  auto &str = shortString(const_cast<const string &>(s1), const_cast<const string &>(s2));
+  return const_cast<string &>(str);
+}
+constexpr int new_sz() { return 42; }
+constexpr int foo = new_sz(); //正确：foo是一个常量表达式
+//如果arg是常量表达式，则scale(arg)也是常量表达式
+constexpr size_t scale(size_t cnt) { return new_sz() * cnt; }
+int main()
+{
+
+  struct
+  {
+  public:
+    void f()
+    {
+      backgrnd = '*';           //改变静态变量的值
+      sz ht = 100, wid = 120;   //重新声明可以屏蔽外部变量，与默认实参无关
+      string window = screen(); //调用默认实参
+      cout << window << endl;
+      cout << screen(ht, wid, backgrnd) << endl; //与调用有关
+    }
+  } inner;
+  string window;
+  window = screen();             //等价于screen(24,80,' ')
+  window = screen(66);           //等价于screen(66,80,' ')
+  window = screen(66, 256);      //等价于screen(66,256,' ')
+  window = screen(66, 256, '#'); //等价于screen(66,256,'#')
+  cout << window << endl;
+  inner.f(); //普通调用不影响外层window的值
+  cout << window << endl;
+
+  string s1 = "Hello world!", s2 = "1234567890";
+  string *const str1 = &s1, *const str2 = &s2;
+  cout << shortString(s1, s2) << endl;
+  cout << *shortString(str1, str2) << endl;
+
+  cout << scale(2) << endl; //scale(2)是常量表达式
+  int i = 2;
+  cout << scale(i) << endl; //scale(i)不是常量表达式，看编译器
+  return 0;
+}
+
+//6.6 函数匹配
+/*1.在大多数情况下，我们容易确定某次调用应该选用哪个重载函数。
+  2.当几个重载函数形参数量相同以及某些形参的类型可以由其他类型转换得来。
+  3.确定候选函数和可行函数
+  第一步，选定本次调用对应的重载函数集，集合中的函数称为候选函数（candidate function）。
+  候选函数特征：
+  与被掉函数同名，声明在调用点可见。
+  第二步，考察本次调用提供的实参，然后选出能被这组实参调用的函数。
+  选出的函数称为可行函数（viable function）。可行函数两个特征：
+  形参数量与本次调用提供的实参数量相等，实参类型与对应的形参类型形同，或者能转换成形参的类型。
+  如果函数含有默认实参，则调用该函数时，传入的实参数量可能少于实际使用的实参数量。
+  如果没找到可行函数，编译器讲报告无匹配函数的错误。
+  第三步，寻找最佳匹配（如果有的话），选用与本次调用最匹配的函数。
+  实参类型与形参类型越接近匹配越好。
+  4.含有多个形参的函数匹配满足条件：
+  该函数每个实参的匹配都不劣于其他可行函数需要对匹配
+  至少有一个实参的匹配由于其他可行函数提供的匹配*/
+//6.6.1 实参类型的转换
+/*1.实参类型到形参类型的转换分几个等级，如下：
+    （1）精准匹配，包括以下情况：
+    实参类型和形参类型相同
+    实参从数组类型或函数类型转换成对应的指针类型
+    向实参添加顶层const或从实参中删除顶层const
+    （2）通过const转换实现匹配
+    （3）通过类型提升实现的匹配
+    （4）通过算术类型转换实现的匹配
+    （5）通过类类型转换实现的匹配
+  2.需要算术提升和算术类型转换的匹配
+  一般很小的数也会提升为int，而不是short
+  3.函数匹配和const实参
+  const 实参只能匹配const 形参，
+  非const实参能匹配const形参，但优先非const形参
+  指针也类似*/
+
+#include <iostream>
+
+using namespace std;
+inline void f()
+{
+    cout << "无形参" << endl;
+}
+inline void ff(long s) { cout << s << endl; }
+inline void ff(float i) { cout << i << endl; }
+inline void f(short s) { cout << s << endl; }
+inline void f(int i) { cout << i << endl; }
+inline void f(int i, int j) { cout << i << " " << j << endl; }
+inline void f(double b, double d = 3.14) { cout << b << " " << d << endl; }
+inline const string &shortString(const string &s1, const string &s2)
+{
+    return s1.size() < s2.size() ? s1 : s2;
+}
+inline string &shortString(string &s1, string &s2)
+{
+    auto &str = shortString(const_cast<const string &>(s1), const_cast<const string &>(s2));
+    return const_cast<string &>(str);
+}
+//形参为引用和普通变量函数能重载，但出现二义性。
+/*inline const string shortString(const string s1, const string s2)
+{
+    return s1.size() < s2.size() ? s1 : s2;
+}*/
+int main()
+{
+    short s = 7;
+    f();
+    f(5.6);  //调用void f(double, double)
+    f(5);    //调用void f(int)
+    f(5, 4); //调用void f(int,int)
+    f(s);    //调用void f(short)
+    f('a');  //调用void f(int)
+    ff(3.14f);
+    //ff(3.14);//有二义性，即能转换long,又能转换float
+    //f(5, 2.3);//有二义性
+    const string s1 = "Hello world!",
+                 s2 = "0123456789";
+    string str1 = "Hello", str2 = "0123456";
+    cout << shortString(s1, s2) << endl;     //选择形参时常量的函数
+    cout << shortString(str1, str2) << endl; //都可以，但选择不用转换的函数
+    //复习引用与指针的区别和联系
+    //const变量的引用可以绑定const变量、普通变量和字面值
+    int i = 1;
+    const int ic = 2, &icr = ic, &icr1 = 3, icr2 = i;
+    //普通变量的引用可以绑定普通变量，不能绑定const变量和字面值
+    int &ir = i;
+    //int &ir1 = ic;
+    //int &ir2 = 4;
+    //不能通过给const变量的引用赋值改变它绑定的对象
+    //icr = i;
+    //icr1 = ic;
+    //可以通过给普通变量的引用赋值改变它绑定的对象
+    ir = ic;
+    ir = 3;
+    ir = icr1;
+    //指向const变量的指针可以指向const变量、普通变量
+    const int *icp = &ic, *icp1 = &i;
+    //可以通过取地址符赋值给const变量的指针，但不能给常量取地址
+    icp = &i;
+    icp1 = &ic;
+    //icp = &7;
+    //指向普通变量的指针可以指向普通变量，不能指向const变量，
+    int *ip = &i;
+    //int *ip1 = &ic;
+    //可以通过取普通变量或其引用地址赋值给普通指针，不能取const变量地址赋值
+    ip = &ir;
+    ip = &i;
+    //ip = &ic;
+
+    double d = 5.5;
+    const double cd = 6.6;
+    double *const dcp = &d; //顶层const：指针本身是常量，可以通过给解引用赋值改变指向的对象，自身不变,不能指向常量
+    *dcp = 7.7;
+    *dcp = cd;
+    //dcp = &cd;
+    const double *cdp = &cd; //底层const：指向常量的指针，不能通过给解引用赋值改变指向的对象，指针本身可以变,可指向常量和变量
+    cdp = &cd;
+    //*cdp = 8.8;
+    const double *const cdcp = &d; //是底层const也是顶层const：指向常量的指针本身是常量指针，自身不能改变，指向的对象也不能改变,可指向常量和变量
+    //cdcp = &d;
+    //*cdcp = 9.9;
+    return 0;
+}
+
+//6.7 函数指针
+/*1.函数指针指向的是函数而非对象。
+函数的指针指向某种特定类型。
+函数的类型由它的返回类型和形参类型共同决定，与函数名无关。
+想要声明一个可以指向该函数的指针，只需要用指针替换函数名即可
+2.使用函数指针
+当我们把函数名作为一个值食用时，该函数自动地转换成指针。
+还能直接使用指向函数的指针调用该函数，无需提前解引用指针
+指向不同的函数的指针，不存在转换规则。
+但可以为函数指针赋一个nullptr或者值为0的整型常量表达式，表示没有指向任何一个函数。
+3.重载寒素的指针
+当我们重载函数时，上下文必须清晰地界定到应该选用哪个函数。
+如果定义了指向重载函数的指针，编译器通过指针类型决定选用哪个函数。
+指针类型必须和重载函数中的某一个精准匹配。
+4.函数指针形参
+和数组类似，虽然不能定义函数类型的形参，但是形参可以是指向函数的指针。
+此时函数形参看起来是函数类型，实际上却是当成指针使用。
+可以直接把函数作为实参使用，此时它会自动转换成指针。
+直接使用函数指针类型显得冗长而繁琐。
+类型别名和decltype能让我们简化使用函数指针的代码。
+decltype返回函数类型，不会自动转换成指针类型。
+5.返回指向函数的指针
+不能返回函数，但是能返回指向函数的指针。
+必须把返回类型写成指针形式，编译器不会自动将函数返回类型当成对应的指针类型处理
+声明一个返回函数指针的函数，最简单的办法是使用类型别名。
+和函数类型的形参不同，返回类型必须显式的转换成指针。
+可以使用尾置返回类型的方式。
+6.将auto和decltype用于函数指针类型
+*/
+
+#include <iostream>
+
+using namespace std;
+//比较两个string对象的长度
+//函数的类型时bool(cosnt string &,cosnt string &)
+bool lengthCompare(const string &s1, const string &s2)
+{
+    return s1.size() > s2.size();
+}
+string::size_type sumLength(const string &s1, const string &s2)
+{
+    return s1.size() + s2.size();
+}
+string::size_type largerLength(const string &, const string &);
+//根据其形参的取值，getFcn函数返回指向sumLength或者largerLength的指针
+decltype(sumLength) *getFcn(const string &);
+bool cstringCompare(const char *, const char *);
+void ff(int *);
+void ff(unsigned int);
+
+//Func和Func2是函数类型
+typedef bool Func(const string &, const string &);
+typedef decltype(lengthCompare) Func2; //等价的类型
+//Funcp和Funcp2是指向函数的指针
+typedef bool (*Funcp)(const string &, const string &);
+typedef decltype(lengthCompare) *Funcp2; //等价的类型
+
+//第三个形参是函数类型，它会自动地转换成函数的指针
+void useBigger(const string &s1, const string &s2, bool pf(const string &, const string &));
+//等价的声明：显式地将形参定义成指向函数的指针
+void useBigger(const string &s1, const string &s2, bool (*pf)(const string &, const string &))
+{
+    cout << s1 << s2 << *pf << endl;
+}
+//等价的声明：使用了类型别名
+void useBigger(const string &, const string &, Func); //编译器自动将类型转换为指针
+void useBigger(const string &, const string &, Funcp2);
+
+using F = int(int *, int);      //F是函数类型，不是指针
+using PF = int (*)(int *, int); //PF是指针类型
+PF f1(int);                     //PF是指向函数的指针，f1返回指向函数的指针
+//F f1(int);//F是函数类型，f1不能返回函数类型
+F *f1(int); //显式地指定返回类型时指向函数的指针
+//直接声明
+/*  f1有形参列表，是个函数，前面有*，返回的是指针，
+返回类型有形参列表，返回指向函数的指针*/
+int (*f1(int))(int *, int);
+//尾置返回类型方式
+auto f1(int) -> int (*)(int *, int);
+int main()
+{
+    //pf指向一个函数，该函数的参数是两个const string的引用，返回值是bool类型
+    bool (*pf)(const string &, const string &); //未初始化
+    //bool *pf(const string &,const string &);//返回值是bool *类型的函数
+    pf = lengthCompare;                          //pf指向名为lengthCompare的函数
+    pf = &lengthCompare;                         //等价的赋值语句：取地址符是可选的
+    bool b1 = pf("Hello", "goodbye");            //调用lengthCompare函数
+    bool b2 = (*pf)("Hello", "goodbye");         //一个等价的调用
+    bool b3 = lengthCompare("Hello", "goodbye"); //另一个等价的调用
+    pf = 0;                                      //pf不指向任何函数
+    //pf = sumLength;                              //返回类型不匹配
+    //pf = cstringCompare;                         //形参类型不匹配
+    pf = lengthCompare;             //函数和指针的类型精确匹配
+    void (*pf1)(unsigned int) = ff; //pf1指向ff(unsigned int)
+    //void (*pf2)(int) = ff;          //没有任何一个ff与该形参列表匹配
+    //double (*pf3)(int *) = ff;      //ff和pf3的返回类型不匹配
+
+    string s1 = "Hello", s2 = "goodbye";
+    //自动将函数lengthCompare转换成指向该函数的指针
+    useBigger(s1, s2, lengthCompare);
+
+    return 0;
+}

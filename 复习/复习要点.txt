@@ -1,0 +1,2008 @@
+1.4.1
+    任意R进制数X，其值V(X)按权展开为多项式：
+    X=X(n-1)...X1X0....X(-1)X(-2)X(-m)
+    V(X)=X0*R^0+X1*R^1...X(n-1)*R^(n-1)+X(-1)R^(-1)+...+X(-m)*R^(-m)
+1.4.2 几种进位记数制之间的转换
+1.R进制转换为十进制
+    各数字乘以权之和
+2.十进制转换为R进制
+    整数：短除法
+    小数：乘R取整
+3.二进制、八进制、十六进制相互转化
+    二进制3位等于八进制1位
+    二进制4位等于十六进制1位
+1.4.3 信息的存储单位
+    位（bit) 最小单位 表示1位二进制信息
+    字节（Byte):1Byte=8bit
+    K字节：1K=1024B
+    M字节：1M=1024K
+    G字节：1G=1024M
+    T...
+1.4.4 二进制数的编码表示
+    原码：首数字为符号位：0表示+，1表示-，其余数字表示值
+    反码：正数的反码与原码相同，负数的反码符号位与原码相同，其余数字取反
+    补码：正数的补码与原码相同，负数的补码为反码末位+1
+    -127           +  18            =  -109
+    [X]  =-1111111 +  [Y]  =+0010010=  [Z]  =-1101101
+    [X]原=11111111 +  [Y]原=00010010=  [Z]原=11101101
+    [X]反=10000000 +  [Y]反=00010010=  [Z]反=10010010
+    [X]补=10000001 +  [Y]补=00010010=  [Z]补=10010011
+1.4.5 定点数和浮点数
+    数N的浮点数表示：
+    N=M*R^E
+    M:尾数，有效数字，精度
+    R：基数，二进制R=2
+    E:阶码
+                     补码      原码
+    浮点数格式：阶符 阶码 尾符 尾数
+                0    010  1    11000000000 表示二进制-0.11*10^10
+                1    101  0    11000000000 表示二进制0.11*10^-11
+
+1.4.6 数的表示范围
+    补码中的0:[X]补=100...0
+1.4.7 非数值信息的表示
+    ASCII码：95种可打印字符(10个数字，大小写字母，专用字符)，33个控制字符
+    国标码：占2字节 用两个7位二进制数编码表示一个汉字
+    区分ASCII与国标码：国标码2字节最高位都置成1,ASCII最高位保持0
+1.5.1 源程序  :比如C++编写出来的程序
+      目标程序:通过翻译加工的程序
+      翻译程序:把源程序翻译成目标程序的程序
+      汇编程序:任务是把汇编语言写的源程序翻译成机器语言形式的目标程序
+      编译程序:翻译高级语言的翻译程序
+      解释程序:也是一种高级语言翻译程序，边翻译边执行
+1.5.2 完整的程序过程
+         开始
+           ↓
+       程序设计
+           ↓←----------重新修改源程序------+
+       程序编辑  成品是名为*.cpp的源程序   |
+           ↓                               |
+       程序编译  成品是名为*.obj的目标程序 |
+           ↓                               |
+         通过----------N------------------→|
+           ↓Y                              |
+       程序连接  成品为名为*.exe的执行程序 |
+           ↓                               |
+         通过----------N------------------→|
+           ↓Y                              |
+       程序运行                            |
+           ↓                               |
+         正确----------N------------------→+
+           ↓Y
+         结束
+2.1.3
+//例2——1.cpp
+#include <iostream>//cout,<<等在该文件中声明。
+using namespace std;//命名空间。
+int main()//主函数，int表示主函数返回值类型
+{
+    cout <<"Hello!" << endl;
+    cout <<"Welcome to c++!" << endl;
+    getchar();//getchar有一个int型的返回值。当程序调用getchar时，程序就等着用户按键。
+    //用户输入的字符被存放在键盘缓冲区中。直到用户按回车为止（回车字符也放在缓冲区中）。
+    system("pause");//system("PAUSE")  是暂停的意思，等待用户信号；不然控制台程序会一闪即过，
+    //你来不及看到执行结果。
+    return 0;
+}
+2.1.4 字符集
+#include <iostream>
+#include <iomanip>
+#include <bitset>
+using namespace std;
+int main()
+{
+    for (int i = 33; i <= 126; i++)
+    {
+        if ((i - 32) % 3)
+        {
+            cout << bitset<8>(i) << " | ";        //二进制输出
+            cout << setw(4) << oct << i << " | "; //八进制输出
+            cout << setw(2) << hex << i << " | "; //十六进制输出
+            cout << setw(3) << dec << i << " | "; //十进制输出
+            cout << char(i) << "  ||  ";          //char类型输出
+        }
+        else
+        {
+            cout << bitset<8>(i) << " | ";        //二进制输出
+            cout << setw(4) << oct << i << " | "; //八进制输出
+            cout << setw(2) << hex << i << " | "; //十六进制输出
+            cout << setw(3) << dec << i << " | "; //十进制输出
+            cout << char(i) << "  ||  " << endl;  //char类型输出
+        }
+    }
+    cout << endl;
+    return 0;
+}
+/*输出：
+00100001 |   41 | 21 |  33 | !  ||  00100010 |   42 | 22 |  34 | "  ||  00100011 |   43 | 23 |  35 | #  ||
+00100100 |   44 | 24 |  36 | $  ||  00100101 |   45 | 25 |  37 | %  ||  00100110 |   46 | 26 |  38 | &  ||
+00100111 |   47 | 27 |  39 | '  ||  00101000 |   50 | 28 |  40 | (  ||  00101001 |   51 | 29 |  41 | )  ||
+00101010 |   52 | 2a |  42 | *  ||  00101011 |   53 | 2b |  43 | +  ||  00101100 |   54 | 2c |  44 | ,  ||
+00101101 |   55 | 2d |  45 | -  ||  00101110 |   56 | 2e |  46 | .  ||  00101111 |   57 | 2f |  47 | /  ||
+00110000 |   60 | 30 |  48 | 0  ||  00110001 |   61 | 31 |  49 | 1  ||  00110010 |   62 | 32 |  50 | 2  ||
+00110011 |   63 | 33 |  51 | 3  ||  00110100 |   64 | 34 |  52 | 4  ||  00110101 |   65 | 35 |  53 | 5  ||
+00110110 |   66 | 36 |  54 | 6  ||  00110111 |   67 | 37 |  55 | 7  ||  00111000 |   70 | 38 |  56 | 8  ||
+00111001 |   71 | 39 |  57 | 9  ||  00111010 |   72 | 3a |  58 | :  ||  00111011 |   73 | 3b |  59 | ;  ||
+00111100 |   74 | 3c |  60 | <  ||  00111101 |   75 | 3d |  61 | =  ||  00111110 |   76 | 3e |  62 | >  ||
+00111111 |   77 | 3f |  63 | ?  ||  01000000 |  100 | 40 |  64 | @  ||  01000001 |  101 | 41 |  65 | A  ||
+01000010 |  102 | 42 |  66 | B  ||  01000011 |  103 | 43 |  67 | C  ||  01000100 |  104 | 44 |  68 | D  ||
+01000101 |  105 | 45 |  69 | E  ||  01000110 |  106 | 46 |  70 | F  ||  01000111 |  107 | 47 |  71 | G  ||
+01001000 |  110 | 48 |  72 | H  ||  01001001 |  111 | 49 |  73 | I  ||  01001010 |  112 | 4a |  74 | J  ||
+01001011 |  113 | 4b |  75 | K  ||  01001100 |  114 | 4c |  76 | L  ||  01001101 |  115 | 4d |  77 | M  ||
+01001110 |  116 | 4e |  78 | N  ||  01001111 |  117 | 4f |  79 | O  ||  01010000 |  120 | 50 |  80 | P  ||
+01010001 |  121 | 51 |  81 | Q  ||  01010010 |  122 | 52 |  82 | R  ||  01010011 |  123 | 53 |  83 | S  ||
+01010100 |  124 | 54 |  84 | T  ||  01010101 |  125 | 55 |  85 | U  ||  01010110 |  126 | 56 |  86 | V  ||
+01010111 |  127 | 57 |  87 | W  ||  01011000 |  130 | 58 |  88 | X  ||  01011001 |  131 | 59 |  89 | Y  ||
+01011010 |  132 | 5a |  90 | Z  ||  01011011 |  133 | 5b |  91 | [  ||  01011100 |  134 | 5c |  92 | \  ||
+01011101 |  135 | 5d |  93 | ]  ||  01011110 |  136 | 5e |  94 | ^  ||  01011111 |  137 | 5f |  95 | _  ||
+01100000 |  140 | 60 |  96 | `  ||  01100001 |  141 | 61 |  97 | a  ||  01100010 |  142 | 62 |  98 | b  ||
+01100011 |  143 | 63 |  99 | c  ||  01100100 |  144 | 64 | 100 | d  ||  01100101 |  145 | 65 | 101 | e  ||
+01100110 |  146 | 66 | 102 | f  ||  01100111 |  147 | 67 | 103 | g  ||  01101000 |  150 | 68 | 104 | h  ||
+01101001 |  151 | 69 | 105 | i  ||  01101010 |  152 | 6a | 106 | j  ||  01101011 |  153 | 6b | 107 | k  ||
+01101100 |  154 | 6c | 108 | l  ||  01101101 |  155 | 6d | 109 | m  ||  01101110 |  156 | 6e | 110 | n  ||
+01101111 |  157 | 6f | 111 | o  ||  01110000 |  160 | 70 | 112 | p  ||  01110001 |  161 | 71 | 113 | q  ||
+01110010 |  162 | 72 | 114 | r  ||  01110011 |  163 | 73 | 115 | s  ||  01110100 |  164 | 74 | 116 | t  ||
+01110101 |  165 | 75 | 117 | u  ||  01110110 |  166 | 76 | 118 | v  ||  01110111 |  167 | 77 | 119 | w  ||
+01111000 |  170 | 78 | 120 | x  ||  01111001 |  171 | 79 | 121 | y  ||  01111010 |  172 | 7a | 122 | z  ||
+01111011 |  173 | 7b | 123 | {  ||  01111100 |  174 | 7c | 124 | |  ||  01111101 |  175 | 7d | 125 | }  ||
+01111110 |  176 | 7e | 126 | ~  ||
+*/
+2.1.5 词法记号
+1.关键词
+
+//1. asm
+//asm (指令字符串)：允许在 C++ 程序中嵌入汇编代码。
+
+//2. auto
+//auto（自动，automatic）是存储类型标识符，表明变量"自动"具有本地范围，
+//块范围的变量声明（如for循环体内的变量声明）默认为auto存储类型。
+
+//3. bool
+//bool（布尔）类型，C++ 中的基本数据结构，其值可选为 true（真）或者 false（假）。
+//C++ 中的 bool 类型可以和 int 混用，具体来说就是 0 代表 false，非 0 代表 true。
+//bool 类型常用于条件判断和函数返回值。
+
+//4. break
+//break（中断、跳出），用在switch语句或者循环语句中。
+//程序遇到 break 后，即跳过该程序段，继续后面的语句执行。
+
+//5. case
+//用于 switch 语句中，用于判断不同的条件类型。
+
+//6. catch
+//catch 和 try 语句一起用于异常处理。
+
+//7. char
+//char（字符，character）类型，C++ 中的基本数据结构，其值一般为 0~255 的 int。
+//这 256 个字符对应着 256 个 ASCII 码。char 类型的数据需要用单引号 ' 括起来。
+
+//8.class
+//class（类）是 C++ 面向对象设计的基础。使用 class 关键字声明一个类。
+
+//9. const
+//const（常量的，constant）所修饰的对象或变量不能被改变，修饰函数时，
+//该函数不能改变在该函数外面声明的变量也不能调用任何非const函数。
+//在函数的声明与定义时都要加上const，放在函数参数列表的最后一个括号后。
+//在 C++ 中，用 const 声明一个变量，意味着该变量就是一个带类型的常量，
+//可以代替 #define，且比 #define 多一个类型信息，且它执行内链接，
+//可放在头文件中声明；但在 C 中，其声明则必须放在源文件（即 .C 文件）中，
+//在 C 中 const 声明一个变量，除了不能改变其值外，它仍是一具变量。如:
+//const double pi(3.14159);
+//或 const double pi = 3.14159;
+
+//10. const_cast用法：
+//const_cast<type_id> (expression)
+//该运算符用来修改类型的 const 或 volatile 属性。
+//除了 const 或 volatile 修饰之外， type_id 和 expression 的类型是一样的。
+//常量指针被转化成非常量指针，并且仍然指向原来的对象；
+//常量引用被转换成非常量引用，并且仍然指向原来的对象；
+//常量对象被转换成非常量对象。
+
+//11. continue
+//continue（继续）关键字用于循环结构。
+//它使程序跳过代码段后部的部分，
+//与 break 不同的是，continue 不是进入代码段后的部分执行，而是重新开始新的循环。
+//因而它是"继续循环"之意，不是 break（跳出）。
+
+//12. default
+//default（默认、缺省）用于 switch 语句。
+//当 switch 所有的 case 都不满足时，将进入 default 执行。
+//default 只能放在 switch 语句所有的 case 之后，并且是可选的。
+
+//13. delete
+//delete（删除）释放程序动态申请的内存空间。
+//delete 后面通常是一个指针或者数组 []，
+//并且只能 delete 通过 new 关键字申请的指针，否则会发生段错误。
+
+//14. do
+//do-while是一类循环结构。与while循环不同，do-while循环保证至少要进入循环体一次。
+
+//15. double
+//double（双精度）类型，C++ 中的基本数据结构，以双精度形式存储一个浮点数。
+
+//16. dynamic_cast
+//dynamic_cast（动态转换），允许在运行时刻进行类型转换，从而使程序能够在一个类层次结构安全地转换类型。
+//dynamic_cast 提供了两种转换方式，把基类指针转换成派生类指针，或者把指向基类的左值转换成派生类的引用。
+
+//17. else
+//else 紧跟在 if 后面，用于对 if 不成立的情况的选择。
+
+//18. enum
+//enum（枚举）类型，给出一系列固定的值，只能在这里面进行选择一个。
+
+//19. explicit
+//explicit（显式的）的作用是"禁止单参数构造函数"被用于自动型别转换，
+//其中比较典型的例子就是容器类型。在这种类型的构造函数中你可以将初始长度作为参数传递给构造函数。
+
+//20. export
+//为了访问其他编译单元（如另一代码文件）中的变量或对象，对普通类型（包括基本数据类、结构和类），
+//可以利用关键字 extern，来使用这些变量或对象时；但是对模板类型，则必须在定义这些模板类对象和模板函数时，
+//使用标准 C++ 新增加的关键字 export（导出）。
+
+//21. extern
+//extern（外部的）声明变量或函数为外部链接，即该变量或函数名在其它文件中可见。
+//被其修饰的变量（外部变量）是静态分配空间的，即程序开始时分配，结束时释放。
+//用其声明的变量或函数应该在别的文件或同一文件的其它地方定义（实现）。
+//在文件内声明一个变量或函数默认为可被外部使用。
+//在 C++ 中，还可用来指定使用另一语言进行链接，
+//这时需要与特定的转换符一起使用。
+//目前仅支持 C 转换标记，来支持 C 编译器链接。使用这种情况有两种形式：
+//extern "C" 声明语句
+//extern "C" { 声明语句块 }
+
+//22. false
+//false（假的），C++ 的基本数据结构 bool 类型的值之一。等同于 int 的 0 值。
+
+//23. float
+//float（浮点数），C++ 中的基本数据结构，精度小于 double。
+
+//24. for
+//for 是 C++ 中的循环结构之一。
+
+//25. friend
+//friend（友元）声明友元关系。友元可以访问与其有 friend 关系的类中的 private/protected 成员，
+//通过友元直接访问类中的 private/protected 成员的主要目的是提高效率。友元包括友元函数和友元类。
+
+//26. goto
+//goto（转到），用于无条件跳转到某一标号处开始执行。
+
+//27. if
+//if（如果），C++ 中的条件语句之一，可以根据后面的 bool 类型的值选择进入一个分支执行。
+
+//28. inline
+//inline（内联）函数的定义将在编译时在调用处展开。inline 函数一般由短小的语句组成，可以提高程序效率。
+
+//29. int
+//int（整型，integer），C++ 中的基本数据结构，用于表示整数，精度小于 long。
+
+//30. long
+//long（长整型，long integer），C++ 中的基本数据结构，用于表示长整数。
+
+//31. mutable
+//mutable（易变的）是 C++ 中一个不常用的关键字。只能用于类的非静态和非常量数据成员。由于一个对象的状态由该对象的非静态数据成员决定，所以随着数据成员的改变，对像的状态也会随之发生变化。如果一个类的成员函数被声明为 const 类型，表示该函数不会改变对象的状态，也就是该函数不会修改类的非静态数据成员。但是有些时候需要在该类函数中对类的数据成员进行赋值，这个时候就需要用到 mutable 关键字。
+
+//32. namespace
+//namespace（命名空间）用于在逻辑上组织类，是一种比类大的结构。
+
+//33. new
+//new（新建）用于新建一个对象。new 运算符总是返回一个指针。由 new 创建
+
+//34. operator
+//operator（操作符）用于操作符重载。这是 C++ 中的一种特殊的函数。
+
+//35. private
+//private（私有的），C++ 中的访问控制符。被标明为 private 的字段只能在本类以及友元中访问。
+
+//36. protected
+//protected（受保护的），C++ 中的访问控制符。
+//被标明为 protected 的字段只能在本类以及其继承类和友元中访问。
+
+//37. public
+//public（公有的），C++ 中的访问控制符。被标明为 public 的字段可以在任何类
+
+//38.register
+//register（寄存器）声明的变量称着寄存器变量，在可能的情况下会直接存放在机器的寄存器中；
+//但对 32 位编译器不起作用，当 global optimizations（全局优化）开的时候，它会做出选择是否放在自己的寄存器中；
+//不过其它与 register 关键字有关的其它符号都对32位编译器有效。
+
+//39. reinterpret_cast
+//用法：
+//reinpreter_cast<type-id> (expression)
+//type-id 必须是一个指针、引用、算术类型、函数指针或者成员指针。
+//它可以把一个指针转换成一个整数，也可以把一个整数转换成一个指针
+//（先把一个指针转换成一个整数，在把该整数转换成原类型的指针，还可以得到原先的指针值）。
+
+//40. return
+//return（返回）用于在函数中返回值。程序在执行到 return 语句后立即返回，return 后面的语句无法执行到。
+
+//41. short
+//short（短整型，short integer），C++ 中的基本数据结构，用于表示整数，精度小于 int。
+
+//42. signed
+//signed（有符号），表明该类型是有符号数，和 unsigned 相反。
+//数字类型（整型和浮点型）都可以用 signed 修饰。但默认就是 signed，所以一般不会显式使用。
+
+//43. sizeof
+//由于 C++ 每种类型的大小都是由编译器自行决定的，为了增加可移植性，可以用 sizeof 运算符获得该数据类型占用的字节数。
+
+//44. static
+//static（静态的）静态变量作用范围在一个文件内，程序开始时分配空间，结束时释放空间，默认初始化为 0，
+//使用时可改变其值。静态变量或静态函数，只有本文件内的代码才可访问它，它的名字（变量名或函数名）在其它文件中不可见。
+//因此也称为"文件作用域"。
+//在 C++ 类的成员变量被声明为 static（称为静态成员变量），意味着它被该类的所有实例所共享，
+//也就是说当某个类的实例修改了该静态成员变量，其修改值为该类的其它所有实例所见；
+//而类的静态成员函数也只能访问静态成员（变量或函数）。
+//类的静态成员变量必须在声明它的文件范围内进行初始化才能使用，private 类型的也不例外。
+
+//45. static_cast
+//用法：
+//static_cast < type-id > ( expression )
+//该运算符把 expression 转换为 type-id 类型，但没有运行时类型检查来保证转换的安全性。它主要有如下几种用法：
+//① 用于类层次结构中基类和子类之间指针或引用的转换。进行上行转换（把子类的指针或引用转换成基类表示）是安全的；
+//进行下行转换（把基类指针或引用转换成子类表示）时，由于没有动态类型检查，所以是不安全的。
+//② 用于基本数据类型之间的转换，如把 int 转换成 char，把 int 转换成 enum。这种转换的安全性也要开发人员来保证。
+//③ 把空指针转换成目标类型的空指针。
+//④ 把任何类型的表达式转换成void类?
+//注意 static_cast 不能转换掉 expression 的 const、volitale、或者 __unaligned 属性。
+
+//46. struct
+//struct（结构）类型，类似于 class 关键字，与 C 语言兼容（class 关键字是不与 C 语言兼容的），可以实现面向对象程序设计。
+
+//47. switch
+//switch（转换）类似于 if-else-if 语句，是一种多分枝语句。
+//它提供了一种简洁的书写，并且能够生成效率更好的代码。
+//但是，switch 后面的判断只能是int（char也可以，但char本质上也是一种int类型）。
+//switch 语句最后的 default 分支是可选的。
+
+//48. template
+//template（模板），C++ 中泛型机制的实现。
+
+//49. this
+//this 返回调用者本身的指针。
+
+//50. throw
+//throw（抛出）用于实现 C++ 的异常处理机制，可以通过 throw 关键字"抛出"一个异常。
+
+//51. true
+//true（真的），C++ 的基本数据结构 bool 类型的值之一。等同于 int 的非 0 值。
+
+//52. try
+//try（尝试）用于实现 C++ 的异常处理机制。可以在 try 中调用可能抛出异常的函数，然后在 try 后面的 catch 中捕获并进行处理。
+
+//53. typedef
+//typedef（类型定义，type define），其格式为：
+//typedef  类型 定义名;
+//类型说明定义了一个数据类型的新名字而不是定义一种新的数据类型。定义名表示这个类型的新名字。
+
+//54. typeid
+//指出指针或引用指向的对象的实际派生类型。
+
+//55. typename
+//typename（类型名字）关键字告诉编译器把一个特殊的名字解释成一个类型。在下列情况下必须对一个 name 使用 typename 关键字：
+//1． 一个唯一的name（可以作为类型理解），它嵌套在另一个类型中的。
+//2． 依赖于一个模板参数，就是说：模板参数在某种程度上包含这个name。当模板参数使编译器在指认一个类型时产生了误解。
+
+//56. union
+//union（联合），类似于 enum。不同的是 enum 实质上是 int 类型的，而 union 可以用于所有类型，并且其占用空间是随着实际类型大小变化的。
+
+//57. unsigned
+//unsigned（无符号），表明该类型是无符号数，和 signed 相反。
+
+//58. using
+//表明使用 namespace。
+
+//59. virtual
+//virtual（虚的），C++ 中用来实现多态机制。
+
+//60. void
+//void（空的），可以作为函数返回值，表明不返回任何数据；可以作为参数，表明没有参数传入（C++中不是必须的）；可以作为指针使用。
+
+//61. volatile
+//volatile（不稳定的）限定一个对象可被外部进程（操作系统、硬件或并发线程等）改变，声明时的语法如下：
+//int volatile nVint;
+//这样的声明是不能达到最高效的，因为它们的值随时会改变，系统在需要时会经常读写这个对象的值。
+//因此常用于像中断处理程序之类的异步进程进行内存单元访问。
+
+//62. wchar_
+//wchar_t 是宽字符类型，每个 wchar_t 类型占 2 个字节，16 位宽。汉字的表示就要用到 wchar_t。
+
+2.标识符：函数名、变量名、类名、对象名等
+大写字母、小写字母、下划线_开始
+可以由大写字母、小写字母、下划线_或数字0~9组成
+大写字母和小写字母代表不同标识符
+不能是c++的关键词
+
+3.文字：数字、字符、字符串、布尔文字
+
+4.操作符(运算符)
+
+5.分隔符：() {} , : ;
+
+6.空白：空格、制表符、垂直制表符、换行符、回车符、注释等
+
+2.2.1 基本数据类型
+#include <iostream>
+#include <iomanip>
+#include <typeinfo>
+#include <limits>
+using namespace std;
+int main()
+{
+     cout << setiosflags(ios::left) << setw(4) << typeid(bool).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(bool)
+          << setw(4)<< "Max:" << setw(22) << numeric_limits<bool>::max()
+          << setw(4)<< "Min:" << setw(22) << numeric_limits<bool>::min() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(char).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(char)
+          << setw(4)<< "Max:" << setw(22) << (int)numeric_limits<char>::max()
+          << setw(4)<< "Min:" << setw(22) << (int)numeric_limits<char>::min() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(signed char).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(signed char)
+          << setw(4)<< "Max:" << setw(22) << (int)numeric_limits<signed char>::max()
+          << setw(4)<< "Min:" << setw(22) << (int)numeric_limits<signed char>::min() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(unsigned char).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(unsigned char)
+          << setw(4)<< "Max:" << setw(22) << (int)numeric_limits<unsigned char>::max()
+          << setw(4)<< "Min:" << setw(22) << (int)numeric_limits<unsigned char>::min() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(wchar_t).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(wchar_t)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<wchar_t>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<wchar_t>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(char16_t).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(char16_t)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<char16_t>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<char16_t>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(char32_t).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(char32_t)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<char32_t>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<char32_t>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(short).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(short)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<short>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<short>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(unsigned short).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(unsigned short)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<unsigned short>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<unsigned short>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(int).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(int)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<int>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<int>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(unsigned int).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(unsigned)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<unsigned>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<unsigned>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(long).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(long)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<long>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<long>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(unsigned long).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(unsigned long)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<unsigned long>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<unsigned long>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(long long).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(long long)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<long long>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<long long>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(unsigned long long).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(unsigned long long)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<unsigned long long>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<unsigned long long>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(__int64).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(__int64)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<__int64>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<__int64>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(unsigned __int64).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(unsigned __int64)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<unsigned __int64>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<unsigned __int64>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(float).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(float)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<float>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<float>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(double).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(double)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<double>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<double>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(long double).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(long double)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<long double>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<long double>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << typeid(size_t).name()
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(size_t)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<size_t>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<size_t>::min)() << endl;
+     cout << setiosflags(ios::left) << setw(4) << "str"
+          << setw(16) << "占用字节数：" << setw(3)<<sizeof(string)
+          << setw(4)<< "Max:" << setw(22) << (numeric_limits<string>::max)()
+          << setw(4)<< "Min:" << setw(22) << (numeric_limits<string>::min)() << endl;
+     return 0;
+}
+/*
+b   占用字节数：1  Max:1                     Min:0
+c   占用字节数：1  Max:127                   Min:-128
+a   占用字节数：1  Max:127                   Min:-128
+h   占用字节数：1  Max:255                   Min:0
+w   占用字节数：2  Max:65535                 Min:0
+Ds  占用字节数：2  Max:65535                 Min:0
+Di  占用字节数：4  Max:4294967295            Min:0
+s   占用字节数：2  Max:32767                 Min:-32768
+t   占用字节数：2  Max:65535                 Min:0
+i   占用字节数：4  Max:2147483647            Min:-2147483648
+j   占用字节数：4  Max:4294967295            Min:0
+l   占用字节数：4  Max:2147483647            Min:-2147483648
+m   占用字节数：4  Max:4294967295            Min:0
+x   占用字节数：8  Max:9223372036854775807   Min:-9223372036854775808
+y   占用字节数：8  Max:18446744073709551615  Min:0
+x   占用字节数：8  Max:9223372036854775807   Min:-9223372036854775808
+y   占用字节数：8  Max:18446744073709551615  Min:0
+f   占用字节数：4  Max:3.40282e+38           Min:1.17549e-38
+d   占用字节数：8  Max:1.79769e+308          Min:2.22507e-308
+e   占用字节数：16 Max:1.18973e+4932         Min:3.3621e-4932
+y   占用字节数：8  Max:18446744073709551615  Min:0
+str 占用字节数：32 Max:                      Min:
+*/
+
+char类型在不同编译器内有的是signed char，有的是unsigned char，暂且认为char、signed char、unsigned char为不同类型
+
+2.2.2 常量
+1.整型常量
+十进制：+0~9或-0~9，不能以0开头
+        后缀F或f表示float
+        后缀L或l表示long
+        后缀LL或ll表示long long
+        后缀U或u表示无符号
+        后缀UL(ul),ULL(ull)表示unsigned long和unsigned long long类型
+八进制：前缀0开头，0~7
+十六进制：前缀0x开头，0~9，A~F大小写均可
+        八进制和十六进制一般表示无符号整数，前面不加正负号
+二进制：前缀0b开头，0,1
+2.实型常量
+小数形式：10.23
+指数形式：0.1023E1=10.23 0.1E-1=0.01
+实型常量默认double型，后缀f,表示float型
+3.字符常量
+如：'a','D','?','$'等
+转义序列：
+字符常量形式   含义       十六进制    十六进制表示        八进制表示
+\a             响铃       07          char(0x07)  '\x07'  char(007) '\007'
+\n             换行       0A          char(0x0A)  '\x0A'  char(012) '\012'
+\t             水平制表符 09          char(0x09)  '\x09'  char(011) '\011'
+\v             垂直制表符 0B          char(0x0B)  '\x0B'  char(013) '\013'
+\b             退格       08          char(0x08)  '\x08'  char(010) '\010'
+\r             回车       0D          char(0x0D)  '\x0D'  char(015) '\015'
+\f             换页       0C          char(0x0C)  '\x0C'  char(014) '\014'
+\\             字符'\'    5C          char(0x5C)  '\x5C'  char(134) '\134'
+\"             双引号     22          char(0x22)  '\x22'  char(042) '\042'
+\'             单引号     27          char(0x27)  '\x27'  char(047) '\047'
+所有ASCII字符都可以用八进制十六进制表示，如上表
+4.字符串常量
+如 "CHINA" 内存中：CHINA\0,每个字符占一个字节，"CHINA"  6字节
+
+
+2.2.3 变量
+c++ 没字符串变量
+变量存储类型
+auto 采用堆栈方式分配内存空间，属于暂时性存储，可以多次覆盖使用
+register 存放在通用寄存器中
+extern 在所有函数和程序段中都可引用
+static 在内存中是以固定地址存放，在整个程序运行期间都有效
+
+2.2.4 符号常量
+const float PI=3.1415926; float const PI=3.1415926;
+符号常量声明时一定要赋初值
+2.2.5 运算符与表达式
+运算优先级与方向
+// C++ Operator Precedence and Associativity
+// The highest precedence level is at the top of the table.
+//+--------+------------------+---------------------------+---------------+---------------+
+//|优先级  | Operator         | Name or Meaning                           | Associativity |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|1       | ::               | Scope resolution           范围解析       | None          |
+//|        | ::               | Global                     命名空间标识符 | None          |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | [ ]              | Array subscript            数组下标       | Left to right |
+//|        | ( )              | Function call              函数调用       | Left to right |
+//|        | ( )              | Conversion                 括号           | None          |
+//|2       | .                | Member selection (object)  成员选择对象   | Left to right |
+//|        | ->               | Member selection (pointer) 成员选择指针   | Left to right |
+//|        | ++               | Postfix increment          ++后置         | None          |
+//|        | --               | Postfix decrement          --后置         | None          |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | new              | Allocate object            创建对象       | None          |
+//|        | delete           | Deallocate object          释放对象       | None          |
+//|        | delete[ ]        | Deallocate object          释放对象       | None          |
+//|        | ++               | Prefix increment           前置++         | None          |
+//|        | --               | Prefix decrement           前置--         | None          |
+//|        | *                | Dereference                取指针指向的值 | None          |
+//|        | &                | Address-of                 的地址         | None          |
+//|        | +                | Unary plus                 一元加         | None          |
+//|        | -                | Arithmetic negation (unary)一元减         | None          |
+//|3       | !                | Logical NOT                逻辑非         | None          |
+//|        | ~                | Bitwise complement         按位取反       | None          |
+//|        | sizeof           | Size of object             对象的大小     | None          |
+//|        | sizeof ( )       | Size of type               类型的长度     | None          |
+//|        | typeid( )        | type name                  类型名称       | None          |
+//|        | (type)           | Type cast (conversion)     类型强制转换   | Right to left |
+//|        | const_cast       | Type cast (conversion)     类型强制转换   | None          |
+//|        | dynamic_cast     | Type cast (conversion)     类型强制转换   | None          |
+//|        | reinterpret_cast | Type cast (conversion)     类型强制转换   | None          |
+//|        | static_cast      | Type cast (conversion)     类型强制转换   | None          |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|4       | .*               | Apply pointer to class member (objects)   | Left to right |
+//|        | ->*              | Dereference pointer to class member       | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | *                | Multiplication             乘             | Left to right |
+//|5       | /                | Division                   除             | Left to right |
+//|        | %                | Remainder (modulus)        取余           | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|6       | +                | Addition                   加             | Left to right |
+//|        | -                | Subtraction                减             | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|7       | <<               | Left shift                 左位移         | Left to right |
+//|        | >>               | Right shift                右位移         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | <                | Less than                  小于           | Left to right |
+//|8       | >                | Greater than               大于           | Left to right |
+//|        | <=               | Less than or equal to      小于等于       | Left to right |
+//|        | >=               | Greater than or equal to   大于等于       | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|9       | ==               | Equality                   等于           | Left to right |
+//|        | !=               | Inequality                 不等           | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|10      | &                | Bitwise AND                按位与         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|11      | ^                | Bitwise exclusive OR       按位异或       | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|12      | |                | Bitwise OR                 按位或         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|13      | &&               | Logical AND                逻辑与         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|14      | ||               | Logical OR                 逻辑或         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|15      | e1?e2:e3         | Conditional                条件运算符     | Right to left |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | =                | Assignment                 赋值           | Right to left |
+//|        | *=               | Multiplication assignment  乘等           | Right to left |
+//|        | /=               | Division assignment        除等           | Right to left |
+//|        | %=               | Modulus assignment         余等           | Right to left |
+//|        | +=               | Addition assignment        加等           | Right to left |
+//|16      | -=               | Subtraction assignment     减等           | Right to left |
+//|        | <<=              | Left-shift assignment      左位移等       | Right to left |
+//|        | >>=              | Right-shift assignment     右位移等       | Right to left |
+//|        | &=               | Bitwise AND assignment     按位与等       | Right to left |
+//|        | |=               | Bitwise inclusive OR assignment按位或等   | Right to left |
+//|        | ^=               | Bitwise exclusive OR assignment按位异或等 | Right to left |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|17      | throw            |                            抛出异常       | Right to left |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|18      | ,                | Comma                      逗号运算符     | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+
+5.条件运算符
+表达式1？表达式2：表达式3
+表达式1:ture  执行表达式2
+表达式1:false  执行表达式3
+
+6. sizeof 运算符
+计算某类型的对象在内存中所占的字节数
+sizeof(类型名/表达式)
+sizeof 表达式
+sizeof '\047'
+sizeof('\047')
+sizeof(char)
+结果都为1
+
+
+7. 位运算
+    按位与     &   0&0=0,1&0=0,0&1=0,1&1=1
+    按位或     |   0|0=0,1|0=1,0|1=1,1|1=1
+    按位异或   ^   0^0=0,1^0=1,0^1=1,1^1=0
+    按位取反   ~   ~0=1，~1=0
+    移位       <<  左位移 高位舍去，低位补0
+               >>  右位移 低位舍去，高位补符号或0[一般补符号]
+
+
+9. 混合运算时数据类型的转换
+隐含转换
+char  short  int  unsigned  long  unsigned long  float  double
+低-----------------------------------------------------------高
+显式转换
+类型说明符(表达式)
+(类型说明符)表达式
+const_cast<类型说明符>(表达式)
+dynamic_cast<类型说明符>(表达式)
+reinterpret_cast<类型说明符>(表达式)
+static_cast<类型说明符>(表达式)
+
+2.3.1 I/O流 #include <iostream>
+数据从一个对象到另一个对象的流动抽象为“流”
+<<预定义的插入符，作用在流类对象cout上，实现屏幕输出
+>>插入符，作用在流类对象cin上表示键盘输入
+endl                        插入换行符，并刷新流
+ends                        插入空字符
+cout.width(int length);     控制输出宽度（占位
+cout.fill(char c)           控制占位填充字符
+cout.precision(int len);	// 保留 len 位小数与cout.flags(ios::fixed);同时用
+cout.flags(ios::fixed);
+cout.setf(ios::fixed);
+cout.put(char c);           直接输出
+cout.flags(ios::oct);       使用 8/10/16 进制输出整数
+cout.flags(ios::dec);
+cout.flags(ios::hex);
+cout.flags(ios::showpos);
+cout.unsetf(ios::showpos);
+输出控制：#include <iomanip>
+操纵符名                   含义
+dec                         十进制
+hex                         十六进制
+oct                         八进制
+ws                          提取空白符
+setsprecision(int)          设置浮点数的小数位数(包括小数点)
+setw(int)                   设置域宽
+setfill(char)               填充字符c
+setioflags(ios::fixed)      固定的浮点显示
+setioflags(ios::scientific) 指数表示
+setiosflags(ios::left)      左对齐
+setiosflags(ios::right)     右对齐
+setiosflags(ios::skipws)    忽略前导空白
+setiosflags(ios::uppercase) 16进制数大写输出
+setiosflags(ios::lowercase) 16进制小写输出
+setiosflags(ios::showpoint) 强制显示小数点
+setiosflags(ios::showpos)   强制显示符号
+
+printf()输出控制  https://blog.csdn.net/sugarbliss/article/details/80230710
+2.4.3 循环结构
+while
+do while
+for
+
+2.4.5 其他控制语句
+break 跳出循环体和switch,执行下一条语句
+continue 跳出本次循环，执行下次循环
+goto 语句标号
+语句标号：语句
+
+2.5.1 typedef
+typedef 类名 别名
+
+2.5.2 枚举类型
+enum  枚举类型名 {变量列表}；
+枚举元素按常量处理，可以声明时赋值，其他时候不能赋值
+枚举元素有默认值：0,1,2...
+声明：(enum) 枚举类型名 对象名(=变量列表中的变量)
+枚举类型可隐含转换整型，整型需显示转换枚举类型
+enum {变量列表} 可省略枚举类型名，
+#include <iostream>
+using namespace std;
+
+enum GameResult
+{
+    WIN,
+    LOSE,
+    TIE,
+    CANCEL
+};//枚举类型
+
+int main()
+{
+    GameResult result;                             //声明对象（变量）缺省enum关键词
+    enum GameResult omit = CANCEL;                 //声明变量并初始化
+    for (int count = WIN; count <= CANCEL; count++)//枚举类型隐含转换为int
+    {
+        result = GameResult(count);                //int显示转换为枚举类型方法1
+        //result = (GameResult)(count);            //int显示转换为枚举类型方法2
+        //result = static_cast<GameResult>(count); //int显示转换为枚举类型方法3
+        if (result == omit)
+            cout << "The game was cancelled" << endl;
+        else
+        {
+            cout << "The game was Played";
+            if (result == WIN)
+                cout << " and we won";
+            if (result == LOSE)
+                cout << " and we lost";
+            cout << endl;
+        }
+    }
+    return 0;
+}
+/*输出
+The game was Played and we won
+The game was Played and we lost
+The game was Played
+The game was cancelled
+*/
+3.1.3 函数的参数传递
+1.值传递
+2.引用传递 变量的别名
+int &ri=i
+引用传递声明时必须赋值，指向一个已存在的对象
+
+3.2 内联函数
+inline 类型说明符 函数名(含类型说明的形参表){语句序列}
+inline 表示一个要求，编译器不认识
+inline 编译时不一定是内联函数，
+无inline 修饰的函数，不一定不是内联函数
+
+3.3 默认形参的函数
+int add(int x=5,int y=6){return x+y;}
+默认形参必须在列表后面
+3.4 函数重载
+形参个数或类型不同
+
+类
+class A
+{
+public:外部接口
+
+protected:保护型成员
+
+private:私有成员
+
+}
+类的成员：数据成员（属性），函数成员（方法）
+构造函数
+析构函数
+复制构造函数
+4.6.1 结构体
+struct A
+{
+public:外部接口
+
+protected:保护型成员
+
+private:私有成员
+}
+c++中完全可以用类代替结构体
+结构体默认为public ,类默认为private
+如果结构体只有公共数据成员，可以这样赋初值
+类型名 变量名={成员数据1初值，成员数据2初值，...}；
+
+4.6.2 联合体
+union A
+{
+public:外部接口
+
+protected:保护型成员
+
+private:私有成员
+}
+联合体全部数据成员共享同一组内存单元
+联合体的对象成员，不能有自定义的构造函数、析构函数和重载的赋值运算符（对象成员的对象成员也不能有）
+联合体不能继承，也不支持包含多态
+无名联合体 通常作为类和结构体的内嵌成员
+union{
+    int i;
+    float f;
+}
+在程序中可以这样用：
+i=10;
+f=2.2
+注意和枚举类型的区别（枚举类型变量名要看成整型常量，除初始化外，不能赋值）
+#include <iostream>
+using namespace std;
+class ExamInfo
+{
+public:
+    //重载的3种构造函数，分别用等级、是否通过和百分制来初始化
+    ExamInfo(char *name, char grade) : name(name), mode(GRADE), grade(grade) {}
+    ExamInfo(char *name, bool pass) : name(name), mode(PASS), pass(pass) {}
+    ExamInfo(char *name, int percent) : name(name), mode(PERCENTAGE), percent(percent) {}
+    void show();
+
+private:
+    char *name;      //课程名称
+    enum
+    {
+        GRADE,
+        PASS,
+        PERCENTAGE
+    } mode;          //采用何种计分方式
+    union
+    {
+        char grade;  //等级制的成绩
+        bool pass;   //是否通过
+        int percent; //百分制的成绩
+    };
+};
+void ExamInfo::show()
+{
+    cout << name << ":";
+    switch (mode)
+    {
+    case GRADE:
+        cout << grade;
+        break;
+    case PASS:
+        cout << (pass ? "PASS" : "FALL");
+        break;
+    case PERCENTAGE:
+        cout << percent;
+        break;
+    }
+    cout << endl;
+}
+int main()
+{
+    ExamInfo course1("English", 'B');
+    ExamInfo course2("Calculus", true);
+    ExamInfo course3("C++Programming", 85);
+    course1.show();
+    course2.show();
+    course3.show();
+    return 0;
+}
+/*
+English:B
+Calculus:PASS
+C++Programming:85
+*/
+4.8.1 位域
+自定义数据类型 数据长度
+int a;//默认4字节
+int a:27;//27bit
+
+4.8.2 用构造函数定义类型转换
+
+5.1.1 作用域
+作用域是一个标识符在程序正文中有效的区域
+1.函数原型作用域，形参的作用范围
+2.局部作用域，大括号内的作用范围
+3.类作用域
+类函数直接访问类成员
+表达式x.m（通过对象访问）或X::m（访问静态成员）
+对象的指针访问ptr->m
+class X{
+    public:
+    X(int m):m(m){}
+    int getM() const {return m;}
+    private:
+    int m;
+}
+int main(){
+    X x(a);
+    x.getM();
+    X *ptr=&x;
+    ptr->getM();
+}
+命名空间作用域>类作用域>局部作用域
+标识符要声明在前，引用在后
+同一作用域，不能声明同名标识符
+没有相互包含的不同作用域中，同名标识符互不影响
+内层同名标识符可以屏蔽外层同名标识符
+4.命名空间作用域
+namespace 命名空间名
+命名空间名：：标识符名
+using 命名空间名：：标识符名;
+using namespace 命名空间名;
+
+全局命名空间：默认的命名空间
+匿名命名空间
+namespace {}
+5.2.1静态生存期：对象的生存期与运行期相同
+在命名空间作用域内声明的对象，都具有静态生存期
+函数内部局部作用域声明具有静态生存期的对象，用static 声明
+类作用域声明具有静态生存期的对象，用static，命名空间作用域内定义可赋初值
+静态变量声明同时可以赋初值，否则默认赋初值0
+
+5.2.2动态生存期：局部生存期对象
+
+5.3.1静态数据成员
+实例属性：属性的个数、名称、数据类型相同，属性值可以各不相同
+类属性：不属于任何具体对象，由该类的所有对象共同维护和使用
+静态数据成员：为类的属性，具有警惕生存期
+类名：：标识符
+#include <iostream>
+using namespace std;
+
+class Point //Point类定义
+{
+public: //外部接口
+    Point(int x = 0, int y = 0) : x(x), y(y)
+    { //构造函数
+        count++;
+    }
+    Point(Point &p)
+    { //复制构造函数
+        x = p.x;
+        y = p.y;
+        count++;
+    }
+    ~Point() { count--; }
+    int getX() { return x; }
+    int getY() { return y; }
+    void showCount()
+    { //输出静态数据成员
+        cout << "   Object count=" << count << endl;
+    }
+
+private: //私有数据成员
+    int x, y;
+    static int count; //静态数据成员声明，用于记录点的个数类内声明，类外定义
+};
+int Point::count = 0; //静态数据成员定义和初始化使用类名限定
+int main()            //主函数
+{
+    Point a(4, 5); //定义对象a,其构造函数会使count增1
+    cout << "Point A:" << a.getX() << ", " << a.getY();
+    a.showCount(); //输出对象个数
+    Point b(a);    //定义对象b,其构造函数会使count增1
+    cout << "Point B:" << b.getX() << ", " << b.getY();
+    a.showCount(); //输出对象个数
+    return 0;
+}
+/*输出
+Point A:4, 5   Object count=1
+Point B:4, 5   Object count=2
+*/
+
+5.3.2静态函数成员
+使用static关键字声明的函数成员
+静态数据成员，必须在命名空间作用域的某个地方使用类名限定定义性声明，可以进行初始化
+静态函数成员只能访问静态数据成员，不依赖类，所以不会有静态常函数成员
+可以通过对象调用，也可以通过类调用
+#include <iostream>
+using namespace std;
+
+class Point //Point类定义
+{
+public: //外部接口
+    Point(int x = 0, int y = 0) : x(x), y(y)
+    { //构造函数
+        count++;
+    }
+    Point(Point &p)
+    { //复制构造函数
+        x = p.x;
+        y = p.y;
+        count++;
+    }
+    ~Point() { count--; }
+    int getX() { return x; }
+    int getY() { return y; }
+    static void showCount() //静态函数成员
+    {                       //输出静态数据成员
+        cout << "   Object count=" << count << endl;
+    }
+
+private: //私有数据成员
+    int x, y;
+    static int count; //静态数据成员声明，用于记录点的个数
+};
+int Point::count = 0; //静态数据成员定义和初始化使用类名限定
+int main()            //主函数
+{
+    Point::showCount(); //输出对象个数
+    Point a(4, 5);      //定义对象a,其构造函数会使count增1
+    cout << "Point A:" << a.getX() << ", " << a.getY();
+    Point::showCount(); //输出对象个数
+    Point b(a);         //定义对象b,其构造函数会使count增1
+    cout << "Point B:" << b.getX() << ", " << b.getY();
+    Point::showCount(); //输出对象个数
+    return 0;
+}
+/*
+   Object count=0
+Point A:4, 5   Object count=1
+Point B:4, 5   Object count=2
+*/
+5.4.1友元函数
+友元函数是在类中用关键字friend修饰的非成员函数
+#include <iostream>
+#include <cmath>
+using namespace std;
+class Point //Point类定义
+{
+public: //外部接口
+    Point(int x = 0, int y = 0) : x(x), y(y) {}
+    int getX() { return x; }
+    int getY() { return y; }
+    friend float dist(Point &p1, Point &p2); //友元函数声明
+private:
+    int x, y; //私有数据成员
+};
+float dist(Point &p1, Point &p2)
+{                           //友元函数实现
+    double x = p1.x - p2.x; //通过对象访问私有数据成员
+    double y = p1.y - p2.y;
+    return static_cast<float>(sqrt(x * x + y * y));
+}
+int main() //主函数
+{
+    Point myp1(1, 3), myp2(3, 9); //定义Point类的对象
+    cout << "The distance is:";
+    cout << dist(myp1, myp2) << endl; //计算两点之间的距离
+    return 0;
+}
+/*输出
+The distance is:6.32456
+*/
+5.4.2友元类
+如果类A为类B的友元类，那么类A的所有函数成员都可以访问类B的私有和保护成员
+
+友元关系是不能传递的
+友元关系是单向的
+友元关系是不被继承的
+
+5.5.1
+常对象
+const 类型说明符 对象名=值;
+常对象必须初始化（区分初始化和赋值）
+5.5.2常成员函数
+类型说明符 函数名(参数表)const;
+常对象只能调用常成员函数
+调用常成员函数的对象视为常对象
+const关键字可以用于对重载函数的区分
+#include <iostream>
+using namespace std;
+class R
+{
+public:
+    R(int r1, int r2) : r1(r1), r2(r2) {}
+    void print();
+    void print() const;
+
+private:
+    int r1, r2;
+};
+void R::print()
+{
+    cout << r1 << ":" << r2 << endl;
+}
+void R::print() const
+{
+    cout << r1 << ";" << r2 << endl;
+}
+int main()
+{
+    R a(5, 2);
+    a.print(); //调用void print()
+    const R b(5, 3);
+    b.print(); //调用void print()const
+    return 0;
+}
+/*输出
+5:2
+5;3
+*/
+2.常数据成员
+类的静态常量如果具有整数型或枚举类型，可以直接在类定义中为它指定常量值
+
+静态常数据成员的地址？
+#include <iostream>
+
+using namespace std;
+class A
+{
+public:
+    A(int i);
+    void print();
+    //访问私有静态常数成员的地址，必须在类外分配空间
+    static const int *getB() { return &b; }
+
+private:
+    const int a;                 //常数据成员
+    static const int b; //静态常数据成员
+};
+A::A(int i) : a(i) {} //常数据成员只能通过初始化列表来获得初值
+const int A::b = 10;  //常静态数据成员在类外说明和初始化，类外分配空间
+void A::print()
+{
+    cout << a << ":" << b << endl;
+}
+int main()
+{
+    /*建立对象a和b，并以100和0作为初值，分别调用构造函数，
+    通过构造函数的初始化列表给对象的常数据成员赋初值
+    */
+    A a1(100), a2(0);
+    a1.print();
+    a2.print();
+    cout << A::getB()<< endl;
+    return 0;
+}
+/*输出
+100:10
+0:10
+0x404000
+*/
+常引用
+const 类型说明符 &引用名
+常引用与常函数成员类似
+非const引用，只能绑定到普通的对象
+常引用可以绑定到常对象
+常引用绑定到普通对象，把该对象当做常对象
+对基本数据类型的常引用，不能为其赋值
+对类类型的常引用，不能改变它的数据成员
+#include <iostream>
+#include <cmath>
+using namespace std;
+class Point //Point类定义
+{
+public: //外部接口
+    Point(int x = 0, int y = 0) : x(x), y(y) {}
+    int getX() { return x; }
+    int getY() { return y; }
+    friend float dist(const Point &p1,const Point &p2); //友元函数声明
+private:
+    int x, y; //私有数据成员
+};
+float dist(const Point &p1,const Point &p2)//常引用作形参
+{                           //友元函数实现
+    double x = p1.x - p2.x; //通过对象访问私有数据成员
+    double y = p1.y - p2.y;
+    return static_cast<float>(sqrt(x * x + y * y));
+}
+int main() //主函数
+{
+    const Point myp1(1, 3), myp2(3, 9); //定义Point类的对象
+    cout << "The distance is:";
+    cout << dist(myp1, myp2) << endl; //计算两点之间的距离
+    return 0;
+}
+/*输出
+The distance is:6.32456
+*/
+匿名命名空间与static 类似，可以将变量和函数限制在编译单元内
+extern 与 static相反
+extern 外部变量声明
+如果变量不在头文件中声明，只在全局变量中声明，
+声明之前访问或其他源文件中访问，需外部变量声明
+
+
+5.6.4编译预处理
+// #include 文件包含指令
+// #define 定义符号常量 c++可以用const取代
+// #define 定义带参数宏 c++用内联函数取代
+// #define 定义空符号   该符号配合编译指令起到特殊作用
+// #undef  删除有#define 定义的宏
+// 条件编译指令
+// (1)
+#if 常量表达式
+    程序段
+#endif
+(2)
+#if 常量表达式
+    程序段1
+#else
+    程序段2
+#endif
+(3)
+#if 常量表达式1
+程序段1
+#elif 常量表达式2
+程序段2
+.
+.
+.
+#elif 常量表达式n
+程序段n
+#endif
+(4)
+#ifdef 标识符
+程序段1
+#else          如果标识符经#define定义过，
+程序段2        且未经#undef删除，则编译程序段1，
+               否则编译程序段2.如果没有程序段2，
+              则#else可以省略
+#endif
+(5)
+#ifndef 标识符
+程序段1
+#else           如果标识符未被定义过，则编译程序段1，否则编译程序段2，如果没有2，#else可以省略
+程序段2
+#endif
+
+defined(标识符)
+如果标识符经#define定义过，未经#undef删除，则defined(标识符)！=0否则为0
+
+
+mutable 修饰的成员对象的值可以用常成员函数改变
+
+6.1.1 数组
+1.声明：
+（1）确定数组的名称
+（2）确定数组元素的类型
+（3）确定数组的结构（包括数组的维数，每一维的大小等）
+数据类型 标识符[常量表达式1][常量表达式2]...;
+2.使用
+数组名[下标表达式1][下标表达式2]...
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() //主函数
+{
+    int a[10], b[10];            //生命两个元素个数为10的一维数组
+    for (int i = 0; i < 10; i++) //利用for循环为两个数组赋值
+    {
+        a[i] = i * 2 - 1;
+        b[10 - i - 1] = a[i];
+    }
+    for (int i = 0; i < 10; i++) //利用for循环将两个数组依次打印到屏幕上
+    {
+        cout << "a[" << i << "] =" << setw(3) << a[i] << "    ";
+        cout << "b[" << i << "] =" << setw(3) << b[i] << endl;
+    }
+    return 0;
+}
+/*输出
+a[0] = -1    b[0] = 17
+a[1] =  1    b[1] = 15
+a[2] =  3    b[2] = 13
+a[3] =  5    b[3] = 11
+a[4] =  7    b[4] =  9
+a[5] =  9    b[5] =  7
+a[6] = 11    b[6] =  5
+a[7] = 13    b[7] =  3
+a[8] = 15    b[8] =  1
+a[9] = 17    b[9] = -1
+*/
+注意：数组下表越界有时会得到提示，有时却得不到提示
+6.1.2 数组的存储与初始化
+一个一维数组 可看作列向量
+一个二维数组 可看作一个矩阵 第一个下标称为行标，第二个下标称为列标
+排列顺序如下：
+int arr[3]:arr[0] arr[2] arr[3]
+int m[2][3]: m[0][0] m[0][1] m[0][2] m[1][0] m[1][1] m[1][2]
+三维数组依次类推
+
+2.数组的初始化
+为数组每一个元素赋值
+int a[3]={1,2,2};//一般情况
+int a[]={1,2,3};//如果列出全部元素，可以不用说明元素个数
+float a[5]={1.0,2.0,3.0};//初值个数小于数组大小时，未赋值的默认赋值0
+static int a[4];与static a[4]={0,0,0,0};相同//静态生存期数组，未赋值，每个元素会被赋予0，动态生存期未赋值，每个元素初值不确定
+int a[4] 则数组元素不确定
+int a[2][3]={1,0,0,0,1,0};//多维数组给出全部元素，第一维下标可以不显式说明
+等同于
+int a[][3]={1,0,0,0,1,0};
+int a[2][3]={{1,0,0},{0,1,0}};//分开赋初值
+const int a[2][3]={1.0,2.0,3.0}声明为数组常量
+6.1.3 数组作为函数参数
+数组元素和数组名都可以作为函数的参数
+使用数组名作为参数，传递的是地址
+实参数组的元素个数不应少于形参数组的元素个数
+被调函书中对形参数组元素值进行改变，主调函数中实参数组的相应数组的相应元素值也会改变
+#include <iostream>
+
+using namespace std;
+//计算二维数组a每行元素的值得和，nRow是行数
+void rowSum(int a[][4], int nRow) //数组作为参数时，一般不指定第一维的大小，即使指定，也会背被忽略
+{
+    for (int i = 0; i < nRow; i++)
+    {
+        for (int j = 1; j < 4; j++)
+            a[i][0] += a[i][j]; //改变形参数组元素的值，会影响函数实参的值
+    }
+}
+int main() //主函数
+{
+    //声明并初始化数组
+    int table[3][4] = {{1, 2, 3, 4}, {2, 3, 4, 5}, {3, 4, 5, 6}};
+    for (int i = 0; i < 3; i++) //输出数组元素
+    {
+        for (int j = 0; j < 4; j++)
+            cout << table[i][j] << "  ";
+        cout << endl;
+    }
+    rowSum(table, 3);           //调用子函数，计算各行和
+    for (int i = 0; i < 3; i++) //输出计算结果
+        cout << "Sum of row " << i << " is " << table[i][0] << endl;
+    for (int i = 0; i < 3; i++) //输出数组元素
+    {
+        for (int j = 0; j < 4; j++)
+            cout << table[i][j] << "  ";
+        cout << endl;
+    }
+    return 0;
+}
+/*
+1  2  3  4
+2  3  4  5
+3  4  5  6
+Sum of row 0 is 10
+Sum of row 1 is 14
+Sum of row 2 is 18
+10  2  3  4
+14  3  4  5
+18  4  5  6
+*/
+6.1.4对象数组
+类名 数组名[常量表达式];
+数组名[下标表达式].成员名
+需要建立每个类的对象数组，设计类的构造函数就要充分考虑到数组元素初始化的需要
+元素对象的初值要求为相同的值时，应该在类中定义默认的构造函数
+当各元素对象的初值要求不同的值时，需要定义带形参(无默认值)的构造函数
+数组中的元素对象被删除时，系统会调用析构函数完成扫尾工作
+#include <iostream>
+using namespace std;
+
+class Point //类的定义
+{
+private:
+    int x, y;//私有数据成员
+public://外部接口
+    Point();
+    Point(int x, int y);
+    ~Point();
+    void move(int newX, int newY);
+    int getX() const { return x; }
+    int getY() const { return y; }
+    static void showCount();//静态函数成员
+};
+Point::Point(){//构造函数实现
+    x = y = 0;
+    cout << "Default Constructor called." << endl;
+}
+Point::Point(int x,int y):x(x),y(y){//构造函数重载实现
+    cout << "Constructor called." << endl;
+}
+Point::~Point(){//析构函数实现
+    cout << "Destructor called." << endl;
+}
+void Point::move(int newX,int newY){//成员函数实现
+    cout << "Moving the point to(" << newX << "," << newY
+         << ")" << endl;
+    x = newX;
+    y = newY;
+}
+
+int main()
+{
+    cout << "Entering main..." << endl;
+    Point a[2];//定义一个Point类数组，包括两个数组元素
+    for (int i = 0; i < 2; i++)
+        a[i].move(i + 10, i + 20);
+    cout << "Exiting main..." << endl;
+    return 0;
+}
+/*输出
+Entering main...
+Default Constructor called.
+Default Constructor called.
+Moving the point to(10,20)
+Moving the point to(11,21)
+Exiting main...
+Destructor called.
+Destructor called.
+*/
+
+6.2.2 指针变量的声明
+数据类型 *标识符
+
+6.2.3 地址相关的运算
+int *ptr ;//int *整型指针 ，ptr指针变量，存放内存单元地址
+int a;//声明一个整型变量a
+int *ptr=&a//声明一个整型指针变量ptr,并用整型变量a的地址初始化
+cout<<*ptr<<endl;//输出指针ptr指向的内容
+int &rf; //声明一个int 型引用
+
+6.2.4 指针的赋值
+声明并初始化
+存储类型 数据类型 *指针名=初始地址;
+如 static int *ptr=&a;
+声明后，单独复制
+指针名=地址;
+如 int *ptr=&a;
+数组名为一个不能赋值的指针
+int a[10];
+int *ptr=a;
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    int i;//声明整型变量i
+    int *ptr = &i;//声明并初始化整型指针变量ptr
+    i = 10;//把10赋值给i
+    cout << "i=" << i << endl;//输出变量i的值
+    cout << "*ptr=" << *ptr << endl;//输出指针ptr指向的内容
+    return 0;
+}
+/*输出
+i=10
+*ptr=10
+*/
+
+可以声明指向常量的指针
+const int *p=&a; p能改变，*p不能改变
+指针常量
+int * const p=&a; p不能改变
+
+指针的值只能赋给相同类型的指针，但void类型指针，可以存储任何类型对象的地址
+#include <iostream>
+using namespace std;
+int main()
+{
+    //void voidObject;  // 错，不能声明void 类型变量
+    void *pv;           //可以声明void类型指针
+    int i = 5;
+    pv = &i;//void类型指针指向整型变量
+    int *pint = static_cast<int *>(pv);//void 类型指针赋值给int类型指针
+    cout << "*pint=" << *pint << endl;
+    return 0;
+}
+/*
+*pint=5
+*/
+6.2.5指针运算
+*(p1+n1)等同于p1[n1]，表示p1当前所指位置后方第n1个数的内容
+*(p1-n1)      p1[-n1]
+*(p1++)
+*(p1--)
+指针运算与数组相连
+
+指针变量可以和整数0比较，表示该指针是否指向一个空指针
+int *ptr=0;
+int *ptr=NULL;
+都表示指向空指针
+6.2.6 指针处理数组元素
+
+int array[5]
+array 等同于 &array[0]
+
+void f(int p[]);
+void f(int p[3]);
+void f(int *p);
+以上三种形参列表等价
+#include <iostream>
+using namespace std;
+int main()
+{
+    int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
+    for (int i = 0; i < 10; i++)
+        cout << a[i] << "  "; //使用数组名和下标
+    cout << endl;
+    for (int *p = a + 9; p >= a; p--)
+        cout << *p << "  "; //使用指针变量
+    cout << endl;
+    for (int i = 0; i < 10; i++)
+        cout << *(a + i) << "  "; //使用数组名和指针
+    cout << endl;
+    return 0;
+}
+/*
+1  2  3  4  5  6  7  8  9  0
+0  9  8  7  6  5  4  3  2  1
+1  2  3  4  5  6  7  8  9  0
+*/
+
+6.2.7 指针处理
+如果一个数组的每一个元素都是指针变量，这个数组就是指针数组
+数据类型 *数组名[下标表达式]
+指针数组每一个元素都是指针，必须先赋值后引用
+#include <iostream>
+using namespace std;
+int main()
+{
+    int line1[] = {1, 0, 0}; //定义数组，矩阵的第一行
+    int line2[] = {0, 1, 0}; //定义数组，矩阵的第二行
+    int line3[] = {0, 0, 1}; //定义数组，矩阵的第三行
+    //定义整型指针数组并初始化
+    int *pLine[3] = {line1, line2, line3};
+    cout << "Matrix test:" << endl; //输出单位矩阵
+    for (int i = 0; i < 3; i++)     //对指针数组元素循环
+    {
+        for (int j = 0; j < 3; j++) //对矩阵每一行循环
+            cout << pLine[i][j] << " ";
+        cout << endl;
+    }
+
+    return 0;
+}
+/*
+Matrix test:
+1 0 0
+0 1 0
+0 0 1
+*/
+把二维数组当指针数组来访问
+*(*(array+i)+j)
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    int array[3][3] = {11, 12, 13, 21, 22, 23, 31, 32, 33};
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+            cout << *(*(array + i) + j) << "  "; //逐个输出二维数据第i行元素
+        cout << endl;
+    }
+    return 0;
+}
+/*
+11  12  13
+21  22  23
+31  32  33
+*/
+
+以指针作为函数的形参有三个作用：
+实参与形参指向共同点内存空间，达到参数双向传递的目的
+减少函数调用时数据传递的开销
+通过函数的指针传递函数代码的首地址
+
+6.8.1 指针与引用
+用是变量的别名，引用只能在初始化时指定被引用的对象
+普通指针可以多次赋值，引用与指针常量差不多
+指针有指针类型，引用没有引用类型
+
+如果函数体中不需要通过指针改变指针所指向对象的内容，应在列表中将其声明为指向常量的指针
+#include <iostream>
+using namespace std;
+
+//将实数x分成整数部分和小数部分，形参intPart、fracPart是指针
+void splitFloat(float x, int *intPart, float *fracPart)
+{
+    *intPart = static_cast<int>(x); //取x的整数部分
+    *fracPart = x - *intPart;       //取x的小数部分
+}
+int main()
+{
+    cout << "Enter 3 float point numbers:" << endl;
+    for (int i = 0; i < 3; i++)
+    {
+        float x, f;
+        int n;
+        cin >> x;
+        splitFloat(x, &n, &f); //变量地址作为实参
+        cout << "Integer Part=" << n << " Fraction Part=" << f << endl;
+    }
+    return 0;
+}
+/*
+Enter 3 float point numbers:
+4.7
+Integer Part=4 Fraction Part=0.7
+8.913
+Integer Part=8 Fraction Part=0.913
+-4.7518
+Integer Part=-4 Fraction Part=-0.7518
+*/
+6.2.9指针型函数
+数据类型 *函数名(参数表){
+    函数体
+}
+函数返回指针的类型
+
+6.2.10 指向函数的指针
+数据类型 (*函数指针名)(形参表)
+typedef int (* DoubleIntFunction)(double);
+DoubleIntFunction funcPtr;
+DoubleIntFunction 类名，返回值为int类型，参数为double类型的函数指针类
+funcPtr函数指针名，利用函数指针调用函数
+函数名也是指针
+
+#include <iostream>
+
+using namespace std;
+void printStuff(float)
+{
+    cout << "This is the print stuff function." << endl;
+}
+void printMessage(float data)
+{
+    cout << "The data to be printed is " << data << endl;
+}
+void printFloat(float data)
+{
+    cout << "The data to be printed is " << data << endl;
+}
+const float PI = 3.14159f;
+const float TWO_PI = PI * 2.0f;
+//typedef void (*functionPointer)(float);
+int main() //主函数
+{
+    //functionPointer为形参float类型无返回值函数指针类型的别名(是类型，不是函数名)
+    typedef void (*functionPointer)(float);
+    printStuff(PI);
+    functionPointer fun; //声明函数指针
+    fun = printStuff;    //函数指针指向printStuff(),函数名为指针
+    fun(PI);             //函数指针调用
+    fun = printMessage;  //函数指针指向printStuff(),函数名为指针
+    fun(TWO_PI);         //函数指针调用
+    fun(13.0);           //函数指针调用
+    fun = printFloat;    //函数指针指向printStuff(),函数名为指针
+    fun(PI);             //函数指针调用
+    printFloat(PI);
+    return 0;
+}
+/*输出
+This is the print stuff function.
+This is the print stuff function.
+The data to be printed is 6.28318
+The data to be printed is 13
+The data to be printed is 3.14159
+The data to be printed is 3.14159
+*/
+
+
+6.2.11 对象指针
+类名 *对象指针名
+对象指针名->成员名
+(*对象指针名).成员名
+#include <iostream>
+using namespace std;
+class Point //类的定义
+{
+public:                                         //外部接口
+    Point(int x = 0, int y = 0) : x(x), y(y) {} //构造函数
+    int getX() { return this->x; }              //返回x
+    int getY() { return y; }                    //返回y
+private:                                        //私有数据成员
+    int x, y;
+};
+int main() //主函数
+{
+    Point a(3, 5);              //定义并初始化对象a
+    Point *p1 = &a;             //定于对象指针，用a的地址将其初始化
+    cout << p1->getX() << endl; //利用指针访问对象成员
+    cout << a.getY() << endl;   //利用对象名访问对象成员
+    return 0;
+}
+/*
+3
+5
+*/
+#include <iostream>
+using namespace std;
+class Node
+{
+public:
+    const char *cargo;
+    int depth;
+    Node *left;
+    Node *right
+};
+void Node::postfix()
+{
+    if (this == __nullptr)
+    {
+        return;
+    }
+    else
+    {
+        *this->left.postfix();//同名局部函数调用
+        *this->right.postfix();
+        cout << *this->cargo << "  ";
+        return;
+    }
+}
+
+
+this 指针
+隐含于每个类的非静态成员函数中的特殊指针（包括构造函数和析构函数）
+用于指向正在被成员函数操作的对象
+对象调用成员函数时，对象的地址会自动赋值给this指针
+对于常成员函数来说，这个隐含参数是常指针类型的
+在成员函数中，可以用*this来标识正在调用该函数的对象
+
+在局部作用域中声明了与类成员同名的标识符时，
+对该标识符的直接引用代表的是局部作用域中所声明的标识符，
+这时为了访问该类成员，可以通过this指针
+#include <iostream>
+using namespace std;
+class Clock //时钟类
+{
+public:                                                                       //外部接口
+    Clock(int h = 0, int m = 0, int s = 0) : hour(h), minute(m), second(s) {} //构造函数
+    //比较两个时钟对象
+    Clock &contrastClock(Clock &otherClock)
+    {
+        //相等
+        bool con = hour == otherClock.hour && minute == otherClock.minute && second == otherClock.second;
+        //如果相等返回当前对象，否则返回参数对象，此时必须用到this指针
+        return con ? *this : otherClock;
+    }
+    inline void showTime() const
+    { //显示当前对象时间
+        cout << "Time  " << hour << ":" << minute << ":" << second << endl;
+    }
+
+private: //私有成员
+    int hour;
+    int minute;
+    int second;
+};
+int main()
+{
+    Clock c1(12, 35, 36);            //对象1
+    Clock c2(c1);                    //对象2
+    Clock c3(1, 35, 36);             //对象3
+    c1.showTime();                   //显示对象1时间
+    c2.showTime();                   //显示对象2时间
+    c3.showTime();                   //显示对象3时间
+    c1.contrastClock(c2).showTime(); //比较对象1,2，并显示返回时间
+    c1.contrastClock(c3).showTime(); //比较对象1,3，并显示返回时间
+}
+/*
+Time  12:35:36
+Time  12:35:36
+Time  1:35:36
+Time  12:35:36
+Time  1:35:36
+*/
+3.指向类的非静态成员的指针
+声明:
+类型说明符 类名::*指针名；
+类型说明符 (类名::*指针名)(参数表);
+赋值：
+指针名=&类名::数据成员名；
+在类的作用域外，不能对类的私有成员取地址
+类成员的地址是相对地址，只有在创建对象后，同对象访问该地址
+对象名.*类成员指针
+对象指针名->*类成员指针
+
+指针名=&类名::函数成员名;
+能够被常成员函数赋值的指针，需要在声明时明确写出const
+类的成员函数，不能通过指针直接调用函数，必须先创建对象，通过对象调用函数
+(对象名.*类成员指针名)(参数表)
+(对象名指针->*类成员指针名)(参数表)
+#include <iostream>
+using namespace std;
+class Point //类的定义
+{
+public:                                         //外部接口
+    Point(int x = 0, int y = 0) : x(x), y(y) {} //构造函数
+    int getX() const { return this->x; }        //返回x
+    int getY() const { return y; }              //返回y
+private:                                        //私有数据成员
+    int x, y;
+};
+int getX()
+{
+    int x = 9;
+    return x;
+}
+int main() //主函数S
+{
+
+    Point a(3, 5);                                //定义并初始化对象a
+    Point *p1 = &a;                               //定于对象指针，用a的地址将其初始化
+    int (Point::*funcPtr)() const = &Point::getX; //定义函数指针并初始化
+    cout << (a.*funcPtr)() << endl;                //利用对象名和函数指针访问对象成员
+    cout << (p1->*funcPtr)() << endl;             //利用对象指针和函数指针访问对象成员
+    cout << p1->getX() << endl;                   //利用指针访问对象成员
+    cout << a.getY() << endl;                     //利用对象名访问对象成员
+    return 0;
+}
+/*
+3
+3
+3
+5
+*/
+4.指向类的静态成员的指针
+对静态成员的访问不依赖对象
+#include <iostream>
+
+using namespace std;
+class Point //Point类定义
+{
+public:                                      //外部接口
+    Point(int x = 0, int y = 0) : x(x), y(y) //构造函数
+    {
+        count++;
+    }
+    Point(const Point &p) : x(p.x), y(p.y) //复制构造函数
+    {
+        count++;
+    }
+    ~Point()
+    {
+        count--;
+    }
+    int getX() const { return x; }
+    int getY() const { return y; }
+    static int count; //静态数据成员，用于记录点的个数
+private:              //私有数据成员
+    int x, y;
+};
+int Point::count = 0;
+int main()
+{
+    int *ptr = &Point::count; //定义一个int型指针，指向类的静态成员
+    Point a(4, 5);            //定义对象a
+    cout << "Point A:" << a.getX() << "," << a.getY();
+    cout << " Object count=" << *ptr << endl; //直接通过指针访问静态数据成员
+    Point b(a);                               //定义对象b
+    cout << "Point B:" << b.getX() << "," << b.getY();
+    cout << " Object count=" << *ptr << endl; //直接通过指针访问静态数据成员
+    return 0;
+}
+#include <iostream>
+
+using namespace std;
+class Point
+{
+public:
+    Point(int x=0,int y=0):x(x),y(y){
+        count++;
+    }
+    Point(const Point &p):x(p.x),y(p.y){
+        count++;
+    }
+    ~Point() { count--; }
+    int getX() const { return x; }
+    int getY() const { return y; }
+    static void showCount(){
+        cout << " Object count=" << count << endl;
+    }
+
+private:
+    int x, y;
+    static int count;
+};
+int Point::count=0;
+int main()
+{
+    void (*funcPtr)()=Point::showCount;
+    Point a(4, 5);
+    cout << "Point A:" << a.getX() << "," << a.getY();
+    funcPtr();
+    Point b(a);
+    cout << "Point B:" << b.getX() << "," << b.getY();
+    funcPtr();
+    return 0;
+}
+
+指针常量与引用使用形式的比较
+-------------------------------+--------------------+-------------------
+操作                           |  T类型的指针常量   |   对T类型的引用
+-------------------------------+--------------------+-------------------
+定义并用v初始化（v是T类型变量）|  T *const p=&v;    |   T &r=v;
+取v的值                        |  *p                |   r
+访问成员m                      |  p->m              |   r.m
+读取v的地址                    |  p                 |   &r =&v
+-------------------------------+--------------------+-------------------
+
+
+
+
+
+
+
+
+
+
+
+
+预定义变量#
+持下面的预定义变量:
+
+${workspaceFolder} - 当前工作目录(根目录)
+${workspaceFolderBasename} - 当前文件的父目录
+${file} - 当前打开的文件名(完整路径)
+${relativeFile} - 当前根目录到当前打开文件的相对路径(包括文件名)
+${relativeFileDirname} - 当前根目录到当前打开文件的相对路径(不包括文件名)
+${fileBasename} - 当前打开的文件名(包括扩展名)
+${fileBasenameNoExtension} - 当前打开的文件名(不包括扩展名)
+${fileDirname} - 当前打开文件的目录
+${fileExtname} - 当前打开文件的扩展名
+${cwd} - 启动时task工作的目录
+${lineNumber} - 当前激活文件所选行
+${selectedText} - 当前激活文件中所选择的文本
+${execPath} - vscode执行文件所在的目录
+${defaultBuildTask} - 默认编译任务(build task)的名字
+预定义变量示例:
+假设你满足以下的条件
+
+一个文件 /home/your-username/your-project/folder/file.ext 在你的编辑器中打开;
+一个目录 /home/your-username/your-project 作为你的根目录.
+下面的预定义变量则代表:
+
+${workspaceFolder} - /home/your-username/your-project
+${workspaceFolderBasename} - your-project
+${file} - /home/your-username/your-project/folder/file.ext
+${relativeFile} - folder/file.ext
+${relativeFileDirname} - folder
+${fileBasename} - file.ext
+${fileBasenameNoExtension} - file
+${fileDirname} - /home/your-username/your-project/folder
+${fileExtname} - .ext
+${lineNumber} - 光标所在行
+${selectedText} - 编辑器中所选择的文本
+${execPath} - Code.exe的位置

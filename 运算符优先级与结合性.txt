@@ -1,0 +1,85 @@
+// C++ Operator Precedence and Associativity
+// The highest precedence level is at the top of the table.
+//+--------+------------------+---------------------------+---------------+---------------+
+//|优先级  | Operator         | Name or Meaning                           | Associativity |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|1       | ::               | Scope resolution           范围解析       | None          |
+//|        | ::               | Global                     命名空间标识符 | None          |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | [ ]              | Array subscript            数组下标       | Left to right |
+//|        | ( )              | Function call              函数调用       | Left to right |
+//|        | ( )              | Conversion                 括号           | None          |
+//|2       | .                | Member selection (object)  成员选择对象   | Left to right |
+//|        | ->               | Member selection (pointer) 成员选择指针   | Left to right |
+//|        | ++               | Postfix increment          ++后置         | None          |
+//|        | --               | Postfix decrement          --后置         | None          |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | new              | Allocate object            创建对象       | None          |
+//|        | delete           | Deallocate object          释放对象       | None          |
+//|        | delete[ ]        | Deallocate object          释放对象       | None          |
+//|        | ++               | Prefix increment           前置++         | None          |
+//|        | --               | Prefix decrement           前置--         | None          |
+//|        | *                | Dereference                取指针指向的值 | None          |
+//|        | &                | Address-of                 的地址         | None          |
+//|        | +                | Unary plus                 一元加         | None          |
+//|        | -                | Arithmetic negation (unary)一元减         | None          |
+//|3       | !                | Logical NOT                逻辑非         | None          |
+//|        | ~                | Bitwise complement         按位取反       | None          |
+//|        | sizeof           | Size of object             对象的大小     | None          |
+//|        | sizeof ( )       | Size of type               类型的长度     | None          |
+//|        | typeid( )        | type name                  类型名称       | None          |
+//|        | (type)           | Type cast (conversion)     类型强制转换   | Right to left |
+//|        | const_cast       | Type cast (conversion)     类型强制转换   | None          |
+//|        | dynamic_cast     | Type cast (conversion)     类型强制转换   | None          |
+//|        | reinterpret_cast | Type cast (conversion)     类型强制转换   | None          |
+//|        | static_cast      | Type cast (conversion)     类型强制转换   | None          |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|4       | .*               | Apply pointer to class member (objects)   | Left to right |
+//|        | ->*              | Dereference pointer to class member       | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | *                | Multiplication             乘             | Left to right |
+//|5       | /                | Division                   除             | Left to right |
+//|        | %                | Remainder (modulus)        取余           | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|6       | +                | Addition                   加             | Left to right |
+//|        | -                | Subtraction                减             | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|7       | <<               | Left shift                 左位移         | Left to right |
+//|        | >>               | Right shift                右位移         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | <                | Less than                  小于           | Left to right |
+//|8       | >                | Greater than               大于           | Left to right |
+//|        | <=               | Less than or equal to      小于等于       | Left to right |
+//|        | >=               | Greater than or equal to   大于等于       | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|9       | ==               | Equality                   等于           | Left to right |
+//|        | !=               | Inequality                 不等           | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|10      | &                | Bitwise AND                按位与         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|11      | ^                | Bitwise exclusive OR       按位异或       | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|12      | |                | Bitwise OR                 按位或         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|13      | &&               | Logical AND                逻辑与         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|14      | ||               | Logical OR                 逻辑或         | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|15      | e1?e2:e3         | Conditional                条件运算符     | Right to left |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|        | =                | Assignment                 赋值           | Right to left |
+//|        | *=               | Multiplication assignment  乘等           | Right to left |
+//|        | /=               | Division assignment        除等           | Right to left |
+//|        | %=               | Modulus assignment         余等           | Right to left |
+//|        | +=               | Addition assignment        加等           | Right to left |
+//|16      | -=               | Subtraction assignment     减等           | Right to left |
+//|        | <<=              | Left-shift assignment      左位移等       | Right to left |
+//|        | >>=              | Right-shift assignment     右位移等       | Right to left |
+//|        | &=               | Bitwise AND assignment     按位与等       | Right to left |
+//|        | |=               | Bitwise inclusive OR assignment按位或等   | Right to left |
+//|        | ^=               | Bitwise exclusive OR assignment按位异或等 | Right to left |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|17      | throw            |                            抛出异常       | Right to left |
+//+--------+------------------+---------------------------+---------------+---------------+
+//|18      | ,                | Comma                      逗号运算符     | Left to right |
+//+--------+------------------+---------------------------+---------------+---------------+

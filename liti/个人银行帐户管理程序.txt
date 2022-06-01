@@ -1,0 +1,20 @@
+//+---------------------------------------------+
+//|               SavingsAccount                |存储帐户类
+//+---------------------------------------------+
+//|-id:int                                      |账号
+//|-balance:double                              |余额
+//|-rate:double                                 |存款年利率
+//|-lastDate:int                                |上次变更余额信息
+//|-accumulation:double                         |余额按日累加之和
+//+---------------------------------------------+
+//|-record(date:int,amount:double)              |记录一笔账，date为日期，amount为金额，desc为说明
+//|-accumulate(date:int):double                 |获得到指定日期为止的存款金额按日累积值
+//|+SavingsAccount(date:int,id:int,rate:double) |构造函数
+//|+getId():int                                 |获得账号
+//|+getBalance():double                         |获得余额
+//|+getRate():double                            |获得存款年利率
+//|+show()                                      |
+//|deposit(date:int,amount:double)              |存入现金
+//|withdraw(date:int,amount:double)             |取出现金
+//|+settle(date:int)                            |结算利息，每年1月1日调用一次该函数
+//+---------------------------------------------+

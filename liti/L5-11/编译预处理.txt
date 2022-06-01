@@ -1,0 +1,39 @@
+// #include 文件包含指令
+// #define 定义符号常量 c++可以用const取代
+// #define 定义带参数宏 c++用内联函数取代
+// #define 定义空符号   该符号配合编译指令起到特殊作用
+// #undef  删除有#define 定义的宏
+// 条件编译指令
+// (1)
+#if 常量表达式
+    程序段
+#endif
+(2)
+#if
+#else
+#endif
+(3)
+#if
+#elif
+.
+.
+.
+#elif
+#endif
+(4)
+#ifdef 标识符
+程序段1
+#else          如果标识符经#define定义过，
+程序段2        且未经#undef删除，则编译程序段1，
+               否则编译程序段2.如果没有程序段2，
+              则#else可以省略
+#endif
+(5)
+#ifndef 标识符
+程序段1
+#else           如果标识符未被定义过，则编译程序段1，否则编译程序段2，如果没有2，#else可以省略
+程序段2
+#endif
+
+defined(标识符)
+如果标识符经#define定义过，未经#undef删除，则defined(标识符)！=0否则为0

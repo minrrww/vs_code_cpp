@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+class ExamInfo
+{
+public:
+    //重载的3种构造函数，分别用等级、是否通过和百分制来初始化
+    ExamInfo(char *name, char grade) : name(name), mode(GRADE), grade(grade) {}
+    ExamInfo(char *name, bool pass) : name(name), mode(PASS), pass(pass) {}
+    ExamInfo(char *name, int percent) : name(name), mode(PERCENTAGE), percent(percent) {}
+    void show();
+
+private:
+    char *name;      //课程名称
+    enum
+    {
+        GRADE,
+        PASS,
+        PERCENTAGE
+    } mode;          //采用何种计分方式
+    union
+    {
+        char grade;  //等级制的成绩
+        bool pass;   //是否通过
+        int percent; //百分制的成绩
+    };
+};
+void ExamInfo::show()
+{
+    cout << name << ":";
+    switch (mode)
+    {
+    case GRADE:
+        cout << grade;
+        break;
+    case PASS:
+        cout << (pass ? "PASS" : "FALL");
+        break;
+    case PERCENTAGE:
+        cout << percent;
+        break;
+    }
+    cout << endl;
+}
+int main()
+{
+    ExamInfo course1("English", 'B');
+    ExamInfo course2("Calculus", true);
+    ExamInfo course3("C++Programming", 85);
+    course1.show();
+    course2.show();
+    course3.show();
+    return 0;
+}
+/*
+English:B
+Calculus:PASS
+C++Programming:85
+*/

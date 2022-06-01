@@ -1,0 +1,199 @@
+vscode无法使用github登录同步
+打开：https://www.ipaddress.com/
+搜索：github.com
+获得：140.82.112.4
+搜索：vscode-auth.github.com
+获得：
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+搜索：vscode.dev
+获得：
+13.107.213.51
+13.107.246.51
+写入hosts：
+记事本打开C:\Windows\System32\drivers\etc\hosts
+140.82.112.4  github.com
+185.199.108.153  GitHub for VS Code
+185.199.109.153  GitHub for VS Code
+185.199.110.153  GitHub for VS Code
+185.199.111.153  GitHub for VS Code
+13.107.213.51  vscode.dev
+13.107.246.51  vscode.dev
+刷新dns缓存：
+ipconfig/flushdns
+
+git命令学习
+一、基本操作
+1.查看某个命令文档
+git help<command>
+git<command>-h
+git<command>--help
+
+2.用户配置
+git config --global user.name "minrrww"
+git config --global user.email "598169426@qq.com"
+git config --global --list
+git config --list
+
+–local（默认，高级优先）：只影响本地仓库
+–global(中优先级)：只影响所有当前用户的git仓库
+–system（低优先级）：影响到全系统的git仓库
+
+3.初始化仓库
+git config --global init.defaultBranch main 默认分支
+git init
+
+4.对状态的跟踪
+git status
+git status介绍：
+git中有两个状态：内容状态和文件状态，
+内容状态标示内容文件的改变，有三个区域：工作目录，暂存区和提交区
+文件状态有两个状态：已跟踪和未跟踪
+
+5.添加文件内容到暂存区（同时文件被跟踪）
+git add
+//添加所有文件
+git add .
+
+并不是所有文件都想被跟踪，可以配置.gitignore配置忽略文件
+
+git rm--cached：仅从暂存区删除
+git rm：从暂存区与工作目录同时删除
+git rm$（git 1s-files--deleted）：删除所有被跟踪，但是在工作目录被删除的文件
+
+git -commit -m 'first commit' 从暂存区提交-m：注释
+git commit -a -m 'full commit' 从工作区提交
+
+git 1og//查看提交历史记录
+git log--online
+git log--color--graph
+
+git diff//工作区与暂存区的差异
+git diff--cached[<reference>]//暂存区与某次提交的差异，默认为HEAD git diff[<reference>]//工作区与某次提交的差异，默认为HEAD git checkout--<file>//将文件内容从暂存区复制到工作目录
+//撤销暂存区内容
+git reset HEAD<file>//将文件内容从上次提交复制到缓存区git checkout HEAD--<file>/将内容从上次提交复制到工作目录
+
+二、分支操作
+
+git branch<branchName>//创建一个分支
+git branch -d<branchName>//删除一个分支
+git branch -v/显示所有分支信息
+
+git checkout<branchName>//通过移动HEAD检出版本，可用于切换分支
+git checkout-b<branchName>//创件一个分支并切换
+git checkout <reference>//将其移动到一个引用
+git checkout-//恢复到上一个分支
+
+git checkout 也可以跟一个commitid，这时候HEAD指向这个commitid跟所有分支分离，这个状态为detached
+
+git reset 将当前分支回退到历史某个版本
+git reset--mixed<commit>//（默认）
+git reset--soft<commit>
+git reset--hard<commit>
+git reflog
+
+命令                    范例                        移动（HEAD/branch）          说明
+git reset [commit]      git reset HEAD^ --soft      是/是                        完全回退到某提交
+git reset [file]        git reset README.md         否/否                        恢复暂存区到某提交状态
+git checkout [comnit]   git checkout master         是/否                        移动当前指针HEAD到某提交
+git checkout [file]     git checkout  --README.md   否/否                        恢复工作目录到某状态
+                        git checkout HEAD --xx.log
+
+git stash 用来保存目前的工作目录和暂存区状态，并返回到干净的工作空间
+
+git stash save"push to stash area"//通过save 后面传入信息标识放到stash区
+git stash 1list//查看收藏的记录
+git stash apply stashe{e}//将保存的内容重新恢复到工作目录
+git stash drop stashe{e}//将对应的stash记录删除
+git stash pop//=git stash apply+ git stash drop
+
+git merge
+合并分支
+git cat-file -p HEAD //查看某个对象的具体信息
+git merge 基本会出现冲突
+
+merge fast-forward
+merge fast-forward//默认不会显示feature，只保留单条分支记录。git直接把HEAD指针指向合
+git merge--no-ff//指的是强行关闭fast-forward方式。可以保存之前的分支历史。能够更好的查
+git rebase//修剪提交历史基线，俗称“变基”
+git rebase--onto master 5755487
+
+git tag//对某个提交设置一个别名
+
+三、远程操作
+
+3.远程操作
+git init ~/git-server--bare//初始化一个本地的远程服务器
+git push//将本地历史推送到远程
+
+git remote：远程仓库相关配置操作
+git remote add origin ~/git-server//添加一个远程仓库的别名
+git remote -v //查看远程仓库信息
+
+git fetch：获取远程仓库的提交记录
+git fetch
+git pull  //git pull=git fetch+git merge
+
+git clone  //克隆一个远程仓库作为本地仓库
+
+
+Git 全局设置:
+git config --global user.name "minrrww"
+git config --global user.email "598169426@qq.com"
+
+git config --global --list
+git config --list
+Git 全局设置:
+git config --global user.name "minrrww"
+git config --global user.email "598169426@qq.com"
+创建 git 仓库:
+
+mkdir vs-code-cpp
+cd vs-code-cpp
+git init
+touch README.md
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:minrrww/vs_code_cpp.git
+git push -u origin "main"
+已有仓库?
+
+cd existing_git_repo
+git remote add origin git@github.com:minrrww/vs_code_cpp.git
+git push -u origin "main"
+
+
+删除远程仓库链接
+git remote rm origin
+修改远程库地址
+git remote set-url origin https://github.com/minrrww/vs-code-cpp.git
+git remote -v
+
+
+生成密钥
+ssh-keygen -t rsa -f ~/.ssh/id_rsa
+查看密钥
+cat ~/.ssh/id_rsa.pub
+
+ssh-keygen -R hostname 命令
+
+生成 known_hosts
+ssh -T git@github.com
+ssh -T git@gitee.com
+
+// 手动解决(这个比较推荐)
+git stash
+git pull
+git stash pop
+
+// 放弃本地修改，直接覆盖
+git reset --hard
+git pull
+
+
+镜像：
+https://cdn.githubjs.cf
+http://git.what996.com
+
