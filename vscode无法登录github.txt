@@ -138,7 +138,6 @@ git pull  //git pull=git fetch+git merge
 
 git clone  //克隆一个远程仓库作为本地仓库
 
-
 Git 全局设置:
 git config --global user.name "minrrww"
 git config --global user.email "598169426@qq.com"
