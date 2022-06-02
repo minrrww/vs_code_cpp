@@ -3,6 +3,7 @@
  *简单主函数：
  *读取两个数，求它们的和
  */
+using namespace std;
 int main()
 {
     //提示用户输入两个数
