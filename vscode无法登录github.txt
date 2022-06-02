@@ -168,7 +168,7 @@ git push -u origin "main"
 git remote rm origin
 设置远程库链接
 git remote add origin git@github.com:minrrww/vs_code_cpp.git
-git remote add gitee git@github.com:minrrww/vs_code_cpp.git
+git remote add gitee git@gitee.com:minrrww/vs_code_cpp.git
 重置远程库地址
 git remote set-url origin git@gitee.com/minrrww/vs_code_cpp.git
 添加远程库链接
