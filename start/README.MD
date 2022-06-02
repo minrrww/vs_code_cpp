@@ -1,4 +1,4 @@
-1.2 初识输入输出
+##1.2 初识输入输出
 C++用一个全面的iostream标准库提供IO机制
 
 iostream库：istream 输入流，ostream 输出流
@@ -14,10 +14,10 @@ ostream类型对象<<右值
 istream类型的对象>>右值
 将读取的值存入右值，写入istream类型的对象中，并返回istream类型的对象作为计算结果
 
-1.3 注释简介
+##1.3 注释简介
 注释不能嵌套
 
-1.4 控制流
+##1.4 控制流
 
 while语句：while (condition) statement
 检测condition条件，为真时执行statement，为假时停止。
