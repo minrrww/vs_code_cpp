@@ -1,8 +1,22 @@
-#primer学习笔记
+# <p align="center">primer学习笔记</p>
 
-##==第一章 开始==
-###1.2 iostream库
+## ==第一章 开始==
+### 1.1 编写一个简单的C++程序
+C++程序包含一个或多个函数，其中一个必须命名为main。
+函数包括：返回类型return type，函数名function name，形参列表parameter list，函数体function body
+``````
+//返回类型int，函数名main，形参列表()，函数体{}
+int main()
+{
+    return 0;
+}
+``````
 
+#### 1.1.1 编译、运行程序
+- 程序源文件命名约定（略）
+- 从命令行运行编译器（略）
+### 1.2 初识输入输出
+- 标准输入输出对象
 <table>
   <tr >
     <td align="center">库</td>
@@ -26,6 +40,7 @@
   </tr>
 </table>
 
+- 一个使用IO库的程序
 **例1.2 输入两个数，求它们的和**
 ``````
 #include <iostream> //#include 指令:告诉编译器，需要用iostream库
@@ -40,21 +55,22 @@ int main()
     return 0;
 }
 ``````
-- << 输出运算符
-  - ostream类型的对象<<右值
-    - 将右值写入ostream类型的对象中，返回ostream类型的对象作为计算结果
-- \>> 输入运算符
-  - istream类型的对象>>右值
-    - 将读取的值存入右值，写入istream类型的对象中，并返回istream类型的对象作为计算结果
----
-- endl操纵符
-  - 结束当前行，并将设备关联的缓冲区中的内容刷到设备中
----
-- std 命名空间
+- 向流写入数据
+  - ostream对象<<表达式expression
+  - 将表达式写入ostream类型的对象中，返回ostream类型的对象作为计算结果
+  - endl操纵符：结束当前行，并将设备关联的缓冲区中的内容刷到设备中
+- 使用标准库中的名字
+  - std 命名空间
   - cout endl cin等对象是定义在命名空间std中的
   - :: 作用域运算符
-
----
+- 从流读取数据
+  - istream对象>>对象
+  - 从给定的istream读入数据，存入给定对象汇总，返回运算符左侧运算对象作为计算结果
+- 完成程序（略）
+### 1.3 注释
+- C++注释种类
+  - 双斜杠//和注释界定符/* */
+- 注释界定符不能嵌套
 ### 1.4 控制流
 #### 1.4.1 while语句
 - while (condition) statement；【*while(条件)循环体；*】
@@ -79,7 +95,7 @@ int main()
     return 0;
 }
 ``````
----
+
 #### 1.4.2 for 语句
   - for(init-statement,condition,expression)statement； 【*for(初始化语句,条件,表达式)循环体；*】
     - 检测condition条件，为真时执行statement，为假时停止。
@@ -101,7 +117,7 @@ int main()
     return 0;
 }
 ``````
----
+
 #### 1.4.3 读取数量不定的输入数据
 **例1.4.3 读取数据直到遇到cin无效，计算所有读入的值得和**
 ``````
@@ -119,7 +135,7 @@ int main()
     return 0;
 }
 ``````
----
+
 #### 1.4.4 if 语句
   - if(condition) statement1; else statemnt2; 【*if(条件) 循环体1; else 循环体2;*】
     - 条件为真，执行循环体1，否则，执行循环体2
@@ -163,7 +179,6 @@ int main()
   - 声明错误（declaration error）
     - 每个名字都要先声明后使用
 ---
-
 ### 1.5 类简介
 #### 1.5.1 Sales_item类
 **例1.5.1 计算售出书籍的和**
@@ -338,9 +353,7 @@ int main()
 - 算术类型（arithmetic tyoe）：整型和浮点数
   - 整型（integral type）：字符、整型数、布尔值
 - 空类型（void）
----
 #### 2.1.1 算术类型
-**表2.1.1.1 C++算术类型**
 
 | 类型        | 含义           | 最小尺寸     |
 | ----------- | -------------- | ------------ |
@@ -357,9 +370,7 @@ int main()
 | double      | 双精度浮点数   | 10位有效数字 |
 | long double | 扩展精度浮点数 | 10位有效数字 |
 
----
 - 带符号类型和不带符号类型
-**表2.1.1.2 signed与unsigned**
 
 | 默认类型 | signed      | unsigned           |
 | -------- | ----------- | ------------------ |
@@ -369,12 +380,11 @@ int main()
 | long     | long        | unsigned long      |
 | long     | long        | unsigned long long |
 
----
+
 #### 2.1.2 类型转换
----
+- 含有无符号类型的表达式（略）
 #### 2.1.3 字面值常量
-- 字符与字面值
-**表2.1.3.1 字面值例子**
+- 整型和浮点型字面值
 
 | 字面值名称 | 字面值例子        |
 | ---------- | ----------------- |
@@ -383,14 +393,15 @@ int main()
 | 八进制     | 024               |
 | 十六进制   | 0x14              |
 | 浮点数     | 3.14159 3.14159e0 |
-| 字符       | 'a'               |
-| 字符串     | "Hello world"     |
-| bool       | true false        |
-| 指针       | nullptr           |
 
----
+- 字符和字符串字面值
+
+| 字面值名称 | 字面值例子    |
+| ---------- | ------------- |
+| 字符       | 'a'           |
+| 字符串     | "Hello world" |
+
 - 转义序列
-**表2.1.3.2 转移序列**
 
 | 字符常量形式 | 含义       | 十六进制 | 十六进制表示       | 八进制表示       |
 | ------------ | ---------- | -------- | ------------------ | ---------------- |
@@ -405,9 +416,7 @@ int main()
 | \"           | 双引号     | 22       | char(0x22)  '\x22' | char(042) '\042' |
 | \'           | 单引号     | 27       | char(0x27)  '\x27' | char(047) '\047' |
 
----
 - 指定字面值的类型
-**表2.1.3.3 前缀后缀**
 
 | 前缀 | 含义          | 类型     |
 | ---- | ------------- | -------- |
@@ -422,7 +431,13 @@ int main()
 | l or L         | long                   | l or L         | Long double            |
 | ll or LL       | long long              |                |                        |
 
----
+- 布尔和指针字面值
+
+| 字面值名称 | 字面值例子 |
+| ---------- | ---------- |
+| bool       | true false |
+| 指针       | nullptr    |
+
 ### 2.2 变量
 
 #### 2.2.1 变量定义
@@ -448,13 +463,11 @@ int j;//声明并定义j
 ``````
 extern double pi=3.1416；//显式初始化的声明不在时声明，是定义
 ``````
----
 - 函数体内部初始化extern标记的变量，将引发错误
 - 变量可以被多次声明，能且只能被定义一次
----
+
 #### 2.2.3 标识符
-- 标识符（identifier）由字母、数字和下划线组成，必须以字母或下划线开头，大小写敏感
----
+ C++标识符（identifier）由字母、数字和下划线组成，必须以字母或下划线开头，大小写敏感
 - 变量命名规范
   - 标识符要能体现实际含义
   - 变量名一般用小写字母
@@ -462,54 +475,54 @@ extern double pi=3.1416；//显式初始化的声明不在时声明，是定义
   - 如果标识符由多个单词组成，则单词间应有明显区分（驼峰命名法：小驼峰法：变量；大驼峰法：类名，命名空间，属性等）
 
 **表2.2.3.1：C++关键字**
-| 0   | 1          | 2            | 3         | 4                | 5        |
-| --- | ---------- | ------------ | --------- | ---------------- | -------- |
-| 1   | alingnas   | continue     | friend    | register         | true     |
-| 2   | alignof    | decltype     | goto      | reinterpret_cast | try      |
-| 3   | asm        | default      | if        | return           | typedef  |
-| 4   | auto       | delete       | inline    | short            | typeid   |
-| 5   | bool       | do           | int       | signed           | typename |
-| 6   | break      | double       | long      | sizeof           | union    |
-| 7   | case       | dynamic_cast | mutable   | static           | unsigned |
-| 8   | catch      | else         | namespace | static_assert    | using    |
-| 9   | char       | enum         | new       | static_cast      | virtual  |
-| 10  | char16_t   | explicit     | noexcept  | struct           | void     |
-| 11  | char32_t   | export       | nullptr   | switch           | volatile |
-| 12  | calss      | extern       | operator  | template         | wchar_t  |
-| 13  | const      | false        | private   | this             | while    |
-| 14  | constexpr  | float        | protected | thread_local     |          |
-| 15  | const_cast | for          | public    | throw            |          |
+|            |              |           |                  |          |
+| ---------- | ------------ | --------- | ---------------- | -------- |
+| alingnas   | continue     | friend    | register         | true     |
+| alignof    | decltype     | goto      | reinterpret_cast | try      |
+| asm        | default      | if        | return           | typedef  |
+| auto       | delete       | inline    | short            | typeid   |
+| bool       | do           | int       | signed           | typename |
+| break      | double       | long      | sizeof           | union    |
+| case       | dynamic_cast | mutable   | static           | unsigned |
+| catch      | else         | namespace | static_assert    | using    |
+| char       | enum         | new       | static_cast      | virtual  |
+| char16_t   | explicit     | noexcept  | struct           | void     |
+| char32_t   | export       | nullptr   | switch           | volatile |
+| calss      | extern       | operator  | template         | wchar_t  |
+| const      | false        | private   | this             | while    |
+| constexpr  | float        | protected | thread_local     |          |
+| const_cast | for          | public    | throw            |          |
 **表2.2.3.2：C++操作符替代名**
-| 1   | 2      | 3     | 4      | 5     | 6      | 7      | 8     | 9   | 10  | 11  |
+|     |        |       |        |       |        |        |       |     |     |     |
 | --- | ------ | ----- | ------ | ----- | ------ | ------ | ----- | --- | --- | --- |
 | and | bitand | compl | not_eq | or_eq | xor_eq | and_eq | bitor | not | or  | xor |
 
----
 #### 2.2.4 名字的作用域
-C++大多数作用域都以{}分隔
+- 作用域scope
+  - C++大多数作用域都以{}分隔
+  - 同一名字在不同作用域中可能指向不同的实体
+  - 名字的有效区域始于声明，结束于作用域末端
+  - 全局作用域global scope main和大多数定义在函数体之外的名字具有全局作用域
+  - 块作用域block scope，定义在块内的名字，在块外就无法访问
 
-同一名字在不同作用域中可能指向不同的实体
-名字的有效区域始于声明，结束于作用域末端
+- 嵌套的作用域 被包围的作用域称内层作用域inner scope，相对的为外层作用域outer scope
+  - 内层作用域可以访问外层作用域
+  - 内层作用域可以重新定义外层作用域的名字
 
-全局作用域 块作用域
-
-嵌套的作用域 被包围的作用域称内层作用域，相对的为外层作用域
-内层作用域可以访问外层作用域
-内层作用域可以重新定义外层作用域的名字
-
-2.3 复合类型：引用和指针
+### 2.3 复合类型
 声明符语句：基本数据类型（base type） 声明符（declarator）
 简单的声明符就是变量
 复杂的声明符，基于简单的声明符得到更复杂的类型，并把它指定给变量
 
-2.3.1 引用
-一般引用指左值引用（lvalue reference），另一种右值引用（rvalue reference）
-
-引用（reference）为对象起别名
-引用类型必须引用（refers to）另外一种类型的对象（引用必须被初始化）
-引用的定义：每个引用变量名必须紧跟&
+#### 2.3.1 引用
+一般引用指左值引用（lvalue reference），另一种右值引用（rvalue reference）主要用于内置类
+引用（reference）为对象起别名，引用类型必须引用（refers to）另外一种类型的对象（引用必须被初始化）
+引用不是对象
+- 引用的定义：每个引用标识符必须紧以&符号开头,引用类型必须与绑定对象严格匹配，只能绑定在对象上，不能与字面值或表达式绑定。
+``````
 int i=1024,j=2048;
 int &ri=i,&rj=j;
+``````
 所以int &可以看成int型的引用类型，ri,rj看成引用变量
 为了连续声明几个引用，int 和 &ri分开
 引用不是对象，必须初始化，给引用变量赋值，就是给所引用的对象赋值，可以看成常量指针
