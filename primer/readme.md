@@ -960,64 +960,86 @@ s1!=s2       //string对象的相等性判断对字母的大小写敏感
 <,<=,>,>=    //利用字符在字典中的顺序进行比较，且对字母的大小写敏感
 ``````
 - 读写string对象
-1.函数操作
-2.运算符新含义
-//example-3.2.2-.cpp
-#include <iostream>
-using namespace std;
-int main()
-{
-    string s, s1, s2;    //默认初始化，s是一个空字符串
-    cin >> s1;           //在cin流对象中读取值，赋给s,字符以空格为界，返回cin
-    cout << s1 << endl;  //将s写到cout流对象中，返回cout
+``````
+string s;//空字符串
+cin>>s;//将string对象读入s，遇到空白停止
+cout<<s<<endl;//输出s，如输入"   Hello World!   ",输出"Hello"
 
-    getline(cin, s2);    //在cin流对象中读取一行赋给s,返回cin，,s2中不包括换行符
-    bool b = s2.empty(); //s为空返回true,否则返回false
-    auto i = s2.size();  //返回s中字符的个数,i为size_type类型的对象
-    char c = s2[s2.size() - 1];//返回s最后一个字符
-    cout << s2 << b << i << c << endl;
-    s = s1 + s2;//连接
-    cout << s << endl;
-    //利用字符在字典中的顺序进行比较，且对字母大小写敏感名，比较第一个相异的字符大小
-    cout << (s1 < s2) << (s1 > s2) << (s1 <= s2) << (s1 >= s2) << endl;
-    s1 = s2;//用s2副本代替s1原来的值
-    cout << s1 << endl;
-    cout << s2 << endl;
-    if(s1==s2)
-        cout << (s1 != s2 )<< endl;
-    return 0;
-}
-/*
-abc abc
-abc
- abc04c
-abc abc
-0101
- abc
- abc
-0
- */
+string s1,s2;//空字符串s1,s2
+cin>>s1>>s2;//将string对象读入s1,s2，遇到空白停止
+cout<<s1<<s2<<endl;//输出两个string对象，如输入"   Hello World!   ",输出"HelloWorld"
+``````
+- 读取未知数量的string对象
+``````
+string word;
+while(cin>>word)//反复读取，知道文件末尾
+cout<<word<<endl;//输出单词，每个单词后紧跟一个换行符
+``````
+- 使用getline读取一整行
+``````
+string line;//每次读入一整行，直至到达文件末尾
+while(getline(cin,line));
+cout<<line<<endl;//line中不包含换行符，getline函数返回的换行符被丢弃了
+``````
+- string的empty和size操作
+``````
+bool b = s2.empty(); //s为空返回true,否则返回false
+auto i = s2.size();  //返回s中字符的个数,i为size_type类型的对象
+``````
+- string::size_type类型
+size函数返回的是一个string::size_type类型，该类型在类string中定义的，是一个无符号整型
+- 比较string对象
+关系运算符<、<=、>、>=分别检验一个string对象是否小于、小于等于、大于、大于等于另外一个string对象。上述这些运算符都依照（大小写敏感的）字典顺序：
+如果两个string对象的长度不同，而且较短string对象的每个字符都与较长string对象对应位置上的字符相同，就说较短string对象小于较长string对象。
+如果两个string对象在某些对应的位置上不一致，则string对象比较的结果其实是string对象中第一对相异字符比较的结果。
+``````
+string str="Hello";
+string phrase="Hello World";
+string slang="Hiya";
+//str<phrase<slang
+``````
+- 为string对象赋值
+- 两个string对象相加
+``````
+string s1="hello，",s2="world\n";
+string s3=s1+s2;//s3的内容是hello，world\n
+s1+=s2;//等价于s1=s1+s2
+``````
+- 字面值和string对象相加
+
+当把string对象和字符字面值及字符串字面值混在一条语句中使用时，必须确保每个加法运算符（+）的两侧的运算对象至少有一个是string：
+``````
+string s4=s1+"，";//正确：把一个string对象和一个字面值相加
+string s5="hello"+"，";//错误：两个运算对象都不是string
+string s6=s1+"，"+"world";//正确：每个加法运算符都有一个运算对象是string
+string s7="hello"+"，"+s2;//错误：不能把字面值直接相加
+``````
+---
 字符串字面值和string对象相加：字符串字面值不能直接相加
 字符串字面值和string对象不是同一类型
 
-3.2.3 处理string对象中的字符
+---
+#### 3.2.3 处理string对象中的字符
+在cctype头文件中定义了一组标准库函数
 cctype头文件中的函数
-isalnum(c) 当c是字母或数字时为真
-isalpha(c) 当c是字母时为真
-iscntrl(c) 当c是控制符时为真
-isdigit(c) 当c是数字时为真
-isgraph(c) 当c是不是空格但可以打印时为真
-islower(c) 当c是小写字母时为真
-isprint(c) 当c是可打印字符时为真（即c是空格或具有可视形式）
-ispunct(c) 当c是标点符号时为真
-isspace(c) 当c是空白时为真（即c使空格、横向纵向制表符、回车符、换行符、进纸符中的一种）
-isupper(c) 当c是十六进制数字时为真
+``````
+isalnum(c)  当c是字母或数字时为真
+isalpha(c)  当c是字母时为真
+iscntrl(c)  当c是控制符时为真
+isdigit(c)  当c是数字时为真
+isgraph(c)  当c是不是空格但可以打印时为真
+islower(c)  当c是小写字母时为真
+isprint(c)  当c是可打印字符时为真（即c是空格或具有可视形式）
+ispunct(c)  当c是标点符号时为真
+isspace(c)  当c是空白时为真（即c使空格、横向纵向制表符、回车符、换行符、进纸符中的一种）
+isupper(c)  当c是十六进制数字时为真
 isxdigit(c) 当c是字母或数字时为真
-tolower(c) 如果c是大写字母，输出对应的小写字母；否则原样输出c
-toupper(c) 如果c是小写字母，输出对应的大写字母；否则原样输出c
-
-处理每个字符？使用基于范围的for语句
-
+tolower(c)  如果c是大写字母，输出对应的小写字母；否则原样输出c
+toupper(c)  如果c是小写字母，输出对应的大写字母；否则原样输出c
+``````
+- 处理每个字符？使用基于范围的for语句
+for (declaration:expression)statement
+``````
 #include <iostream>
 using namespace std;
 int main()
@@ -1032,10 +1054,8 @@ int main()
          << " punctuation characters in " << s << endl;
     return 0;
 }
-/*
-3 punctuation characters in Hello World!!!
-*/
-
+``````
+``````
 #include <iostream>
 using namespace std;
 int main()
@@ -1053,13 +1073,13 @@ int main()
          << " punctuation characters in " << s << endl;
     return 0;
 }
-/*
-3 punctuation characters in HELLO WORLD!!!
-*/
+``````
 
-只处理一部分字符？
-1.使用下标
-2.使用迭代器
+- 只处理一部分字符？
+  - 使用下标
+  - 使用迭代器
+- 使用下标执行迭代
+``````
 #include <iostream>
 using namespace std;
 int main()
@@ -1085,12 +1105,9 @@ int main()
     cout << s1 << endl;
     return 0;
 }
-/*
-3 punctuation characters in HELLO WORLD!!!
-Some string
-SOME string
-*/
-
+``````
+- 使用下标执行随机访问
+``````
 #include <iostream>
 using namespace std;
 int main()
@@ -1107,54 +1124,58 @@ int main()
     cout << "Your hex number is: " << result << endl;
     return 0;
 }
-/*
-Enter a series of numbers between 0 and 15 separated by spaces. Hit ENTER when finished:
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15^Z
-Your hex number is: 123456789ABCDEF
-*/
-
-3.3 标准库类型vector
+``````
+### 3.3 标准库类型vector
 标准库类型vector表示对象的集合，其中所有对象的类型都相同，也被称为容器（container）
+``````
 #include <vector>
 using namespace std;
+``````
 c++既有类模板（class template），也有函数模板
 vector是一个类模板 模板不是类或函数，可看作编译器生成类或函数编写的一份说明
 编译器根据模板创建类或函数的过程称为实例化（istantiation）
+``````
 vector<int> ivec;//ivec保存int 类型的对象
 vector<SalesItem> salesVec;//salesVec保存SalesItem类型的对象
 vector<vector<stirng>> file;//该向量的元素是vector<string>类型的对象
+``````
 引用不是对象，vector不保护引用
 
-3.3.1 定义和初始化vector对象
+#### 3.3.1 定义和初始化vector对象
 初始化vector对象的方法
 不能使用字符串字面值创建vector对象
-//example-3.3.1-.cpp
-#include <iostream>
-#include <vector>
-using namespace std;
-int main()
-{
-    vector<int> v1;      //v1是一个空vector，int类型
-    vector<int> v2(v1);  //v2包含v1所有元素副本
-    vector<int> v3 = v1; //v3包含v1所有元素副本
-    int n = 5, val = 5;
-    vector<int> v4(n, val);//v4包含5个5
-    //vector<string> v5('5');//不能使用字符串字面值创建vector 对象
-    vector<int> v5{1, 2, 3, 4, 5, 6};    //v5包含1, 2, 3, 4, 5, 6
-    vector<int> v6 = {9, 8, 7, 6, 5, 4}; //v6包含9, 8, 7, 6, 5, 4
-    vector<int> v7 = vector<int>(v6);    //v7包含v6全部副本
-    vector<int> v8(10);                  //10个元素，都是0
-    vector<string> v9(10);               //10个元素，都是""
-    return 0;
-}
-
-
-3.3.2 向vector对象中添加元素
+``````
+vector<T>v1             //v1是一个空vector，它潜在的元素是T类型的，执行默认初始化
+vector<T>v2(v1)         //v2中包含有v1所有元素的副本
+vector<T>v2=v1          //等价于v2（v1），v2中包含有v1所有元素的副本
+vector<T>v3(n，val )    //v3包含了n个重复的元素，每个元素的值都是va1
+vector<T>v4(n)          //v4包含了n个重复地执行了值初始化的对象
+vector<T>v5{a，b，c...} //v5包含了初始值个数的元素，每个元素被赋予相应的初始值
+vector<T>v5={a，b，c...}//等价于v5{a，b，c...}
+``````
+- 列表初始化vector对象
+- 创建指定数量的元素
+- 值初始化
+- 列表初始值还是元素数量？
+``````
+vector<int> v1;      //v1是一个空vector，int类型
+vector<int> v2(v1);  //v2包含v1所有元素副本
+vector<int> v3 = v1; //v3包含v1所有元素副本
+int n = 5, val = 5;
+vector<int> v4(n, val);//v4包含5个5
+//vector<string> v5('5');//不能使用字符串字面值创建vector 对象
+vector<int> v5{1, 2, 3, 4, 5, 6};    //v5包含1, 2, 3, 4, 5, 6
+vector<int> v6 = {9, 8, 7, 6, 5, 4}; //v6包含9, 8, 7, 6, 5, 4
+vector<int> v7 = vector<int>(v6);    //v7包含v6全部副本
+vector<int> v8(10);                  //10个元素，都是0
+vector<string> v9(10);               //10个元素，都是""
+``````
+#### 3.3.2 向vector对象中添加元素
 
 vector的成员函数push_back()，向vector对象的尾端添加元素
+- 想vector对象添加元素蕴含的编程假定
 范围for语句体内不应改变其所遍历序列的大小
-不能以下标添加元素
-//example-3.3.2-.cpp
+``````
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -1203,45 +1224,45 @@ int main()
     cout << endl;
     return 0;
 }
-/*
-123
-^Z
-10099
-10011
-0       1       4       9       16      25      36      49      64      81
-100     121     144     169     196     225     256     289     324     361
-400     441     484     529     576     625     676     729     784     841
-900     961     1024    1089    1156    1225    1296    1369    1444    1521
-1600    1681    1764    1849    1936    2025    2116    2209    2304    2401
-2500    2601    2704    2809    2916    3025    3136    3249    3364    3481
-3600    3721    3844    3969    4096    4225    4356    4489    4624    4761
-4900    5041    5184    5329    5476    5625    5776    5929    6084    6241
-6400    6561    6724    6889    7056    7225    7396    7569    7744    7921
-8100    8281    8464    8649    8836    9025    9216    9409    9604    9801
-42 65 95 100 39 67 95 76 88 76 83 92 76 93^Z
-0 0 0 1 1 0 2 3 2 4 1
-*/
-
-3.4 迭代器介绍
+``````
+#### 3.3.3 其他vector操作
+与string类型相应运算符功能一致，只有当元素的值可以比较时，vector对象才能被比较
+``````
+v.empty()      //如果v不含有任何元素，返回真；否则返回假
+v.size()       //返回v中元素的个数
+v.push_back(t) //向v的尾端添加一个值为t的元素
+v[n]           //返回v中第n个位置上元素的引用
+v1=v2          //用v2中元素的拷贝替换v1中的元素
+v1={a，b，c...}//用列表中元素的拷贝替换v1中的元素
+v1==v2         //v1和v2相等当且仅当它们的元素数量相同且对应位置的元素值都相同
+v1!=v2
+<，<=，>，>=   //顾名思义，以字典顺序进行比较
+``````
+vector对象的size_size类型：vector\<T>::size_type
+- 计算vector内对象的索引
+- 不能以下标添加元素
+### 3.4 迭代器介绍
 通用的访问string对象的字符或vector对象的元素的方法，就是迭代器（iterator）
 string对象不属于容器，但和vector及其他几种容器，支持迭代器
 迭代器类似于指针
 
-3.4.1 使用迭代器
+#### 3.4.1 使用迭代器
 获取迭代器不用取地址符，迭代器类型有返回迭代器的成员
 begin 返回指向第一个元素或第一个字符的迭代器
 end 返回容器或string对象尾元素的下一位置，称为尾后迭代器（off-the-end iterator）
 如果容器为空，begin和end返回的都是尾后迭代器
 不知道迭代器的类型，用auto类型
-
-*iter  返回迭代器iter所指元素的引用
-iter->mem 解引用iter并获取该元素的名为mem的成员，等价于(*iter).mem
-++iter 令iter指向容器中的下一个元素
---iter 令iter指向容器中的上一个元素
-iter1==iter2 迭代器是否相等，如果两个迭代器指向的是同一个元素或者它们是同一个容器的尾后迭代器
-iter1！=iter2 和上面相反
-
-//example-3.4.1-.cpp
+- 迭代器运算符
+``````
+*iter        //返回迭代器iter所指元素的引用
+iter->mem    //解引用iter并获取该元素的名为mem的成员，等价于(*iter).mem
+++iter       //令iter指向容器中的下一个元素
+--iter       //令iter指向容器中的上一个元素
+iter1==iter2 //迭代器是否相等，如果两个迭代器指向的是同一个元素或者它们是同一个容器的尾后迭代器
+iter1!=iter2 //和上面相反
+``````
+- 将迭代器从一个元素移动到另一个元素
+``````
 include <iostream>
 using namespace std;
 int main()
@@ -1259,25 +1280,32 @@ int main()
     cout << s << endl;
     return 0;
 }
-/*
-Some string
-SOME string
-*/
-
+``````
+- 迭代器类型
 迭代器的类型拥有迭代器的标准库类型使用iterator和const_iterator来表示迭代器类型
-vector<int>::itertor it;//it能读写vector<int>对象的元素
-string::itertor it2;//it2能读写string对象中的字符
+``````
+vector<int>::itertor it;       //it能读写vector<int>对象的元素
+string::itertor it2;           //it2能读写string对象中的字符
 vector<int>::const_itertor it3;//it3只能读，不能写vector<int>对象的元素
-string::const_itertor it4;//it4只能读不能写string对象中的字符
+string::const_itertor it4;     //it4只能读不能写string对象中的字符
+``````
+---
+迭代器三种不同含义：迭代器概念本身，容器定义的迭代器类型，某个迭代器对象
 
-迭代器三种不同含义：迭代器概念本书，容器定义的迭代器类型，某个迭代器对象
+---
+- begin和end运算符
+  cbegin和cend运算符
+``````
 vector<int> v;
 const vector<int> cv;
-auto it1=v.begin();//it1对象类型是vector<int>::iterator
+auto it1=v.begin(); //it1对象类型是vector<int>::iterator
 auto it2=cv.begin();//it2对象类型是vector<int>::const_iterator
-
+auto it3=v.cbegin();//it3对象类型是vector<int>::const_iterator
+``````
+- 结合解引用和成员访问操作
 解引用迭代器可以获得迭代器所指的对象
-//example-3.4.1-.cpp
+先对迭代器解引用，在访问成员：(*it).empty()
+``````
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -1300,15 +1328,11 @@ int main()
         cout << *it<< endl;//只读未写可以用cbegin和cend
     return 0;
 }
-/*
-Some string
-SOME string
-Hello world
-
-Some string
-*/
-
-3.4.2 迭代器运算
+``````
+- 某些对vector对象的操作会使迭代器失效
+不能在范围for循环中添加元素
+任何一种可能改变vector对象容量的操作
+#### 3.4.2 迭代器运算
 
 iter + n   迭代器加上一个整数仍得一个迭代器，
 迭代器指示的新位置与原来相比向后移动了若干个元素
