@@ -920,39 +920,46 @@ using std::string;
 #### 3.2.1 定义和初始化string对象
 一个类可以定义很多种初始化对象的方式：或者初始值数量不同，或者初始值的类型不同
 ``````
-//example-3.2.1-.cpp
-#include <iostream>
-using namespace std;
-int main()
-{
     string s1;                  //默认初始化，s1是一个空字符串
     string s2 = s1;             //s2是s1的副本
-    string s3(s2);              //s3是s1的副本
-    string s4 = "hiya";         //s4是该字符串字面值（除最后的空字符外）的副本
-    string s5("hiya");          //s5是该字符串字面值（除最后的空字符外）的副本
-    string s6(10, 'c');         //s6的内容是cccccccccc;
-    string s7{15, 'b'};         //s7的内容是b;
-    string s8 = {"15", "cdf"};  //s8的内容是15;
-    string s9{"15", "cdf"};     //s9的内容是15;
-    string s10 = string("ABC"); //s9的内容是ABC;
-    cout << s1 << endl;
-    cout << s2 << endl;
-    cout << s3 << endl;
-    cout << s4 << endl;
-    cout << s5 << endl;
-    cout << s6 << endl;
-    cout << s7 << endl;
-    cout << s8 << endl;
-    cout << s9 << endl;
-    cout << s10 << endl;
-    return 0;
-}
+    string s3(s2);              //等价于s3=s2
+    string s4 = "hiya";         //s4是该字符串字面值的副本，除最后的空字符外
+    string s5("hiya");          //等同于s5="hiya"
+    string s6(n, 'c');          //把s6初始化为由连续n个字符c组成都字符串
+``````
+  - 直接初始化和拷贝初始化
+``````
+  string s4 = "hiya";         //拷贝初始化
+  string s5("hiya");          //直接初始化
+  string s6 = string(10,'c'); //拷贝初始化
 ``````
 可以用字符串变量、字符串字面值、圆括号、花括号、string()通过拷贝初始化“=”或直接初始化
 圆括号必须带参数，否则会被当函数声明
 花括号读取第一个字面值字符串或字符否则为空字符串
+``````
+  string s7{15, 'b'};         //s7的内容是b;
+  string s8 = {"15", "cdf"};  //s8的内容是15;
+  string s9{"15", "cdf"};     //s9的内容是15;
+  string s10 = string("ABC"); //s9的内容是ABC;
+``````
 
-3.2.2 string 对象上的操作
+
+#### 3.2.2 string对象上的操作
+string的操作
+``````
+os<<s        //将s写到输出流os当中，返回os
+is>>s        //从is中读取字符串赋给s，字符串以空白分隔，返回is
+getline(is,s)//从is中读取一行赋给s，返回is
+s.empty()    //s为空返回true，否则返回false
+s.size()     //返回s中字符的个数
+s[n]         //返回s中第n个字符的引用，位置n从0计起
+s1+s2        //返回s1和s2连接后的结果
+s1=s2        //用s2的副本代替s1中原来的字符
+s1==s2       //如果s1和s2中所含的字符完全一样，则它们相等，
+s1!=s2       //string对象的相等性判断对字母的大小写敏感
+<,<=,>,>=    //利用字符在字典中的顺序进行比较，且对字母的大小写敏感
+``````
+- 读写string对象
 1.函数操作
 2.运算符新含义
 //example-3.2.2-.cpp
