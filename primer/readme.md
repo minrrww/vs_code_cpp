@@ -720,32 +720,40 @@ const pstring cstr=0; //cstr是const pstring类型的对象，即指向char类�
 const pstring *ps;    //ps是指针，指向的对象是指针，指向的对象是指向char类型对象的常量指针
 ``````
 #### 2.5.2 auto类型说明符
-把表达式赋值给变量，如果不知道表达式的类型，用auto类型说明符
-auto定义的变量必须有初始值
+把表达式==赋值==给变量，如果不知道表达式的类型，用auto类型说明符，auto定义的变量必须有初始值
 auto在一条语句中声明多个变量，变量的初始基本数据类型必须一样
+``````
+auto i=0,*p=&i;//i是整型，p是整型指针
+//auto sz=0,pi=3.14;//错误，sz是整型，pi为浮点型
+``````
+- 复合类型、常量和auto
+  - 使用引用作为初始值时，编译器把引用的对象的类型作为auto的类型
+  - auto 一般会忽略掉顶层const，同时底层const会保留下来
+  - 希望推断出的auto类型是一个顶层const，需要明确指出
+  - 可以将引用得类型设为auto
+  - 设置一个类型为auto的引用时，初始值的顶层常量属性仍然保留，auto紧跟&和*时，理解为初始化
+  - 在同一条语句中定义多个变量，&和*只从属于某个声明符，而非基本数据类型的一部分
+``````
+int i=0,&r=i;//i是整型，r是i的别名
+auto a=r;//将r赋值给a，r绑定的对象是整型，a是整型
 
-复合类型、常量和auto
-1.使用引用作为初始值时，编译器把引用的对象的类型作为auto的类型
-2.auto 一般会忽略掉顶层const，同时底层const会保留下来
-const int ci=i;&cr=ci;
-auto b=ci;//b是一个整数（ci的顶层const被忽略）
-auto c=cr；//c是一个整数（cr是ci的别名）
+const int ci=i,&cr=ci;//ci是整型常量，cr是对整形常量的引用
+auto b=ci;//将ci赋值给b，b是整型（常量赋值给变量，ci的顶层const被忽略）
+auto c=cr；//将cr引用的对象赋值给c，c是整型（cr是ci的别名）
 auto d=&i;//d是一个整型指针
-auto e=&ci;//e是一个指向整数常量的指针，对常量去地址是底层const
-3.希望推断出的auto类型是一个顶层const，需要明确指出：
-const auto f=ci;
-4.可以将引用得类型设为auto，
-auto &g=ci;//g是一个整型常量引用，绑定到ci
-//auto &h=42;//错误，不能为非常量引用绑定字面值
-const auto &j=42;//可以为常量引用绑定字面值
-5.设置一个类型为auto的引用时，初始值的顶层常量属性仍然保留
-6.在同一条语句中定义多个变量，&和*只从属于某个声明符，而非基本数据类型的一部分
-auto k=ci，&l=i;
-auto &m=ci,*p=&ci;
-//错误：i的类型是int而&ci的类型是const int
-//auto &n=i,*p2=&ci;
+auto e=&ci;//e是一个指向整数常量的指针，对常量取地址是底层const
 
-2.5.3 decltype 类型指示符
+const auto f=ci;//希望推断出的auto类型是一个顶层const，需要明确指出
+
+auto &g=ci;//g是一个绑定整形常量对象的引用，绑定到ci
+//auto &h=42;//错误，不能为非常量引用绑定字面值，能自动识别字面值的类型，不能确定是常量，h为非常量对象引用
+const auto &j=42;//可以为常量引用绑定字面值
+
+auto k=ci，&l=i;//k是整数，l是对整型对象的引用
+auto &m=ci,*p=&ci;//m是对整型常量对象的引用，p是一个指向整型常量的指针
+//auto &n=i,*p2=&ci;//错误：i的类型是int，而p2是指向是const int对象的制作
+``````
+#### 2.5.3 decltype 类型指示符
 1.希望从表达式的类型推断出要定义的变量的类型，但不想用该表达式的值初始化变量
 decltype(f()) sum=x;//sum的类型就是函数f()d 返回类型
 decltype返回该变量的类型（包括顶层const和引用在内）
