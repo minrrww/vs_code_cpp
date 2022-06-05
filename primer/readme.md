@@ -754,13 +754,15 @@ auto &m=ci,*p=&ci;//m是对整型常量对象的引用，p是一个指向整型�
 //auto &n=i,*p2=&ci;//错误：i的类型是int，而p2是指向是const int对象的制作
 ``````
 #### 2.5.3 decltype 类型指示符
-1.希望从表达式的类型推断出要定义的变量的类型，但不想用该表达式的值初始化变量
+希望从表达式的类型推断出要定义的变量的类型，但不想用该表达式的值初始化变量
+``````
 decltype(f()) sum=x;//sum的类型就是函数f()d 返回类型
 decltype返回该变量的类型（包括顶层const和引用在内）
 const int ci=0,&cj=ci;
 decltype(ci) x=0;//x的类型是const int
 decltype(cj) y=x;//y的类型是const int &,y绑定到变量x
 //decltype(cj) z;//错误，z是一个引用，必须初始化
+``````
 引用都是作为所指对象的同义词出现，用在decltype处例外，表示自己
 
 - decltype 和引用
