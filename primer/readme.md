@@ -763,7 +763,7 @@ decltype(cj) y=x;//y的类型是const int &,y绑定到变量x
 //decltype(cj) z;//错误，z是一个引用，必须初始化
 引用都是作为所指对象的同义词出现，用在decltype处例外，表示自己
 
-2.decltype 和引用
+- decltype 和引用
 如果表达式向decltype返回一个引用类型，意味着表达式的结果对象能作为一条赋值语句的左值：
 int i=42,*p=&i,&r=i;
 decltype(r+0) b;//加法的结果是int,b是一个未初始化的int
