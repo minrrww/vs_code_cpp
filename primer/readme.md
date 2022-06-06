@@ -3,18 +3,18 @@
 
 ## 第一章 开始
 ### 1.1 编写一个简单的C++程序
-- C++程序包含一个或多个函数function，其中一个必须命名为main。
+- C++程序包含一个或多个函数(function)，其中一个必须命名为main。
 - 一个函数包括四部分：
-   - 返回类型 return type
-   - 函数名 function name
-   - 形参列表 parameter list
-   - 函数体 function body
+   - 返回类型 (return type)
+   - 函数名 (function name)
+   - 形参列表 (parameter list)
+   - 函数体 (function body)
 ```cpp
-//返回类型int，函数名main，形参列表()，函数体{}
 int main()
 {
     return 0;
 }
+//返回类型int，函数名main，形参列表()，函数体{}
 ```
 #### 1.1.1 编译、运行程序
 ##### 程序源文件命名约定
@@ -27,36 +27,35 @@ int main()
   - istream 输入流类型
   - ostream 输出流类型
 ##### 标准输入输出对象
-- cin 标准输入standard input
-- cout 标准输出 standard output
-- cerr 标准错误 standard error 输出警告和错误信息
+- cin 标准输入(standard input)
+- cout 标准输出 (standard output)
+- cerr 标准错误 (standard error) 输出警告和错误信息
 - clog 一般信息 输出程序运行时的一般信息
-
-
 ##### 一个使用IO库的程序
 ```cpp
 #include <iostream> //#include 指令:告诉编译器，需使用头文件（header）iostream库
 int main()
 {
-    std::cout << "Enter two numbers:" << std::endl;  //提示用户输入两个数
-    int v1 = 0, v2 = 0;  //保存我们读入的输入数据的变量
-    std::cin >> v1 >> v2;   //读取输入数据
+    std::cout << "Enter two numbers:" << std::endl; //提示用户输入两个数
+    int v1 = 0, v2 = 0;                             //保存我们读入的输入数据的变量
+    std::cin >> v1 >> v2;                           //读取输入数据
     std::cout << "The sum of " << v1 << " and " << v2
               << " is " << v1 + v2 << std::endl;
     return 0;
 }
 ```
 ##### 向流写入数据
-  - ostream对象<<表达式expression
-    - 将表达式写入ostream类型的对象中，返回ostream类型的对象作为计算结果
-  - endl操纵符：结束当前行，并将设备关联的缓冲区中的内容刷到设备中
+- <<运算符（<<operator）输出运算符。
+  - 将右侧运算对象的值写到左侧运算对象表示的输出流,输出运算符可以连接
+- endl操纵符：结束当前行，并将设备关联的缓冲区中的内容刷到设备中
 #####  使用标准库中的名字
-  - std 命名空间
-  - cout endl cin等对象是定义在命名空间std中的
-  - :: 作用域运算符
+- 命名空间名::对象名
+  - std::cout
+  - std::cin
+  - std::endl
 ##### 从流读取数据
-  - istream对象>>对象
-    - 从给定的istream读入数据，存入给定对象汇总，返回运算符左侧运算对象作为计算结果
+- \>>运算符（>>operator）输入运算符。
+  - 从左侧运算对象所指定的输入流读取数据，存入右侧运算对象中,输入运算符可以连接
 ##### 完成程序（略）
 ### 1.3 注释
 #####  C++注释种类
@@ -64,46 +63,41 @@ int main()
 ##### 注释界定符不能嵌套
 ### 1.4 控制流
 #### 1.4.1 while语句
-- while (condition) statement；
-  - 检测condition条件，为真时执行statement，为假时停止。
-  - condition条件为一个真或假的表达式。
+- while statement 重复执行直至特定条件为假。循环体会执行零次或多次，依赖于循环条件求值结果。
 ```cpp
 int sum = 0, val = 1;
-while (val <= 10) //只要val的值小于等于10，while循环就会持续执行
+while (val <= 10) //重复执行循环体，直至val大于10
 {
     sum += val; //将sum+val赋值给sum
     ++val;      //将val+1赋值给val
 }
 ```
-
 #### 1.4.2 for 语句
-  - for(init-statement,condition,expression) statement；
-    - 检测condition条件，为真时执行statement，为假时停止。
+- for statement 提供重复执行能力。通常用来将一个计算反复执行指定次数。
 ```cpp
 int sum = 0;
-for (int val = 1; val <= 10; ++val)   //从1加到10
+for (int val = 1; val <= 10; ++val) //从1加到10
 {
     sum += val; //将sum+val赋值给sum
 }
 ```
-
 #### 1.4.3 读取数量不定的输入数据
 ```cpp
 int sum = 0, value = 0;
-while (cin >> value) sum += value; //将sum+val赋值给sum
-//windows系统文件结束符ctrl+z，enter;linux系统文件结束符ctrl+d
+while (cin >> value)
+    sum += value; //将sum+val赋值给sum
+// windows系统文件结束符ctrl+z，enter;linux系统文件结束符ctrl+d
 //返回的cin对象无效指遇到文件结束符（end-of-file）或无效输入
 ```
-- *编译器检查程序错误*
-  - *语法错误（syntax error）*
-  - *类型错误（type error）*
-  - *声明错误（declaration error）*
-    - *每个名字都要先声明后使用*
+##### *编译器检查程序错误*
+- *语法错误（syntax error）*
+- *类型错误（type error）*
+- *声明错误（declaration error）*
+  - *每个名字都要先声明后使用*
 #### 1.4.4 if 语句
-  - if(condition) statement1; else statemnt2;
-    - 条件为真，执行循环体1，否则，执行循环体2
+- if statement 根据一个特定条件的值进行条件执行的语句。如果条件为真，执行if语句体。否则，执行else语句体（如果存在的话）。
 ```cpp
-int currVal = 0, val = 0;//currVal是我们正在统计的数；我们将读入的新值存入val
+int currVal = 0, val = 0; // currVal是我们正在统计的数；我们将读入的新值存入val
 //读取第一个数，并确保实有数据可以处理
 if (cin >> currVal)
 {
@@ -111,7 +105,7 @@ if (cin >> currVal)
     while (cin >> val)
     {                       //读取剩余的数
         if (val == currVal) //如果值相同
-            ++cnt;          //cnt自加1
+            ++cnt;          // cnt自加1
         else
         { //否则，打印前一个值得个数
             cout << currVal << " occurs "
@@ -119,14 +113,16 @@ if (cin >> currVal)
             currVal = val; //记住新值
             cnt = 1;       //重置计数器
         }
-    } //while循环在这里结束
+    } // while循环在这里结束
     //记住打印文件中最后一个值得个数
     cout << currVal << " occurs "
-          << cnt << " times" << endl;
+         << cnt << " times" << endl;
 } //最外层的if语句在这里结束
 ```
 ### 1.5 类简介
 #### 1.5.1 Sales_item类
+##### 读写Sales_item
+##### Sales_item对象的加法
 ```cpp
 #include <iostream>
 #include "Sales_item.h"
@@ -230,6 +226,7 @@ Sales_item operator+(const Sales_item &lhs, const Sales_item &rhs) //实现重�
 #endif
 ```
 #### 1.5.2 初识成员函数
+##### 什么是成员函数？
 ```c++
 #include <iostream>
 #include "Sales_item.h"
@@ -343,7 +340,7 @@ int main()
 - `:运算符（:operator）`作用域运算符。其用处之一是访问命名空间中的名字。例如，std:cout 表示命名空间std中的名字cout。
 - `=运算符（=operator）`将右侧运算对象的值赋予左侧运算对象所表示的对象。
 - `-运算符（-operator）`递减运算符。将运算对象的值减1，--i等价于i=i-1。
-- `<<运算符（<<operator）`输出运算符。将右侧运算对象的值写到左侧运算对象表示的输出流：cout<<"hi“表示将hi写到标准输出。输出运算符可以连接：cout<<"hi"<<"bye"表示将输出hibye。
+- `<<运算符（<<operator）`输出运算符。将右侧运算对象的值写到左侧运算对象表示的输出流：cout<<"hi"表示将hi写到标准输出。输出运算符可以连接：cout<<"hi"<<"bye"表示将输出hibye。
 - `>>运算符（>>operator）`输入运算符。从左侧运算对象所指定的输入流读取数据，存入右侧运算对象中：cin>>i表示从标准输入读取下一个值，存入i中。输入运算符可以连接：cin>>i>>j表示先读取一个值存入i，再读取一个值存入j。
 - `#include`头文件包含指令，使头文件中代码可被程序使用。
 - `==运算符（==operator）`相等运算符。检测左侧运算对象是否等于右侧运算对象。
@@ -455,7 +452,7 @@ int main()
   - 赋值：擦出当前值，以新值替代
 ##### 列表初始化
   - 一组用花括号括起来的初始值
-#####  默认初始化
+##### 默认初始化
   - 定义于任何函数体外地变量被初始化为0
   - 定义在函数体内部的内置类型变量将不被初始化
 #### 2.2.2 声明变量和定义的关系
@@ -483,29 +480,26 @@ extern double pi=3.1416；//显式初始化的声明不在时声明，是定义
 - 如果标识符由多个单词组成，则单词间应有明显区分（驼峰命名法：小驼峰法：变量；大驼峰法：类名，命名空间，属性等）
 
 - C++关键字
+<table>
+<tr><td>alingnas</td><td>continue</td><td>friend</td><td>register</td><td>true</td></tr>
+<tr><td>alignof</td><td>decltype</td><td>goto</td><td>reinterpret_cast</td><td>try</td></tr>
+<tr><td>asm</td><td>default</td><td>if</td><td>return</td><td>typedef</td></tr>
+<tr><td>auto</td><td>delete</td><td>inline</td><td>short</td><td>typeid</td></tr>
+<tr><td>bool</td><td>do</td><td>int</td><td>signed</td><td>typename</td></tr>
+<tr><td>break</td><td>double</td><td>long</td><td>sizeof</td><td>union</td></tr>
+<tr><td>case</td><td>dynamic_cast</td><td>mutable</td><td>static</td><td>unsigned</td></tr>
+<tr><td>catch</td><td>else</td><td>namespace</td><td>static_assert</td><td>using</td></tr>
+<tr><td>char</td><td>enum</td><td>new</td><td>static_cast</td><td>virtual</td></tr>
+<tr><td>char16_t</td><td>explicit</td><td>noexcept</td><td>struct</td><td>void</td></tr>
+<tr><td>char32_t</td><td>export</td><td>nullptr</td><td>switch</td><td>volatile</td></tr>
+<tr><td>calss</td><td>extern</td><td>operator</td><td>template</td><td>wchar_t</td></tr>
+<tr><td>const</td><td>false</td><td>private</td><td>this</td><td>while</td></tr>
+<tr><td>constexpr</td><td>float</td><td>protected</td><td>thread_local</td><td></td></tr>
+<tr><td>const_cast</td><td>for</td><td>public</td><td>throw</td><td></td></tr>
+</table>
 
-|            |              |           |                  |          |
-| ---------- | ------------ | --------- | ---------------- | -------- |
-| alingnas   | continue     | friend    | register         | true     |
-| alignof    | decltype     | goto      | reinterpret_cast | try      |
-| asm        | default      | if        | return           | typedef  |
-| auto       | delete       | inline    | short            | typeid   |
-| bool       | do           | int       | signed           | typename |
-| break      | double       | long      | sizeof           | union    |
-| case       | dynamic_cast | mutable   | static           | unsigned |
-| catch      | else         | namespace | static_assert    | using    |
-| char       | enum         | new       | static_cast      | virtual  |
-| char16_t   | explicit     | noexcept  | struct           | void     |
-| char32_t   | export       | nullptr   | switch           | volatile |
-| calss      | extern       | operator  | template         | wchar_t  |
-| const      | false        | private   | this             | while    |
-| constexpr  | float        | protected | thread_local     |          |
-| const_cast | for          | public    | throw            |          |
 - C++操作符替代名
-
-|     |        |       |        |       |        |        |       |     |     |     |
-| --- | ------ | ----- | ------ | ----- | ------ | ------ | ----- | --- | --- | --- |
-| and | bitand | compl | not_eq | or_eq | xor_eq | and_eq | bitor | not | or  | xor |
+<table><tr><td> and </td><td> bitand </td><td> compl </td><td> not_eq </td><td> or_eq </td><td> xor_eq </td><td> and_eq </td><td> bitor </td><td> not </td><td> or  </td><td> xor </td></tr></table>
 
 #### 2.2.4 名字的作用域
 - 作用域scope
@@ -990,14 +984,14 @@ using namespace std;
 ##### 头文件中不应包含using声明
 - 如果头文件中有了using声明，每个使用了头文件的文件就都会有using声明，容易产生始料未及的名字冲突
 ### 3.2 标准库类型 string
-使用string前，要包含string
+- 使用string前，要包含string
 ```cpp
 #include <string>
 using std::string;
 ```
 #### 3.2.1 定义和初始化string对象
-一个类可以定义很多种初始化对象的方式：或者初始值数量不同，或者初始值的类型不同
-```
+- 一个类可以定义很多种初始化对象的方式：或者初始值数量不同，或者初始值的类型不同
+```cpp
     string s1;                  //默认初始化，s1是一个空字符串
     string s2 = s1;             //s2是s1的副本
     string s3(s2);              //等价于s3=s2
@@ -1005,40 +999,39 @@ using std::string;
     string s5("hiya");          //等同于s5="hiya"
     string s6(n, 'c');          //把s6初始化为由连续n个字符c组成都字符串
 ```
-  - 直接初始化和拷贝初始化
+##### 直接初始化和拷贝初始化
 ```
   string s4 = "hiya";         //拷贝初始化
   string s5("hiya");          //直接初始化
   string s6 = string(10,'c'); //拷贝初始化
 ```
-可以用字符串变量、字符串字面值、圆括号、花括号、string()通过拷贝初始化“=”或直接初始化
-圆括号必须带参数，否则会被当函数声明
-花括号读取第一个字面值字符串或字符否则为空字符串
+- 可以用字符串变量、字符串字面值、圆括号、花括号、string()通过拷贝初始化“=”或直接初始化
+- 圆括号必须带参数，否则会被当函数声明
+- 花括号读取第一个字面值字符串或字符否则为空字符串
+```cpp
+string s7{15, 'b'};         //s7的内容是b;
+string s8 = {"15", "cdf"};  //s8的内容是15;
+string s9{"15", "cdf"};     //s9的内容是15;
+string s10 = string("ABC"); //s9的内容是ABC;
 ```
-  string s7{15, 'b'};         //s7的内容是b;
-  string s8 = {"15", "cdf"};  //s8的内容是15;
-  string s9{"15", "cdf"};     //s9的内容是15;
-  string s10 = string("ABC"); //s9的内容是ABC;
-```
-
-
 #### 3.2.2 string对象上的操作
-string的操作
-```
-os<<s        //将s写到输出流os当中，返回os
-is>>s        //从is中读取字符串赋给s，字符串以空白分隔，返回is
-getline(is,s)//从is中读取一行赋给s，返回is
-s.empty()    //s为空返回true，否则返回false
-s.size()     //返回s中字符的个数
-s[n]         //返回s中第n个字符的引用，位置n从0计起
-s1+s2        //返回s1和s2连接后的结果
-s1=s2        //用s2的副本代替s1中原来的字符
-s1==s2       //如果s1和s2中所含的字符完全一样，则它们相等，
-s1!=s2       //string对象的相等性判断对字母的大小写敏感
-<,<=,>,>=    //利用字符在字典中的顺序进行比较，且对字母的大小写敏感
-```
-- 读写string对象
-```
+- string的操作
+<table>
+<tr><td>os<<s</td><td>将s写到输出流os当中，返回os</td></tr>
+<tr><td>is>>s</td><td>从is中读取字符串赋给s，字符串以空白分隔，返回is</td></tr>
+<tr><td>getline(is,s)</td><td>从is中读取一行赋给s，返回is</td></tr>
+<tr><td>s.empty()</td><td>s为空返回true，否则返回false</td></tr>
+<tr><td>s.size()</td><td>返回s中字符的个数</td></tr>
+<tr><td>s[n]</td><td>返回s中第n个字符的引用，位置n从0计起</td></tr>
+<tr><td>s1+s2</td><td>返回s1和s2连接后的结果</td></tr>
+<tr><td>s1=s2</td><td>用s2的副本代替s1中原来的字符</td></tr>
+<tr><td>s1==s2</td><td>如果s1和s2中所含的字符完全一样，则它们相等，</td></tr>
+<tr><td>s1!=s2</td><td>string对象的相等性判断对字母的大小写敏感</td></tr>
+<tr><td><,<=,>,>=</td><td>利用字符在字典中的顺序进行比较，且对字母的大小写敏感</td></tr>
+</table>
+
+##### 读写string对象
+```cpp
 string s;//空字符串
 cin>>s;//将string对象读入s，遇到空白停止
 cout<<s<<endl;//输出s，如输入"   Hello World!   ",输出"Hello"
@@ -1047,77 +1040,76 @@ string s1,s2;//空字符串s1,s2
 cin>>s1>>s2;//将string对象读入s1,s2，遇到空白停止
 cout<<s1<<s2<<endl;//输出两个string对象，如输入"   Hello World!   ",输出"HelloWorld"
 ```
-- 读取未知数量的string对象
-```
+##### 读取未知数量的string对象
+```cpp
 string word;
 while(cin>>word)//反复读取，知道文件末尾
 cout<<word<<endl;//输出单词，每个单词后紧跟一个换行符
 ```
-- 使用getline读取一整行
-```
+##### 使用getline读取一整行
+```cpp
 string line;//每次读入一整行，直至到达文件末尾
 while(getline(cin,line));
 cout<<line<<endl;//line中不包含换行符，getline函数返回的换行符被丢弃了
 ```
-- string的empty和size操作
-```
+##### string的empty和size操作
+```cpp
 bool b = s2.empty(); //s为空返回true,否则返回false
 auto i = s2.size();  //返回s中字符的个数,i为size_type类型的对象
 ```
-- string::size_type类型
-size函数返回的是一个string::size_type类型，该类型在类string中定义的，是一个无符号整型
-- 比较string对象
-关系运算符<、<=、>、>=分别检验一个string对象是否小于、小于等于、大于、大于等于另外一个string对象。上述这些运算符都依照（大小写敏感的）字典顺序：
-如果两个string对象的长度不同，而且较短string对象的每个字符都与较长string对象对应位置上的字符相同，就说较短string对象小于较长string对象。
-如果两个string对象在某些对应的位置上不一致，则string对象比较的结果其实是string对象中第一对相异字符比较的结果。
-```
+##### string::size_type类型
+- size函数返回的是一个string::size_type类型，该类型在类string中定义的，是一个无符号整型
+##### 比较string对象
+- 关系运算符<、<=、>、>=分别检验一个string对象是否小于、小于等于、大于、大于等于另外一个string对象。上述这些运算符都依照（大小写敏感的）字典顺序：
+  - 如果两个string对象的长度不同，而且较短string对象的每个字符都与较长string对象对应位置上的字符相同，就说较短string对象小于较长string对象。
+  - 如果两个string对象在某些对应的位置上不一致，则string对象比较的结果其实是string对象中第一对相异字符比较的结果。
+```cpp
 string str="Hello";
 string phrase="Hello World";
 string slang="Hiya";
 //str<phrase<slang
 ```
-- 为string对象赋值
-- 两个string对象相加
-```
+##### 为string对象赋值
+##### 两个string对象相加
+```cpp
 string s1="hello，",s2="world\n";
 string s3=s1+s2;//s3的内容是hello，world\n
 s1+=s2;//等价于s1=s1+s2
 ```
-- 字面值和string对象相加
-
-当把string对象和字符字面值及字符串字面值混在一条语句中使用时，必须确保每个加法运算符（+）的两侧的运算对象至少有一个是string：
-```
+##### 字面值和string对象相加
+- 当把string对象和字符字面值及字符串字面值混在一条语句中使用时，必须确保每个加法运算符（+）的两侧的运算对象至少有一个是string：
+```cpp
 string s4=s1+"，";//正确：把一个string对象和一个字面值相加
 string s5="hello"+"，";//错误：两个运算对象都不是string
 string s6=s1+"，"+"world";//正确：每个加法运算符都有一个运算对象是string
 string s7="hello"+"，"+s2;//错误：不能把字面值直接相加
 ```
----
-字符串字面值和string对象相加：字符串字面值不能直接相加
-字符串字面值和string对象不是同一类型
+- 字符串字面值和string对象相加：字符串字面值不能直接相加
+- 字符串字面值和string对象不是同一类型
 
 ---
 #### 3.2.3 处理string对象中的字符
-在cctype头文件中定义了一组标准库函数
-cctype头文件中的函数
-```
-isalnum(c)  当c是字母或数字时为真
-isalpha(c)  当c是字母时为真
-iscntrl(c)  当c是控制符时为真
-isdigit(c)  当c是数字时为真
-isgraph(c)  当c是不是空格但可以打印时为真
-islower(c)  当c是小写字母时为真
-isprint(c)  当c是可打印字符时为真（即c是空格或具有可视形式）
-ispunct(c)  当c是标点符号时为真
-isspace(c)  当c是空白时为真（即c使空格、横向纵向制表符、回车符、换行符、进纸符中的一种）
-isupper(c)  当c是十六进制数字时为真
-isxdigit(c) 当c是字母或数字时为真
-tolower(c)  如果c是大写字母，输出对应的小写字母；否则原样输出c
-toupper(c)  如果c是小写字母，输出对应的大写字母；否则原样输出c
-```
-- 处理每个字符？使用基于范围的for语句
-for (declaration:expression)statement
-```
+- 在cctype头文件中定义了一组标准库函数
+##### cctype头文件中的函数
+<table>
+<tr><td>isalnum(c)</td><td>当c是字母或数字时为真</td></tr>
+<tr><td>isalpha(c)</td><td>当c是字母时为真</td></tr>
+<tr><td>iscntrl(c)</td><td>当c是控制符时为真</td></tr>
+<tr><td>isdigit(c)</td><td>当c是数字时为真</td></tr>
+<tr><td>isgraph(c)</td><td>当c是不是空格但可以打印时为真</td></tr>
+<tr><td>islower(c)</td><td>当c是小写字母时为真</td></tr>
+<tr><td>isprint(c)</td><td>当c是可打印字符时为真（即c是空格或具有可视形式）</td></tr>
+<tr><td>ispunct(c)</td><td>当c是标点符号时为真</td></tr>
+<tr><td>isspace(c)</td><td>当c是空白时为真（即c使空格、横向纵向制表符、回车符、换行符、进纸符中的一种）</td></tr>
+<tr><td>isupper(c)</td><td>当c是十六进制数字时为真</td></tr>
+<tr><td>isxdigit(c)</td><td>当c是字母或数字时为真</td></tr>
+<tr><td>tolower(c)</td><td>如果c是大写字母，输出对应的小写字母；否则原样输出c</td></tr>
+<tr><td>toupper(c)</td><td>如果c是小写字母，输出对应的大写字母；否则原样输出c</td></tr>
+</table>
+
+##### 处理每个字符？使用基于范围的for语句
+- for (declaration:expression)statement
+```cpp
 #include <iostream>
 using namespace std;
 int main()
@@ -1133,7 +1125,8 @@ int main()
     return 0;
 }
 ```
-```
+##### 使用范围for语句改变字符串中的字符
+```cpp
 #include <iostream>
 using namespace std;
 int main()
@@ -1152,12 +1145,11 @@ int main()
     return 0;
 }
 ```
-
-- 只处理一部分字符？
+##### 只处理一部分字符？
   - 使用下标
   - 使用迭代器
-- 使用下标执行迭代
-```
+##### 使用下标执行迭代
+```cpp
 #include <iostream>
 using namespace std;
 int main()
@@ -1184,8 +1176,8 @@ int main()
     return 0;
 }
 ```
-- 使用下标执行随机访问
-```
+##### 使用下标执行随机访问
+```cpp
 #include <iostream>
 using namespace std;
 int main()
@@ -1204,25 +1196,25 @@ int main()
 }
 ```
 ### 3.3 标准库类型vector
-标准库类型vector表示对象的集合，其中所有对象的类型都相同，也被称为容器（container）
-```
+- 标准库类型vector表示对象的集合，其中所有对象的类型都相同，也被称为容器（container）
+```cpp
 #include <vector>
 using namespace std;
 ```
-c++既有类模板（class template），也有函数模板
-vector是一个类模板 模板不是类或函数，可看作编译器生成类或函数编写的一份说明
-编译器根据模板创建类或函数的过程称为实例化（istantiation）
-```
+- c++既有类模板（class template），也有函数模板
+- vector是一个类模板 模板不是类或函数，可看作编译器生成类或函数编写的一份说明
+- 编译器根据模板创建类或函数的过程称为实例化（istantiation）
+```cpp
 vector<int> ivec;//ivec保存int 类型的对象
 vector<SalesItem> salesVec;//salesVec保存SalesItem类型的对象
 vector<vector<stirng>> file;//该向量的元素是vector<string>类型的对象
 ```
-引用不是对象，vector不保护引用
+- 引用不是对象，vector不保护引用
 
 #### 3.3.1 定义和初始化vector对象
-初始化vector对象的方法
-不能使用字符串字面值创建vector对象
-```
+- 初始化vector对象的方法
+- 不能使用字符串字面值创建vector对象
+```cpp
 vector<T>v1             //v1是一个空vector，它潜在的元素是T类型的，执行默认初始化
 vector<T>v2(v1)         //v2中包含有v1所有元素的副本
 vector<T>v2=v1          //等价于v2（v1），v2中包含有v1所有元素的副本
@@ -1231,11 +1223,11 @@ vector<T>v4(n)          //v4包含了n个重复地执行了值初始化的对象
 vector<T>v5{a，b，c...} //v5包含了初始值个数的元素，每个元素被赋予相应的初始值
 vector<T>v5={a，b，c...}//等价于v5{a，b，c...}
 ```
-- 列表初始化vector对象
-- 创建指定数量的元素
-- 值初始化
-- 列表初始值还是元素数量？
-```
+##### 列表初始化vector对象
+##### 创建指定数量的元素
+##### 值初始化
+##### 列表初始值还是元素数量？
+```cpp
 vector<int> v1;      //v1是一个空vector，int类型
 vector<int> v2(v1);  //v2包含v1所有元素副本
 vector<int> v3 = v1; //v3包含v1所有元素副本
@@ -1250,10 +1242,10 @@ vector<string> v9(10);               //10个元素，都是""
 ```
 #### 3.3.2 向vector对象中添加元素
 
-vector的成员函数push_back()，向vector对象的尾端添加元素
-- 想vector对象添加元素蕴含的编程假定
-范围for语句体内不应改变其所遍历序列的大小
-```
+- vector的成员函数push_back()，向vector对象的尾端添加元素
+##### 想vector对象添加元素蕴含的编程假定
+- 范围for语句体内不应改变其所遍历序列的大小
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -1304,34 +1296,36 @@ int main()
 }
 ```
 #### 3.3.3 其他vector操作
-与string类型相应运算符功能一致，只有当元素的值可以比较时，vector对象才能被比较
-```
-v.empty()      //如果v不含有任何元素，返回真；否则返回假
-v.size()       //返回v中元素的个数
-v.push_back(t) //向v的尾端添加一个值为t的元素
-v[n]           //返回v中第n个位置上元素的引用
-v1=v2          //用v2中元素的拷贝替换v1中的元素
-v1={a，b，c...}//用列表中元素的拷贝替换v1中的元素
-v1==v2         //v1和v2相等当且仅当它们的元素数量相同且对应位置的元素值都相同
-v1!=v2
-<，<=，>，>=   //顾名思义，以字典顺序进行比较
-```
-vector对象的size_size类型：vector\<T>::size_type
-- 计算vector内对象的索引
-- 不能以下标添加元素
+- 与string类型相应运算符功能一致，只有当元素的值可以比较时，vector对象才能被比较
+##### vector支持的操作
+<table>
+<tr><td>v.empty()</td><td>//如果v不含有任何元素，返回真；否则返回假</td></tr>
+<tr><td>v.size()</td><td>//返回v中元素的个数</td></tr>
+<tr><td>v.push_back(t)</td><td>//向v的尾端添加一个值为t的元素</td></tr>
+<tr><td>v[n]</td><td>//返回v中第n个位置上元素的引用</td></tr>
+<tr><td>v1=v2</td><td>//用v2中元素的拷贝替换v1中的元素</td></tr>
+<tr><td>v1={a，b，c...}</td><td>//用列表中元素的拷贝替换v1中的元素</td></tr>
+<tr><td>v1==v2</td><td>//v1和v2相等当且仅当它们的元素数量相同且对应位置的元素值都相同</td></tr>
+<tr><td>v1!=v2</td><td></td></tr>
+<tr><td><，<=，>，>=</td><td>//顾名思义，以字典顺序进行比较</td></tr>
+</table>
+
+- vector对象的size_size类型：vector\<T>::size_type
+##### 计算vector内对象的索引
+##### 不能以下标添加元素
 ### 3.4 迭代器介绍
-通用的访问string对象的字符或vector对象的元素的方法，就是迭代器（iterator）
-string对象不属于容器，但和vector及其他几种容器，支持迭代器
-迭代器类似于指针
+- 通用的访问string对象的字符或vector对象的元素的方法，就是迭代器（iterator）
+- string对象不属于容器，但和vector及其他几种容器，支持迭代器
+- 迭代器类似于指针
 
 #### 3.4.1 使用迭代器
-获取迭代器不用取地址符，迭代器类型有返回迭代器的成员
-begin 返回指向第一个元素或第一个字符的迭代器
-end 返回容器或string对象尾元素的下一位置，称为尾后迭代器（off-the-end iterator）
-如果容器为空，begin和end返回的都是尾后迭代器
-不知道迭代器的类型，用auto类型
-- 迭代器运算符
-```
+- 获取迭代器不用取地址符，迭代器类型有返回迭代器的成员
+- begin 返回指向第一个元素或第一个字符的迭代器
+- end 返回容器或string对象尾元素的下一位置，称为尾后迭代器（off-the-end iterator）
+- 如果容器为空，begin和end返回的都是尾后迭代器
+- 不知道迭代器的类型，用auto类型
+##### 迭代器运算符
+```cpp
 *iter        //返回迭代器iter所指元素的引用
 iter->mem    //解引用iter并获取该元素的名为mem的成员，等价于(*iter).mem
 ++iter       //令iter指向容器中的下一个元素
@@ -1339,8 +1333,8 @@ iter->mem    //解引用iter并获取该元素的名为mem的成员，等价于(
 iter1==iter2 //迭代器是否相等，如果两个迭代器指向的是同一个元素或者它们是同一个容器的尾后迭代器
 iter1!=iter2 //和上面相反
 ```
-- 将迭代器从一个元素移动到另一个元素
-```
+##### 将迭代器从一个元素移动到另一个元素
+```cpp
 include <iostream>
 using namespace std;
 int main()
@@ -1359,31 +1353,28 @@ int main()
     return 0;
 }
 ```
-- 迭代器类型
-迭代器的类型拥有迭代器的标准库类型使用iterator和const_iterator来表示迭代器类型
-```
+##### 迭代器类型
+- 迭代器的类型拥有迭代器的标准库类型使用iterator和const_iterator来表示迭代器类型
+```cpp
 vector<int>::itertor it;       //it能读写vector<int>对象的元素
 string::itertor it2;           //it2能读写string对象中的字符
 vector<int>::const_itertor it3;//it3只能读，不能写vector<int>对象的元素
 string::const_itertor it4;     //it4只能读不能写string对象中的字符
 ```
----
-迭代器三种不同含义：迭代器概念本身，容器定义的迭代器类型，某个迭代器对象
-
----
-- begin和end运算符
-  cbegin和cend运算符
-```
+*迭代器三种不同含义：迭代器概念本身，容器定义的迭代器类型，某个迭代器对象*
+##### begin和end运算符
+- cbegin和cend运算符
+```cpp
 vector<int> v;
 const vector<int> cv;
 auto it1=v.begin(); //it1对象类型是vector<int>::iterator
 auto it2=cv.begin();//it2对象类型是vector<int>::const_iterator
 auto it3=v.cbegin();//it3对象类型是vector<int>::const_iterator
 ```
-- 结合解引用和成员访问操作
-解引用迭代器可以获得迭代器所指的对象
-先对迭代器解引用，在访问成员：(*it).empty()
-```
+##### 结合解引用和成员访问操作
+- 解引用迭代器可以获得迭代器所指的对象
+- 先对迭代器解引用，在访问成员：(*it).empty()
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -1407,23 +1398,24 @@ int main()
     return 0;
 }
 ```
-- 某些对vector对象的操作会使迭代器失效
-不能在范围for循环中添加元素
-任何一种可能改变vector对象容量的操作
+##### 某些对vector对象的操作会使迭代器失效
+- 不能在范围for循环中添加元素
+- 任何一种可能改变vector对象容量的操作
 #### 3.4.2 迭代器运算
 vector和string迭代器支持的运算
-| 运算式        | 说明                                                                                                                                                                                    |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| iter+n        | 迭代器加上一个整数值仍得一个迭代器，迭代器指示的新位置与原来相比向前移动了若干个元素。<br/>结果迭代器或者指示容器内的一个元素，或者指示容器尾元素的下一位置                             |
-| iter-n        | 迭代器减去一个整数值仍得一个迭代器，迭代器指示的新位置与原来相比向后移动了若干个元素。<br/>结果迭代器或者指示容器内的一个元素，或者指示容器尾元素的下一位置                             |
-| iter1+=n      | 迭代器加法的复合赋值语句，将iter1加n的结果赋给iter1                                                                                                                                     |
-| iter1-=n      | 迭代器减法的复合赋值语句，将iter1减n的结果赋给iter1                                                                                                                                     |
-| iter1-iter2   | 两个迭代器相减的结果是它们之间的距离，也就是说，将运算符右侧的迭代器向前移动差值个元素后将得到左侧的迭代器。<br/>参与运算的两个迭代器必须指向的是同一个容器中的元素或者尾元素的下一位置 |
-| \>、>=、<、<= | 迭代器的关系运算符，如果某迭代器指向的容器位置在另一个迭代器所指位置之前，则说前者小于后者。<br/>参与运算的两个迭代器必须指向的是同一个容器中的元素或者尾元素的下一位置                 |
-- 迭代器的算术运算
-迭代器的距离，同一个vector对象迭代器相减，类型为difference_type,带符号整型，可正可负
-- 使用迭代器运算
-```
+<table>
+<tr><td>iter+n</td><td>迭代器加上一个整数值仍得一个迭代器，迭代器指示的新位置与原来相比向前移动了若干个元素。<br/>结果迭代器或者指示容器内的一个元素，或者指示容器尾元素的下一位置</td></tr>
+<tr><td>iter-n</td><td>迭代器减去一个整数值仍得一个迭代器，迭代器指示的新位置与原来相比向后移动了若干个元素。<br/>结果迭代器或者指示容器内的一个元素，或者指示容器尾元素的下一位置</td></tr>
+<tr><td>iter1+=n</td><td>迭代器加法的复合赋值语句，将iter1加n的结果赋给iter1</td></tr>
+<tr><td>iter1-=n</td><td>迭代器减法的复合赋值语句，将iter1减n的结果赋给iter1</td></tr>
+<tr><td>iter1-iter2</td><td>两个迭代器相减的结果是它们之间的距离，也就是说，将运算符右侧的迭代器向前移动差值个元素后将得到左侧的迭代器。<br/>参与运算的两个迭代器必须指向的是同一个容器中的元素或者尾元素的下一位置</td></tr>
+<tr><td>\>、>=、<、<=</td><td>迭代器的关系运算符，如果某迭代器指向的容器位置在另一个迭代器所指位置之前，则说前者小于后者。<br/>参与运算的两个迭代器必须指向的是同一个容器中的元素或者尾元素的下一位置</td></tr>
+</table>
+
+##### 迭代器的算术运算
+- 迭代器的距离，同一个vector对象迭代器相减，类型为difference_type,带符号整型，可正可负
+##### 使用迭代器运算
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -1451,15 +1443,15 @@ int main()
 ```
 
 ### 3.5 数组
-数组是一种类似标准类型vector的数据结构
-相似：数组也是存放类型相同的对象的容器，这些对象本身没有名字，需要通过其所在位置访问
-不同：数组的大小确定不变，不能随意向数组中增加元素
+- 数组是一种类似标准类型vector的数据结构
+- 相似：数组也是存放类型相同的对象的容器，这些对象本身没有名字，需要通过其所在位置访问
+- 不同：数组的大小确定不变，不能随意向数组中增加元素
 
 #### 3.5.1 定义和初始化内置数组
-数组是一种符合类型
-声明形如a[d]，a是数组的名字，d是数组的维度，说明数组中元素的个数，必须大于0
-数组的维度，编译的时候维度应该是已知的
-```
+- 数组是一种符合类型
+- 声明形如a[d]，a是数组的名字，d是数组的维度，说明数组中元素的个数，必须大于0
+- 数组的维度，编译的时候维度应该是已知的
+```cpp
 unsigned cnt=42;          //不是常量表达式
 constexpr unsigned sz=42; //常量表达式
 int arr[10];              //含有10个整数的数组
@@ -1467,16 +1459,16 @@ int *parr[sz];            //含有42个整型指针的数组
 //string bad[cnt];        //错误：cnt不是常量表达式
 string strs[get_size()];  //当get_size是constexpr时正确；否则错误
 ```
-数组的元素被默认初始化
-函数内部定义内置数组，默认初始化数组含有未定义的值
+- 数组的元素被默认初始化
+- 函数内部定义内置数组，默认初始化数组含有未定义的值
 
-定义数组时必须指定数组的类型，不能用auto关键字
-数组元素应为对象，不存在引用的数组
+- 定义数组时必须指定数组的类型，不能用auto关键字
+- 数组元素应为对象，不存在引用的数组
 
-- 显式初始化数组元素
-显示初始化数组，可以忽略数组的维度
-初始值的总数量应该比维度小
-```
+##### 显式初始化数组元素
+- 显示初始化数组，可以忽略数组的维度
+- 初始值的总数量应该比维度小
+```cpp
 const unsigned sz=3;
 int ia1[sz]={0,1,2};      //含有三个元素的数组，元素值分别是0,1，2
 int a2[]={0,1,2};         //维度是3的数组
@@ -1484,28 +1476,28 @@ int a3[5]={0,1,2};        //等价于a3[]={0,1,2,0,0}
 string a4[3]={"hi","bye"};//等价于a4[]={"hi","bye",""}
 int a5[2]={0,1,2};        //错误，初始值过多
 ```
-- 字符数组的特殊性
-字符串字面值 默认 结尾处还有一个空字符
-```
+##### 字符数组的特殊性
+- 字符串字面值 默认 结尾处还有一个空字符
+```cpp
 char a1[]={'C','+',"+'};     //列表初始化，没有空字符
 char a2[]={'C','+',"+','\0'};//列表初始化，含显式的空字符
 char a3[]="C++";             //自动添加表示字符串结束的空字符
 //const char a4[6]="Daniel"; //错误，没有空间可存放空字符
 ```
-- 不允许拷贝和赋值
-不能将数组的内容拷贝给其他数组作为初始值，也不能用数组为其他数组赋值
+##### 不允许拷贝和赋值
+- 不能将数组的内容拷贝给其他数组作为初始值，也不能用数组为其他数组赋值
 
-- 理解复杂的数组声明
-数组能存放大多数类型的对象
-数组本身也是对象，允许定义数组的指针及数组的引用
-```
+##### 理解复杂的数组声明
+- 数组能存放大多数类型的对象
+- 数组本身也是对象，允许定义数组的指针及数组的引用
+```cpp
 int *ptrs[10];         //ptrs是含有10个整型指针元素的数组
 //int &refs[10];       //错误：不存在元素是引用的数组
 int (*parray)[10]=&arr;//parray 指向一个含有10个整数的数组
 int (&arrRef)[10]=arr; //arrRef引用一个含有10个整数的数组
 int *(&arry)[10]=ptrs; //arry是数组的引用，该数组含有10个指针
 ```
-要理解数组声明的含义，最好的办法是从数组的名字开始按照由内向外的顺序阅读
+- 要理解数组声明的含义，最好的办法是从数组的名字开始按照由内向外的顺序阅读
 
 #### 3.5.2 访问数组的元素
 - 与vector和string一样，使用范围for语句或下标运算符来访问
@@ -1527,85 +1519,96 @@ cout << endl;
 - 下标值范围(0,size()]
 #### 3.5.3 指针和数组
 - 数组名为指向数组第一个元素的指针
-使用数组名作为auto变量的初始值时，推断出的类型是指针而不是数组
-    string nums[] = {"one", "two", "three"}; //数组的元素是string对象
-    string *pstr1 = &nums[0];                //pstr1指向nums的第一个元素
-    string *pstr2 = nums;                    //等价于*pstr2=&nums[0]
-    cout << *pstr1 << " " << *pstr2 << endl; //输出pstr1,pstr2指向的对象
-    cout << (pstr1 == pstr2) << endl;        //输出两个指针是否相等
+- 使用数组名作为auto变量的初始值时，推断出的类型是指针而不是数组
+```cpp
+string nums[] = {"one", "two", "three"}; //数组的元素是string对象
+string *pstr1 = &nums[0];                // pstr1指向nums的第一个元素
+string *pstr2 = nums;                    //等价于*pstr2=&nums[0]
+cout << *pstr1 << " " << *pstr2 << endl; //输出pstr1,pstr2指向的对象
+cout << (pstr1 == pstr2) << endl;        //输出两个指针是否相等
 
-    int ia1[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; //ia是一个含有10个整数的数组
-    auto ia2(ia1);                              //ia2是一个整型指针，指向ia的第一个元素。等价于auto ia2(&ia[0])
-    //ia2 = 43;                                 //错误：ia2是一个指针，不能用int值给指针赋值
-    cout << ia1[5] << " " << *(ia2 + 5) << endl; //输出ia[5]和ia2+5指针指向的对象
+int ia1[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // ia是一个含有10个整数的数组
+auto ia2(ia1);                              // ia2是一个整型指针，指向ia的第一个元素。等价于auto ia2(&ia[0])
+// ia2 = 43;                                 //错误：ia2是一个指针，不能用int值给指针赋值
+cout << ia1[5] << " " << *(ia2 + 5) << endl; //输出ia[5]和ia2+5指针指向的对象
+```
+- 使用decltype关键字，返回的类型是由10个整数够成的数组
+```cpp
+//ia3是一个含有10个整数的数组
+decltype(ia1) ia3 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+//ia3 = p;    //错误，不能用整型指针给数组赋值
+int i = 10;
+ia3[4] = i;   //正确：把i的值付给ia3的一个元素
+cout << ia1[4] << " " << *(ia3 + 4) << endl; //对比ia[4]和ia3+4指向的对象
+```
+##### 指针也是迭代器
+- 数组的指针和迭代器一样支持运算
+```cpp
+int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+int *ip = arr; //ip指向arr的第一个元素
+cout << *ip << " ";
+++ip; //p指向arr[1];
+cout << *ip << endl;
+```
+- 尾后指针
+```cpp
+int *e1 = &arr[10]; //指向arr尾元素的下一个位置的指针
+cout << e1 << endl; //输出尾后指针
+```
+- 尾后指针不能解引用或递增操作
+##### 标准库函数begin和end
+```cpp
+int *beg = begin(ia1);                 //指向ia首元素的指针
+int *last = end(ia1);                  //指向ia尾元素的下一位置的指针
+cout << end(ia1) - begin(ia1) << endl; //输出尾后指针和首指针之间的距离
+```
+##### 指针运算
+- 包括：解引用，递增，比较，与整数相加，两个指针相见等
+```cpp
+constexpr size_t sz = 5;
+int arr1[sz] = {1, 2, 3, 4, 5};
+int *ip1 = arr1;                     //等价于int *ip1=&arr[0]
+int *ip2 = ip1 + 4;                  //ip2指向arr的尾元素arr[4]
+cout << *ip1 << " " << *ip2 << endl; //指针加法
 
-使用decltype关键字，返回的类型是由10个整数够成的数组
-    //ia3是一个含有10个整数的数组
-    decltype(ia1) ia3 = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    //ia3 = p;    //错误，不能用整型指针给数组赋值
-    int i = 10;
-    ia3[4] = i;                                  //正确：把i的值付给ia3的一个元素
-    cout << ia1[4] << " " << *(ia3 + 4) << endl; //对比ia[4]和ia3+4指向的对象
-
-指针也是迭代器
-数组的指针和迭代器一样支持运算
-    int arr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    int *ip = arr; //ip指向arr的第一个元素
-    cout << *ip << " ";
-    ++ip; //p指向arr[1];
-    cout << *ip << endl;
-
-尾后指针
-    int *e1 = &arr[10]; //指向arr尾元素的下一个位置的指针
-    cout << e1 << endl; //输出尾后指针
-尾后指针不能解引用或递增操作
-
-标准库函数begin和end
-    int *beg = begin(ia1);                 //指向ia首元素的指针
-    int *last = end(ia1);                  //指向ia尾元素的下一位置的指针
-    cout << end(ia1) - begin(ia1) << endl; //输出尾后指针和首指针之间的距离
-
-指针运算
-包括：解引用，递增，比较，与整数相加，两个指针相见等
-    constexpr size_t sz = 5;
-    int arr1[sz] = {1, 2, 3, 4, 5};
-    int *ip1 = arr1;                     //等价于int *ip1=&arr[0]
-    int *ip2 = ip1 + 4;                  //ip2指向arr的尾元素arr[4]
-    cout << *ip1 << " " << *ip2 << endl; //指针加法
-
-    int *ip3 = arr1 + sz; //不能解引用
-    //int *p2 = arr1 + 10; //错误，arr只有5个元素，p2的值未定义
-
-两个指针相减的值时它们之间的距离
+int *ip3 = arr1 + sz; //不能解引用
+//int *p2 = arr1 + 10; //错误，arr只有5个元素，p2的值未定义
+```
+- 两个指针相减的值时它们之间的距离
+```cpp
 auto n = end(arr1) - begin(arr1); //n的值是5，也是arr中元素的数量
-类型为ptrdiff_t的标准库类型，带符号的类型
-
-遍历数组中的元素：
-    int *b = arr1, *e = arr1 + sz;
-    while (b < e)
-    {
-        cout << *b; //使用*b;
-        ++b;
-    }
-    cout << endl;
-解引用和指针运算的交互
-    int ia[] = {0, 2, 4, 6, 8}; //含有5个整数的数组
-    int last1 = *(ia + 4);      //相当于把ia[4]初始化给last
-    int last2 = *ia + 4;        //相当于把ia[0]+4初始化给l
-    cout << last1 << " " << last2 << endl;
-
-下标和指针
-内置的下标运算符所用的索引值不是无符号类型,与vector和string不同
-    int a = ia[2];  //ia转换成指向数组首元素的指针
-                    //ia[2]得到(ia+2)所指的元素
-    int *ap = ia;   //ap指向ia的首元素
-    a = *(ap + 2);  //等价于i=ia[2]
-    ap = &ia[2];    //ap指向索引为2的元素
-    int j = ap[1];  //ap[1]等价于*(p+1),就是ia[3]表示的那个元素
-    int k = ap[-2]; //ap[-2]等价于*(ap-2),就是ia[0]表示的那个元素
-    cout << a << " " << j << " " << k << endl;
-
-3.5.4 C风格字符串
+```
+- 类型为ptrdiff_t的标准库类型，带符号的类型
+- 遍历数组中的元素：
+```cpp
+int *b = arr1, *e = arr1 + sz;
+while (b < e)
+{
+    cout << *b; //使用*b;
+    ++b;
+}
+cout << endl;
+```
+##### 解引用和指针运算的交互
+```cpp
+int ia[] = {0, 2, 4, 6, 8}; //含有5个整数的数组
+int last1 = *(ia + 4);      //相当于把ia[4]初始化给last
+int last2 = *ia + 4;        //相当于把ia[0]+4初始化给l
+cout << last1 << " " << last2 << endl;
+```
+##### 下标和指针
+- 内置的下标运算符所用的索引值不是无符号类型,与vector和string不同
+```cpp
+int a = ia[2];  //ia转换成指向数组首元素的指针
+                //ia[2]得到(ia+2)所指的元素
+int *ap = ia;   //ap指向ia的首元素
+a = *(ap + 2);  //等价于i=ia[2]
+ap = &ia[2];    //ap指向索引为2的元素
+int j = ap[1];  //ap[1]等价于*(p+1),就是ia[3]表示的那个元素
+int k = ap[-2]; //ap[-2]等价于*(ap-2),就是ia[0]表示的那个元素
+cout << a << " " << j << " " << k << endl;
+```
+#### 3.5.4 C风格字符串
 C风格字符串（C-style character string）
 尽量不用C风格字符串，不方便，极易引发程序漏洞
 C风格字符串 不是一种类型
