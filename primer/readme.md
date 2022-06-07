@@ -1609,37 +1609,44 @@ int k = ap[-2]; //ap[-2]等价于*(ap-2),就是ia[0]表示的那个元素
 cout << a << " " << j << " " << k << endl;
 ```
 #### 3.5.4 C风格字符串
-C风格字符串（C-style character string）
-尽量不用C风格字符串，不方便，极易引发程序漏洞
-C风格字符串 不是一种类型
-1.字符串字面值 此字符串存放字符数组并以空字符结束（null terminated）
-2.C标准库String函数
-定义在cstring头文件中
-strlen(p)      返回p的长度，空字符不计算在内
-strcmp(p1,p2)  比较p1和p2的相等性。如果p1==p2，返回0；
-               如果p1>p2，返回一个正值；如果p1<p2，返回一个负值
-strcat(p1,p2)  将p2附加到p1之后，返回p1
-strcpy(p1,p2)  将p2拷贝给p1,返回p1
-上述函数不负责验证其字符串参数
+- C风格字符串（C-style character string）
+- 尽量不用C风格字符串，不方便，极易引发程序漏洞
+- C风格字符串 不是一种类型
+- 字符串字面值 此字符串存放字符数组并以空字符结束（null terminated）
+##### C标准库String函数
+- 定义在cstring头文件中
+<table>
+<tr><td>strlen(p)</td><td>返回p的长度，空字符不计算在内</td></tr>
+<tr><td>strcmp(p1,p2)</td><td>比较p1和p2的相等性。如果p1 == p2，返回0；<br/>如果p1 > p2，返回一个正值；如果p1 < p2，返回一个负值</td></tr>
+<tr><td>strcat(p1,p2)</td><td>将p2附加到p1之后，返回p1</td></tr>
+<tr><td>strcpy(p1,p2)</td><td>将p2拷贝给p1,返回p1</td></tr>
+</table>
 
-此类函数的指针必须指向以空字符作为结束的数组
+- 上述函数不负责验证其字符串参数
+- 此类函数的指针必须指向以空字符作为结束的数组
+```cpp
 char ca[]={'C','+','+'};//不以空字符结束
 cout<<strlen(ca)<<endl;//错误，ca没有以空字符结束
-
-比较字符串
+```
+##### 比较字符串
+```cpp
 string s1="A string example";
 string s2="A different string";
 if(s1<s2)//false:s2<s1
-C风格字符串比较，实际比较的将是指针而非字符串本身
+```
+- C风格字符串比较，实际比较的将是指针而非字符串本身
+```cpp
 const char ca1[]="A string example";
 const char ca2[]="A different string";
 if(ca1<ca2)//未定义的：试图比较两个无关地址
-调用strcmp函数，两个字符串相等，strcmp返回0；前面字符串较大，返回正值
-后面字符串较大，返回负值
+```
+- 调用strcmp函数，两个字符串相等，strcmp返回0；前面字符串较大，返回正值
+- 后面字符串较大，返回负值
+```cpp
 if(strcmp(ca1,ca2)<0)//和if(s1<s2)效果一样
-
-目标字符串的大小由调用者指定
-//eaample-3.5.4-.cpp
+```
+##### 目标字符串的大小由调用者指定
+```cpp
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -1765,111 +1772,87 @@ int main()
     return 0;
 }
 /*输出结果很奇怪，所以尽量不用C风格字符串
-1B!tusjoh!fybnqmf
-C"uvtkpi"gzcorng
-2C"uvtkpi"gzcorng
-3C"uvtkpi"gzcorng A different string
-4A different string
-5C"uvtkpi"gzcorng A different string
-6A string example
-7A string example
-8A
-9 string example
-10
+```
+#### 3.5.5 与旧代码的接口
+##### 混用string对象和C风格字符串
+- 允许使用以空字符结束的字符数组来初始化string对象或为string对象赋值
+- 在string对象的加法运算中允许使用以空字符结束的字符数组作为其中一个运算对象<br/>（不能两个对象都是）；在string对象的复合赋值运算中允许使用以空字符结束的字<br/>符数组作为右侧的运算对象。
 
-11
-A different string
-12
-
-13A string example A different string
-14A string example
-15A different string
-16A string example
-17B!tusjoh!fybnqmf
-18B!tusjoh!fybnqmf A different string
-19h!fybnqmf rent string
-20B!tusjoh!fybnqmf
-21A different string
-*/
-
-3.5.5 与旧代码的接口
-混用string对象和C风格字符串
-允许使用以空字符结束的字符数组来初始化string对象或为string对象赋值
-在string对象的加法运算中允许使用以空字符结束的字符数组作为其中一个运算对象
-（不能两个对象都是）；在string对象的复合赋值运算中允许使用以空字符结束的字
-符数组作为右侧的运算对象。
-
-不能将string对象直接赋值给指向字符的指针，需要通过c_str的成员函数
+- 不能将string对象直接赋值给指向字符的指针，需要通过c_str的成员函数
+```cpp
 char *str=s;//错误：不能用string对象初始化char*
 const char *str=s.c_str();//正确
-
-使用数组初始化vector对象
+```
+##### 使用数组初始化vector对象
+```cpp
 int int_arr[]={0,1,2,3,4,5};
 vector<int> ivec(begin(int_arr),end(int_arr));//数组的全部初始化vector对象
 vector<int> subVec(int_arr+1,int_arr+4);//数组的部分初始化vector对象
-
-
-3.6 多维数组
-多维数组是数组的数组
-理解多维数组，按照由内而外的顺序阅读
+```
+### 3.6 多维数组
+- 多维数组是数组的数组
+- 理解多维数组，按照由内而外的顺序阅读
+```cpp
 int ia[3][4];//大小为3的数组，每个元素是含有4个整数的数组
-
-多维数组的初始化
+```
+#### 多维数组的初始化
+```cpp
 ia[3][4]={
     {0,1,2,3},
     {4,5,6,7},
     {8,9,10,11}
 };
-等同于
+//等同于
 ia[3][4]={0,1,2,3,4,5,6,7,8,9,10,11};
 
-显式地初始化每行的首元素
+//显式地初始化每行的首元素
 ia[3][4]={{0}, {4},{8}};
-与下面的初始化完全不同
+//与下面的初始化完全不同
 ia[3][4]={0,4,8};
 
-显式地初始化第一行
+//显式地初始化第一行
 ia[3][4]={0,1,2,4};
-
-多维数组的下标引用
+```
+##### 多维数组的下标引用
+```cpp
 ia[2][3] = arr[8][9][10]; //赋值
 int (&row)[4]=ia[1]//把引用row绑定到ia的第二个数组上
+```
+##### 使用范围for语句处理多维数组
+##### 指针和多维数组
+##### 类型别名简化多维数组的指针
+```cpp
+// p是指针，指向维度是4的数组，数组的元素类型是整数
+// p指向第一层数组ia[],p=&ia[]
+int (*p)[4] = ia; // p指向含有4个整数的数组,用ia数组的首地址初始化auto p=ia;
+p = &ia[2];       // p指向ia的尾元素
+cout << *(*p) << endl;
 
-指针和多维数组
-
-    //p是指针，指向维度是4的数组，数组的元素类型是整数
-    //p指向第一层数组ia[],p=&ia[]
-    int(*p)[4] = ia;//p指向含有4个整数的数组,用ia数组的首地址初始化auto p=ia;
-    p = &ia[2];//p指向ia的尾元素
-    cout << *(*p) << endl;
-
-    //指针遍历多维数组
-    for (int (*p)[4] = ia; p != ia + (end(ia) - begin(ia)); p++)
+//指针遍历多维数组
+for (int (*p)[4] = ia; p != ia + (end(ia) - begin(ia)); p++)
+{
+    for (auto q = *p; q != *p + (end(*p) - begin(*p)); q++) //数组迭代器距离的数据类型ptrdiff_t
     {
-        for (auto q = *p; q != *p + (end(*p) - begin(*p)); q++) //数组迭代器距离的数据类型ptrdiff_t
-        {
-            cout << *q<< " ";
-        }
+        cout << *q << " ";
     }
-    cout << endl;
+}
+cout << endl;
 
-    类型别名简化多维数组的指针
-    using int_array = int[4];//新标准下类型别名声明
-    typedef int intArray;//等价的typedef 类型别名声明
-    for (int_array *p = ia; p != ia + (end(ia) - begin(ia)); p++)
+using int_array = int[4]; //新标准下类型别名声明
+typedef int intArray;     //等价的typedef 类型别名声明
+for (int_array *p = ia; p != ia + (end(ia) - begin(ia)); p++)
+{
+    for (intArray *q = *p; q != *p + (end(*p) - begin(*p)); q++) //数组迭代器距离的数据类型ptrdiff_t
     {
-        for (intArray *q = *p; q != *p + (end(*p) - begin(*p)); q++) //数组迭代器距离的数据类型ptrdiff_t
-        {
-            cout << *q<< " ";
-        }
+        cout << *q << " ";
     }
-    cout << endl;
-
-
-//eaample-3.6-.cpp
+}
+cout << endl;
+```
+- 几种遍历数组的方法比较
+```cpp
 #include <iostream>
 using namespace std;
-
 int main()
 {
     //大小为3的数组，每个元素是含有4个整数的数组
@@ -1948,19 +1931,43 @@ int main()
 
     return 0;
 }
-/*
-11
-11
-11
-11
-11
-11
-4
-0 1 4 9 16 25 36 49 64 81 100 121
-0 1 4 9 16 25 36 49 64 81 100 121
-0 1 4 9 16 25 36 49 64 81 100 121
-0 1 4 9 16 25 36 49 64 81 100 121
-0 1 4 9 16 25 36 49 64 81 100 121
-*/
-
-
+```
+### 术语表
+- `begin` 是string和vector的成员，返回指向第一个元素的迭代器。也是一个标准库函数，输入一个数组，返回指向该数组首元素的指针。
+- `缓冲区溢出（buffer overflow）`一种严重的程序故障，主要的原因是试图通过一个越界的索引访问容器内容，容器类型包括string、vector和数组等。
+- `C风格字符串（C-style string）`以空字符结束的字符数组。字符串字面值是C风格字符串，C风格字符串容易出错。
+- `类模板（class template）`用于创建具体类类型的模板。要想使用类模板，必须提供关于类型的辅助信息。例如，要定义一个vector对象需要指定元素的类型：
+- `vector<int>`包含int类型的元素。
+- `编译器扩展（compiler extension）`某个特定的编译器为C++语言额外增加的特性。基于编译器扩展编写的程序不易移植到其他编译器上。
+- `容器（container）`是一种类型，其对象容纳了一组给定类型的对象。vector是一种容器类型。
+- `拷贝初始化（copy initialization）`使用赋值号（=）的初始化形式。新创建的对象是初始值的一个副本。
+- `difference_type`由 string 和vector定义的一种带符号整数类型，表示两个迭代器之间的距离。
+- `直接初始化（direct initialization）`不使用赋值号（=）的初始化形式。
+- `empty`是string和vector的成员，返回一个布尔值。当对象的大小为0时返回真，否则返回假。
+- `end`是string和vector的成员，返回一个尾后迭代器。也是一个标准库函数，输入一个数组，返回指向该数组尾元素的下一位置的指针。
+- `getline`在string头文件中定义的一个函数，以一个istream对象和一个string对象为输入参数。该函数首先读取输入流的内容直到遇到换行符停止，然后将读入的数据存入string对象，最后返回istream对象。其中换行符读入但是不保留。
+- `索引（index）`是下标运算符使用的值。表示要在string对象、vector对象或者数组中访问的一个位置。
+- `实例化（instantiation）`编译器生成一个指定的模板类或函数的过程。
+- `迭代器（iterator）`是一种类型，用于访问容器中的元素或者在元素之间移动。
+- `迭代器运算（iterator arithmetic）`是string 或vector的迭代器的运算：迭代器与整数相加或相减得到一个新的迭代器，与原来的迭代器相比，新迭代器向前或向后移动了若干个位置。两个迭代器相减得到它们之间的距离，此时它们必须指向同一个容器的元素或该容器尾元素的下一位置。
+- `以空字符结束的字符串（null-terminated string）`是一个字符串，它的最后一个字符后面还跟着一个空字符（\0）。
+- `尾后迭代器（off-the-end iterator）`end函数返回的迭代器，指向一个并不存在的元素，该元素位于容器尾元素的下一位置。
+- `指针运算（pointer arithmetic）`是指针类型支持的算术运算。指向数组的指针所支持的运算种类与迭代器运算一样。
+- `prtdiff_t`是cstddef头文件中定义的一种与机器实现有关的带符号整数类型，它的空间足够大，能够表示数组中任意两个指针之间的距离。
+- `push_back`是vector的成员，向vector对象的末尾添加元素。
+- `范围for 语句（range for）`一种控制语句，可以在值的一个特定集合内迭代。
+- `size`是string和vector的成员，分别返回字符的数量或元素的数量。返回值的类型是size type。
+- `size_t`是cstddef头文件中定义的一种与机器实现有关的无符号整数类型，它的空间足够大，能够表示任意数组的大小。
+- `size_type`是string和vector定义的类型的名字，能存放下任意string对象或vector对象的大小。在标准库中，size type被定义为无符号类型。
+- `string`是一种标准库类型，表示字符的序列。
+- `using 声明（using declaration）`令命名空间中的某个名字可被程序直接使用。using 命名空间::名字；上述语句的作用是令程序可以直接使用名字，而无须写它的前缀部分命名空间::。
+- `值初始化（value initialization）`是一种初始化过程。内置类型初始化为0，类类型由类的默认构造函数初始化。只有当类包含默认构造函数时，该类的对象才会被值初始化。对于容器的初始化来说，如果只说明了容器的大小而没有指定初始值的话，就会执行值初始化。此时编译器会生成个值，而容器的元素被初始化为该值。
+- `vector`是一种标准库类型，容纳某指定类型的一组元素。
+- `++运算符（++operator）`是迭代器和指针定义的递增运算符。执行“加1”操作使得迭代器指向下一个元素。
+- `[]运算符（[]operator）`下标运算符。obj[j]得到容器对象obj中位置的那个元素。索引从0开始，第一个元素的索引是0，尾元素的索引是obj.size（）-1。下标运算符的返回值是一个对象。如果p是指针、n是整数，则p[n]与*（p+n）等价。
+- `->运算符（->operator）`箭头运算符，该运算符综合了解引用操作和点操作。a->b等价于（*a）.b。
+- `<<运算符（<<operator）`标准库类型string定义的输出运算符，负责输出string对象中的字符。
+- `>>运算符（>>operator）`标准库类型string定义的输入运算符，负责读入一组字符，遇到空白停止，读入的内容赋给运算符右侧的运算对象，该运算对象应该是一个string对象。
+- `!运算符（!operator）`逻辑非运算符，将它的运算对象的布尔值取反。如果运算对象是假，则结果为真，如果运算对象是真，则结果为假。
+- `&&运算符（&&operator）`逻辑与运算符，如果两个运算对象都是真，结果为真。只有当左侧运算对象为真时才会检查右侧运算对象。
+- `||运算符（|| operator）`逻辑或运算符，任何一个运算对象是真，结果就为真。只有当左侧运算对象为假时才会检查右侧运算对象。
