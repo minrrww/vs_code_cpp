@@ -88,5 +88,5 @@
         "unordered_set": "cpp",
         "numeric": "cpp"
     },
-    "markdown-preview-github-styles.colorTheme": "system" // 效果效果比cpptools要好
+    "markdown-preview-github-styles.colorTheme": "light" // 效果效果比cpptools要好
 }
