@@ -4,7 +4,8 @@ using namespace std;
 
 int main()
 {
-    string s1{15, 'b'},s2(s1);         // s7的内容是b;
-    int i = 6;
-    string s3( i+"" );
+    string line; //每次读入一整行，直至到达文件末尾
+    getline(cin, line);
+    for (char s : line)
+        cout << s << endl; // line中不包含换行符，getline函数返回的换行符被丢弃了
 }
