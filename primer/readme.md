@@ -1,5 +1,4 @@
-<p align="center">primer学习笔记</p>
-===
+# <p align="center">primer学习笔记</p>
 
 ## 第一章 开始
 ### 1.1 编写一个简单的C++程序

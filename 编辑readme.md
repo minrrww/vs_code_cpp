@@ -55,7 +55,7 @@ int main(int argc, char * argv[])//C
 echo "hello GitHub"# Bash
 ```
 ```javascript
-document. getElementById("myH1"). innerHTML="Welcome to my Homepage"; //javascript
+document. getElementdyId("myH1"). innerHTML="Welcome to my Homepage"; //javascript
 ```
 ```cpp
 string &operator+(const atrings A, const atrings B)//cpp
@@ -73,9 +73,14 @@ string &operator+(const atrings A, const atrings B)//cpp
 ***
 ==15.表格==
 
- | 表头表头表头 | 表头表头表头 | 表头表头表头 | 表表头表头头 |
+ | 表头表头表头 | 表头表头表头 | 表头表头表头 | 表头表头表头 |
  | ------------ | :----------: | -----------: | ------------ |
  | 居左         |     居中     |         居右 | aaa          |
+
+<table>
+<tr><th align="left">表头表头表头</th><th>表头表头表头</th><th>表头表头表头</th><th>表头表头表头</th></tr>
+<tr><td align="left">左</td><td align="center">中</td><td align="right">右</td><td>aaa</td></tr>
+</table>
 
 ==16.文字上下标==
 文字^上标^
