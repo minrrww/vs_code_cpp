@@ -3,7 +3,7 @@
 using namespace std;
 int main()
 {
-    string line; //每次读入一整行，直至到达文件末尾
-    while (getline(cin, line))
-        cout << line <<line.size()<< endl; // line中不包含换行符，getline函数返回的换行符被丢弃了
+    string s("Hello world!");
+    for (decltype(s.size()) i = 0; i < s.size(); ++i)
+        cout << s[i] << endl;
 }
