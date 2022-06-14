@@ -105,13 +105,13 @@ string &operator+(const atrings A, const atrings B)//cpp
 
 ==17.流程图==
 
-| 标志 |         方向          |
-| :--: | :-------------------: |
-|  TB  | top bottom - 从上到下 |
-|  BT  | bottom top - 从下到上 |
-|  RL  | right left - 从右到左 |
-|  LR  | left right - 从左到右 |
-|  TD  |       等同于 TB       |
+| 标志  |         方向          |
+| :---: | :-------------------: |
+|  TB   | top bottom - 从上到下 |
+|  BT   | bottom top - 从下到上 |
+|  RL   | right left - 从右到左 |
+|  LR   | left right - 从左到右 |
+|  TD   |       等同于 TB       |
 
 ```mermaid
 graph TB
@@ -209,4 +209,115 @@ id9[/平行四边形/]
 id10[\反向平行四边形\]
 id11[/梯形\]
 id12[\反向梯形/]
+```
+
+```mermaid
+gantt
+    dateFormat  YYYY-MM-DD
+    title 为mermaid加入甘特图功能
+    section A部分
+    完成任务        :done, des1,2019-01-06,2019-01-08
+    正进行任务      :active, des2,2019-01-09,3d
+    待开始任务      :des3, after des2, 5d
+    待开始任务2     :des4, after des3, 5d
+    section 紧急任务
+    完成任务        :crit,done,2019-01-06,24h
+    实现parser     :crit,done,after des1, 2d
+    为parser编写test :crit, active, 3d
+    待完成任务      :crit,5d
+    为rendere编写test: 2d
+    将功能加入到mermaid: 1d
+```
+
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail...
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+```
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+```mermaid
+classDiagram
+Class01 <|-- AveryLongClass : Cool
+Class03 *-- Class04
+Class05 o-- Class06
+Class07 .. Class08
+Class09 --> C2 : Where am i?
+Class09 --* C3
+Class09 --|> Class07
+Class07 : equals()
+Class07 : Object[] elementData
+Class01 : size()
+Class01 : int chimp
+Class01 : int gorilla
+Class08 <--> C2: Cool label
+```
+```mermaid
+gitGraph
+       commit
+       commit
+       branch develop
+       commit
+       commit
+       commit
+       checkout main
+       commit
+       commit
+```
+```mermaid
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE-ITEM : contains
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : uses
+```
+```mermaid
+journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+```
+
+```mermaid
+%%{init: {'theme':'base'}}%%
+        flowchart TD
+          A[Christmas] -->|Get money| B(Go shopping)
+          B --> C{Let me think}
+          B --> G[/Another/]
+          C ==>|One| D[Laptop]
+          C -->|Two| E[iPhone]
+          C -->|Three| F[fa:fa-car Car]
+          subgraph section
+            C
+            D
+            E
+            F
+            G
+          end
+```
+
+```mermaid
+pie
+    title 饼图名称
+    "类别A" : 42.96
+    "类别B" : 50.05
+    "类别C" : 10.01
 ```
