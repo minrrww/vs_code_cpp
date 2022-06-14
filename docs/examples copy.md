@@ -39,8 +39,8 @@ sequenceDiagram
 
 ```mermaid
 graph LR
-    A[Square Rect] -- Link text --> B((Circle))
-    A --> C(Round Rect)
+    A[Square <br/> Rect] -- Link text --> B((Circle))
+    A --> C(Round <br/> Rect)
     B --> D{Rhombus}
     C --> D
 ```
