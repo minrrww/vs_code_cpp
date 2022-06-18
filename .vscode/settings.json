@@ -1,5 +1,7 @@
 // settings.json
 {
+    "markdown-preview-enhanced.enableExtendedTableSyntax": true, // MPE 表格扩展功能
+    "markdown-preview-enhanced.enableScriptExecution": true, // MPE 渲染代码的运行结果功能，侧边目录栏依赖此设置
     "files.defaultLanguage": "cpp", // ctrl+N新建文件后默认的语言
     "editor.formatOnType": true, // 输入时就进行格式化，默认触发字符较少，分号可以触发
     "editor.snippetSuggestions": "top", // snippets代码优先显示补全
